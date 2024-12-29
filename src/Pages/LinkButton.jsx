@@ -56,7 +56,7 @@ export default function LinkButton({ HOST_IP, API_KEY }) {
               <div className="headline" style={{ color: "red" }}>
                 Caution!
               </div>
-              <p>Check<Link to={HOST_IP+"/#bridge"}>TimeZone</Link> before pressing Link Button</p>
+              <p>Check<Link to="/bridge">TimeZone</Link> before pressing Link Button</p>
               <br />
               <p style={{ fontSize: ".8rem" }}>Timezone in config: {configTimezone} </p>
               <p style={{ fontSize: ".8rem" }} >Your Timezone: {clientTimezone}</p>
