@@ -1,12 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import dayjs from 'dayjs';
 import { toast } from "react-hot-toast";
+
+import BrightnessSlider from "../BrightnessSlider/BrightnessSlider";
+import CustomTimePicker from "../TimePicker/Timepicker";
 import GenericButton from "../GenericButton/GenericButton";
 import GenericText from "../GenericText/GenericText";
 import SelectMenu from "../SelectMenu/SelectMenu";
-import BrightnessSlider from "../BrightnessSlider/BrightnessSlider";
-import CustomTimePicker from "../TimePicker/Timepicker";
-import dayjs from 'dayjs';
 
 const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
   const [behaviorData, setBehaviorData] = useState({
@@ -21,6 +22,8 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
   });
 
   const [initialTime, setValue] = useState(dayjs().hour(behaviorData.hour).minute(behaviorData.minute));
+  const [fadeInTime, setFadeInTime] = useState(dayjs().hour(0).minute(behaviorData.fade_in_duration / 60));
+  const [turnOffTime, setTurnOffTime] = useState(dayjs().hour(0).minute(behaviorData.turn_lights_off_after / 60));
 
   const handleChange = (key, value) => {
     setBehaviorData((prevData) => ({
@@ -105,21 +108,23 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
           />
         </div>
         <div className="form-control">
-          <GenericText
-            label="Fade In Duration (seconds before end time)"
-            type="number"
-            placeholder="Fade In Duration"
-            value={behaviorData.fade_in_duration}
-            onChange={(e) => handleChange("fade_in_duration", e)}
+          <CustomTimePicker
+            label="Fade In Duration (time before end time)"
+            value={fadeInTime}
+            onChange={(newValue) => {
+              handleChange("fade_in_duration", newValue.hour() * 3600 + newValue.minute() * 60);
+              setFadeInTime(newValue);
+            }}
           />
         </div>
         <div className="form-control">
-          <GenericText
-            label="Turn Lights Off After (seconds after end time)"
-            type="number"
-            placeholder="Turn Lights Off After"
-            value={behaviorData.turn_lights_off_after}
-            onChange={(e) => handleChange("turn_lights_off_after", e)}
+          <CustomTimePicker
+            label="Turn Lights Off After (time after end time)"
+            value={turnOffTime}
+            onChange={(newValue) => {
+              handleChange("turn_lights_off_after", newValue.hour() * 3600 + newValue.minute() * 60);
+              setTurnOffTime(newValue);
+            }}
           />
         </div>
         <div className="form-control">
@@ -141,8 +146,15 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
             classOptions="maxWidth"
           />
         </div>
+        <div className="form-control">
+          <GenericButton
+          value="Save"
+          color="blue"
+          size=""
+          onClick={() => handleSave()}
+          />
+        </div>
       </div>
-      <GenericButton onClick={handleSave}>Save</GenericButton>
     </>
   );
 };
