@@ -80,6 +80,8 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
     { value: "sunday", label: "Sunday" },
   ];
 
+  const selectedDays = behaviorData.recurrence_days ? behaviorData.recurrence_days.map(day => days.find(d => d.value === day)) : [];
+
   return (
     <>
       <div className="form-control">
@@ -132,10 +134,11 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
           <SelectMenu
             label="Recurrence Days"
             options={days}
-            value={behaviorData.recurrence_days}
+            defaultValue={selectedDays}
             onChange={(e) => handleChange("recurrence_days", e)}
             close={false}
             multie={true}
+            classOptions="maxWidth"
           />
         </div>
       </div>
