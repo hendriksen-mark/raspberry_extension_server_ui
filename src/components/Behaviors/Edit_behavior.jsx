@@ -15,7 +15,7 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
     Name: Behavior_item["metadata"]["name"],
     hour: Behavior_item["configuration"]["when"]?.["time_point"]?.["time"]?.["hour"] || 0,
     minute: Behavior_item["configuration"]["when"]?.["time_point"]?.["time"]?.["minute"] || 0,
-    recurrence_days: Behavior_item["configuration"]["when"]?.["recurrence_days"] || [],
+    recurrence_days: Behavior_item["configuration"]["when"]?.["recurrence_days"] || Behavior_item["configuration"]["when_extended"]?.["recurrence_days"] || [],
     fade_in_duration: Behavior_item["configuration"]["fade_in_duration"]?.["seconds"] || 0,
     turn_lights_off_after: Behavior_item["configuration"]["turn_lights_off_after"]?.["seconds"] || 0,
     end_brightness: Behavior_item["configuration"]["end_brightness"] || 0,
@@ -195,7 +195,7 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
             onChange={(e) => handleChange("Name", e)}
           />
         </div>
-        {behaviorData.script_id === "ff8957e3-2eb9-4699-a0c8-ad2cb3ede704" && (
+        {["ff8957e3-2eb9-4699-a0c8-ad2cb3ede704", "7e571ac6-f363-42e1-809a-4cbf6523ed72"].includes(behaviorData.script_id) && (
           <>
             <div className="form-control">
               <CustomTimePicker
@@ -207,6 +207,10 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
                 }}
               />
             </div>
+          </>
+        )}
+        {behaviorData.script_id === "ff8957e3-2eb9-4699-a0c8-ad2cb3ede704" && (
+          <>
             <div className="form-control">
               <CustomTimePicker
                 label="Fade In Duration (time before end time)"
@@ -231,19 +235,8 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
               <label>End Brightness (%)</label>
               <BrightnessSlider
                 defaultValue={behaviorData.end_brightness}
-                max = "100"
+                max="100"
                 onChange={(value) => handleChange("end_brightness", value)}
-              />
-            </div>
-            <div className="form-control">
-              <SelectMenu
-                label="Recurrence Days"
-                options={days}
-                defaultValue={selectedDays}
-                onChange={(e) => handleChange("recurrence_days", e)}
-                close={false}
-                multie={true}
-                classOptions="maxWidth"
               />
             </div>
           </>
@@ -267,16 +260,6 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
           <>
             <div className="form-control">
               <CustomTimePicker
-                label="End Time"
-                value={initialTime}
-                onChange={(newValue) => {
-                  handleChange("hour", newValue.hour());
-                  handleChange("minute", newValue.minute());
-                }}
-              />
-            </div>
-            <div className="form-control">
-              <CustomTimePicker
                 label="Fade Out Duration (time before end time)"
                 value={fadeOutTime}
                 onChange={(newValue) => {
@@ -292,17 +275,6 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
                 placeholder="End State"
                 value={behaviorData.end_state}
                 onChange={(e) => handleChange("end_state", e)}
-              />
-            </div>
-            <div className="form-control">
-              <SelectMenu
-                label="Recurrence Days"
-                options={days}
-                defaultValue={selectedDays}
-                onChange={(e) => handleChange("recurrence_days", e)}
-                close={false}
-                multie={true}
-                classOptions="maxWidth"
               />
             </div>
           </>
@@ -327,25 +299,27 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, closeWizard }) => {
                 onChange={(e) => handleChange("end_at", e)}
               />
             </div>
-            <div className="form-control">
-              <SelectMenu
-                label="Recurrence Days"
-                options={days}
-                defaultValue={selectedDays}
-                onChange={(e) => handleChange("recurrence_days", e)}
-                close={false}
-                multie={true}
-                classOptions="maxWidth"
-              />
-            </div>
           </>
+        )}
+        {["ff8957e3-2eb9-4699-a0c8-ad2cb3ede704", "7e571ac6-f363-42e1-809a-4cbf6523ed72", "7238c707-8693-4f19-9095-ccdc1444d228"].includes(behaviorData.script_id) && (
+          <div className="form-control">
+            <SelectMenu
+              label="Recurrence Days"
+              options={days}
+              defaultValue={selectedDays}
+              onChange={(e) => handleChange("recurrence_days", e)}
+              close={false}
+              multie={true}
+              classOptions="maxWidth"
+            />
+          </div>
         )}
         <div className="form-control">
           <GenericButton
-          value="Save"
-          color="blue"
-          size=""
-          onClick={() => handleSave()}
+            value="Save"
+            color="blue"
+            size=""
+            onClick={() => handleSave()}
           />
         </div>
       </div>
