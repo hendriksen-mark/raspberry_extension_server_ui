@@ -74,7 +74,7 @@ const GroupHeader = ({ HOST_IP, api_key, id, group, lights }) => {
           {group.state["any_on"] && (
             <BrightnessSlider
               defaultValue={group.state["avr_bri"]}
-              onChange={debouncedChangeHandler}
+              onChange={debouncedHandleBriChange}
             />
           )}
         </AnimatePresence>
