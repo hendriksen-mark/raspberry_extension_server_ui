@@ -26,6 +26,9 @@ const AddLight = ({ HOST_IP, API_KEY, closeWizard }) => {
       ip: lightip,
       config: rest,
     };
+    if (lightproto === "dummy") {
+      formattedData.ip = "dummy";
+    }
     axios
       .post(`${HOST_IP}/api/${API_KEY}/lights`, formattedData)
       .then(() => {
@@ -79,15 +82,17 @@ const AddLight = ({ HOST_IP, API_KEY, closeWizard }) => {
         placeholder={lightData.protocol}
         onChange={(e) => handleChange("protocol", e.value)}
       />
-    <div className="form-control">
-      <GenericText
-        label="Light IP Address"
-        type="text"
-        placeholder="192.168.x.x"
-        value={lightData.ip}
-        onChange={(e) => handleChange("ip", e)}
-      />
-    </div>
+    {lightData.protocol !== "dummy" && (
+      <div className="form-control">
+        <GenericText
+          label="Light IP Address"
+          type="text"
+          placeholder="192.168.x.x"
+          value={lightData.ip}
+          onChange={(e) => handleChange("ip", e)}
+        />
+      </div>
+    )}
     {lightData.protocol !== "auto" && (
       <>
         <div className="form-control">

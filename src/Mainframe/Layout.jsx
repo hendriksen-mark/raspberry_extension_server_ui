@@ -11,6 +11,26 @@ import "./layout.scss";
 import "./scrollbar.scss";
 
 const Layout = ({ HOST_IP, API_KEY }) => {
+  const eventSource = new EventSource(`${HOST_IP}/eventstream/clip/v2`, {
+    headers: {
+      "hue-application-key": API_KEY,
+    },
+  });
+
+  eventSource.onopen = () => {
+    console.log("EventSource connection opened.");
+  };
+
+  eventSource.onmessage = (event) => {
+    console.log("New message from EventSource:", event.data);
+  };
+
+  eventSource.onerror = (error) => {
+    console.error("EventSource error:", error);
+    toast.error(`EventSource error: ${error.message}`);
+    eventSource.close();
+  };
+
   const isMobile = useMediaQuery({ query: `(max-width: 750px)` });
   const [showSidebar, setShowSidebar] = useState(!isMobile);
   const [config, setConfig] = useState({
@@ -34,7 +54,7 @@ const Layout = ({ HOST_IP, API_KEY }) => {
                 JSON.stringify(prevConfig.lights) !== JSON.stringify(lights) ||
                 JSON.stringify(prevConfig.groups) !== JSON.stringify(groups) ||
                 JSON.stringify(prevConfig.scenes) !== JSON.stringify(scenes) ||
-                JSON.stringify(prevConfig.config["swupdate2"]) !== JSON.stringify(config["swupdate2"])
+                JSON.stringify(prevConfig.config) !== JSON.stringify(config)
               ) {
                 //console.log("Updating config");
                 return { ...prevConfig, config, lights, groups, scenes };
