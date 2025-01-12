@@ -10,94 +10,11 @@ import HeaderSection from "./HeaderSection";
 import "./layout.scss";
 import "./scrollbar.scss";
 
-const Layout = ({ HOST_IP, API_KEY }) => {
-  const eventSource = new EventSource(`${HOST_IP}/eventstream/clip/v2`, {
-    headers: {
-      "hue-application-key": API_KEY,
-    },
-  });
-
-  eventSource.onopen = () => {
-    console.log("EventSource connection opened.");
-  };
-
-  eventSource.onmessage = (event) => {
-    console.log("New message from EventSource:", event.data);
-  };
-
-  eventSource.onerror = (error) => {
-    console.error("EventSource error:", error);
-    toast.error(`EventSource error: ${error.message}`);
-    eventSource.close();
-  };
+const Layout = ({ HOST_IP, API_KEY, CONFIG }) => {
+  //console.log("Layout: ", HOST_IP, API_KEY, CONFIG);
 
   const isMobile = useMediaQuery({ query: `(max-width: 750px)` });
   const [showSidebar, setShowSidebar] = useState(!isMobile);
-  const [config, setConfig] = useState({
-    config: {},
-    lights: {},
-    groups: {},
-    scenes: {},
-    group0: {},
-  });
-
-  useEffect(() => {
-    const fetchConfig = () => {
-      if (API_KEY !== undefined) {
-        axios
-          .get(`${HOST_IP}/api/${API_KEY}`)
-          .then((fetchedData) => {
-            //console.log(fetchedData.data["swupdate2"]["state"]);
-            const { config, lights, groups, scenes } = fetchedData.data;
-            setConfig((prevConfig) => {
-              if (
-                JSON.stringify(prevConfig.lights) !== JSON.stringify(lights) ||
-                JSON.stringify(prevConfig.groups) !== JSON.stringify(groups) ||
-                JSON.stringify(prevConfig.scenes) !== JSON.stringify(scenes) ||
-                JSON.stringify(prevConfig.config) !== JSON.stringify(config)
-              ) {
-                //console.log("Updating config");
-                return { ...prevConfig, config, lights, groups, scenes };
-              }
-              //console.log("No changes to config");
-              return prevConfig;
-            });
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.error(`Error occurred: ${error.message}`);
-          });
-        axios
-          .get(`${HOST_IP}/api/${API_KEY}/groups/0`)
-          .then((fetchedData) => {
-            const group0 = fetchedData.data;
-            setConfig((prevConfig) => {
-              if (
-                JSON.stringify(prevConfig.group0) !== JSON.stringify(group0)
-              ) {
-                //console.log("Updating config");
-                return { ...prevConfig, group0 };
-              }
-              //console.log("No changes to config");
-              return prevConfig;
-            });
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.error(`Error occurred: ${error.message}`);
-          });
-          //console.log("fetched config", config);
-      }
-    };
-
-    fetchConfig();
-    const interval = setInterval(() => {
-      fetchConfig();
-    }, 2000); // <<-- ⏱ 1000ms = 1s
-    return () => clearInterval(interval);
-  }, [HOST_IP, API_KEY]);
-  
-
   return (
     <>
       <SidebarSection
@@ -105,22 +22,20 @@ const Layout = ({ HOST_IP, API_KEY }) => {
         setShowSidebar={setShowSidebar}
         isMobile={isMobile}
       />
-      {Object.keys(config.config).length > 0 && (
-        <div className="columnRight">
-          <HeaderSection
-            HOST_IP={HOST_IP}
-            API_KEY={API_KEY}
-            showSidebar={showSidebar}
-            setShowSidebar={setShowSidebar}
-            CONFIG={config}
-          />
-          <ContentSection
-            HOST_IP={HOST_IP}
-            API_KEY={API_KEY}
-            CONFIG={config}
-          />
-        </div>
-      )}
+      <div className="columnRight">
+        <HeaderSection
+          HOST_IP={HOST_IP}
+          API_KEY={API_KEY}
+          showSidebar={showSidebar}
+          setShowSidebar={setShowSidebar}
+          CONFIG={CONFIG}
+        />
+        <ContentSection
+          HOST_IP={HOST_IP}
+          API_KEY={API_KEY}
+          CONFIG={CONFIG}
+        />
+      </div>
     </>
   );
 };

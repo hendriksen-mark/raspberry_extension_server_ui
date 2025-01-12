@@ -139,6 +139,13 @@ const Light = ({ HOST_IP, api_key, id, light, modelIds, lightsCatalog }) => {
               <li>IP: {light["protocol_cfg"]["ip"]}</li>
             )}
           </ul>
+          <IconButton
+            iconName={MdDeleteForever}
+            title="Delete"
+            size="small"
+            color="red"
+            onClick={() => deleteAlert()}
+          />
           <LightUpdate
             light={light}
             lightsCatalog={lightsCatalog}

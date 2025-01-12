@@ -11,8 +11,7 @@ import "./headerSection.scss";
 import NotificationCenter from "../components/NotificationCenter/NotificationCenter";
 
 const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, API_KEY, CONFIG }) => {
-  //console.log("HeaderSection: ", CONFIG);
-  const [group0State, setGroup0State] = useState(CONFIG.group0?.state?.any_on || false);
+  const [group0State, setGroup0State] = useState(CONFIG.groups[0]?.state?.any_on || false);
 
   const iconVariants = {
     opened: {

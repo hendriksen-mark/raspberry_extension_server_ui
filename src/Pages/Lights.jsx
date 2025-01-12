@@ -14,8 +14,9 @@ import IconButton from "../components/IconButton/IconButton";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
 
-export default function Lights({ HOST_IP, API_KEY }) {
-  const [lights, setLights] = useState({});
+export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
+  const lights = CONFIG.lights;
+  //console.log("lights", lights);
   const [lightsCatalog, setlightsCatalog] = useState({});
   const [modelIds, setModelIds] = useState([]);
 
@@ -62,20 +63,6 @@ export default function Lights({ HOST_IP, API_KEY }) {
   };
 
   useEffect(() => {
-    const fetchLights = () => {
-      if (API_KEY !== undefined) {
-        axios
-          .get(`${HOST_IP}/lights`)
-          .then((fetchedData) => {
-            //console.log(fetchedData.data);
-            setLights(fetchedData.data);
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.error(`Error occurred: ${error.message}`);
-          });
-      }
-    };
 
     const fetchModelIds = () => {
       if (API_KEY !== undefined) {
@@ -112,10 +99,6 @@ export default function Lights({ HOST_IP, API_KEY }) {
     fetchLights();
     fetchModelIds();
     fetchLightsCatalog();
-    const interval = setInterval(() => {
-      fetchLights();
-    }, 10000); // <<-- ⏱ 1000ms = 1s
-    return () => clearInterval(interval);
   }, [HOST_IP, API_KEY]);
 
   return (

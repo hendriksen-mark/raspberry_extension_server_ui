@@ -10,7 +10,7 @@ export default function Groups({ HOST_IP, API_KEY, CONFIG }) {
       <CardGrid>
         {Object.keys(config.groups).length === 0 ? <RoomSetup /> : <></>}
         {Object.entries(config.groups)
-          .filter((group) => group[1].type !== "Entertainment")
+          .filter((group) => group[1].type !== "Entertainment" && group[1].name !== "Group 0")
           .map(([id, group]) => (
             <Group
               key={id}

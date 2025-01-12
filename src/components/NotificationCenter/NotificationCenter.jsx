@@ -108,7 +108,7 @@ const NotificationCenter = ({HOST_IP, API_KEY, updating, notifications, CONFIG }
   };
 
   return (
-    <div className="notificationCenterContainer" key={JSON.stringify(swstate)}>
+    <div className="notificationCenterContainer">
       <div className="notificationBtn" onClick={openWizard}>
         <FaBell />
         {(swstate === "anyreadytoinstall" || swstate === "allreadytoinstall") && <div className="notificationDot"></div>}
