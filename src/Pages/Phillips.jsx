@@ -9,24 +9,10 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const Phillips = ({ HOST_IP, API_KEY }) => {
-  const [bridgeIp, setBridgeIp] = useState("192.168.x.x");
-  const [hueUser, setHueUser] = useState("");
-  const [hueKey, setHueKey] = useState("");
-
-  useEffect(() => {
-    axios
-      .get(`${HOST_IP}/api/${API_KEY}/config/hue`)
-      .then((result) => {
-        setBridgeIp(result.data["ip"]);
-        setHueUser(result.data["hueUser"]);
-        setHueKey(result.data["hueKey"]);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Error occurred: ${error.message}`);
-      });
-  }, [HOST_IP, API_KEY]);
+const Phillips = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const [bridgeIp, setBridgeIp] = useState(CONFIG.config.hue?.ip || "192.168.x.x");
+  const [hueUser, setHueUser] = useState(CONFIG.config.hue?.hueUser || "");
+  const [hueKey, setHueKey] = useState(CONFIG.config.hue?.hueKey || "");
 
   const pairBridge = () => {
     axios

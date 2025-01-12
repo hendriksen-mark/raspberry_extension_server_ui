@@ -6,31 +6,8 @@ import { toast } from "react-hot-toast";
 import CardGrid from "../components/CardGrid/CardGrid";
 import User from "../components/User/User";
 
-const Config = ({ HOST_IP, API_KEY }) => {
-  const [whitelist, setWhitelist] = useState({});
-
-  useEffect(() => {
-    const fetchConfig = () => {
-      if (API_KEY !== undefined) {
-        axios
-          .get(`${HOST_IP}/api/${API_KEY}/config`)
-          .then((fetchedData) => {
-            //console.log(fetchedData.data);
-            setWhitelist(fetchedData.data.whitelist);
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.error(`Error occurred: ${error.message}`, { duration: 5000 });
-          });
-      }
-    };
-
-    fetchConfig();
-    const interval = setInterval(() => {
-      fetchConfig();
-    }, 2000); // <<-- ⏱ 1000ms = 1s
-    return () => clearInterval(interval);
-  }, [HOST_IP, API_KEY]);
+const Config = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const whitelist = CONFIG.config.whitelist;
 
   return (
       <div className="inner">

@@ -9,27 +9,11 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const Tradfri = ({ HOST_IP, API_KEY }) => {
-  const [tradfriGwIp, setTradfriGwIp] = useState("192.168.x.x");
-  const [tradfriCode, setTradfriCode] = useState("");
-  const [tradfriIdentity, setTradfriIdentity] = useState("");
-  const [tradfriPsk, setTradfriPsk] = useState("");
-
-  useEffect(() => {
-    axios
-      .get(`${HOST_IP}/api/${API_KEY}/config/tradfri`)
-      .then((result) => {
-        if (result.data["psk"] !== undefined) {
-          setTradfriGwIp(result.data["tradfriGwIp"]);
-          setTradfriIdentity(result.data["identity"]);
-          setTradfriPsk(result.data["psk"]);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Error occurred: ${error.message}`);
-      });
-  }, [HOST_IP, API_KEY]);
+const Tradfri = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const [tradfriGwIp, setTradfriGwIp] = useState(CONFIG.config.tradfri?.tradfriGwIp || "192.168.x.x");
+  const [tradfriCode, setTradfriCode] = useState(CONFIG.config.tradfri?.tradfriCode || "");
+  const [tradfriIdentity, setTradfriIdentity] = useState(CONFIG.config.tradfri?.identity || "");
+  const [tradfriPsk, setTradfriPsk] = useState(CONFIG.config.tradfri?.psk || "");
 
   const pairTradfri = () => {
     axios

@@ -16,10 +16,8 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
   const lights = CONFIG.lights;
-  //console.log("lights", lights);
+  const modelIds = CONFIG.lightTypes;
   const [lightsCatalog, setlightsCatalog] = useState({});
-  const [modelIds, setModelIds] = useState([]);
-
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
 
   const openWizard = () => {
@@ -64,21 +62,6 @@ export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
 
   useEffect(() => {
 
-    const fetchModelIds = () => {
-      if (API_KEY !== undefined) {
-        axios
-          .get(`${HOST_IP}/light-types`)
-          .then((fetchedData) => {
-            //console.log(fetchedData.data);
-            setModelIds(fetchedData.data["result"]);
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.error(`Error occurred: ${error.message}`);
-          });
-      }
-    };
-
     const fetchLightsCatalog = () => {
       if (API_KEY !== undefined) {
         axios
@@ -95,9 +78,6 @@ export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
           });
       }
     };
-
-    fetchLights();
-    fetchModelIds();
     fetchLightsCatalog();
   }, [HOST_IP, API_KEY]);
 

@@ -1,36 +1,10 @@
-import { useState, useEffect } from "react";
-
-import axios from "axios";
-import { toast } from "react-hot-toast";
+import { useState } from "react";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import Device from "../components/Device/Device";
 
-const Devices = ({ HOST_IP, API_KEY }) => {
-  const [devices, setDevices] = useState({});
-
-  useEffect(() => {
-    const fetchDevices = () => {
-      if (API_KEY !== undefined) {
-        axios
-          .get(`${HOST_IP}/sensors`)
-          .then((fetchedData) => {
-            //console.log(fetchedData.data);
-            setDevices(fetchedData.data);
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.error(`Error occurred: ${error.message}`, { duration: 5000 });
-          });
-      }
-    };
-
-    fetchDevices();
-    const interval = setInterval(() => {
-      fetchDevices();
-    }, 10000); // <<-- ⏱ 1000ms = 1s
-    return () => clearInterval(interval);
-  }, [HOST_IP, API_KEY]);
+const Devices = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const devices = CONFIG.sensors;
 
   return (
     <div className="content">

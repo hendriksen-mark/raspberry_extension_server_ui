@@ -10,22 +10,9 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const Alarm = ({ HOST_IP, API_KEY }) => {
-  const [enable, setEnable] = useState(false);
-  const [email, setEmail] = useState("none");
-
-  useEffect(() => {
-    axios
-      .get(`${HOST_IP}/api/${API_KEY}/config/alarm`)
-      .then((result) => {
-        setEnable(result.data["enabled"]);
-        setEmail(result.data["email"]);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Error: ${error.message}`);
-      });
-  }, [HOST_IP, API_KEY]);
+const Alarm = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const [enable, setEnable] = useState(CONFIG.config.alarm?.enabled || false);
+  const [email, setEmail] = useState(CONFIG.config.alarm?.email || "");
 
   const onSubmit = () => {
     axios

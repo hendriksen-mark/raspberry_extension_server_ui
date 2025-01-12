@@ -10,37 +10,13 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const HA = ({ HOST_IP, API_KEY }) => {
-  const [enable, setEnable] = useState(false);
-  const [homeAssistantIp, setHomeAssistantIp] = useState("127.0.0.1");
-  const [homeAssistantPort, setHomeAssistantPort] = useState(8123);
-  const [homeAssistantToken, setHomeAssistantToken] = useState("");
-  const [homeAssistantIncludeByDefault, setHomeAssistantIncludeByDefault] =
-    useState(true);
-  const [homeAssistantUseHttps, setHomeAssistantUseHttps] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get(`${HOST_IP}/api/${API_KEY}/config/homeassistant`)
-      .then((result) => {
-        setEnable(result.data["enabled"]);
-        if ("homeAssistantIp" in result.data)
-          setHomeAssistantIp(result.data["homeAssistantIp"]);
-        if ("homeAssistantPort" in result.data)
-          setHomeAssistantPort(result.data["homeAssistantPort"]);
-        if ("homeAssistantToken" in result.data)
-          setHomeAssistantToken(result.data["homeAssistantToken"]);
-        if ("homeAssistantIncludeByDefault" in result.data)
-          setHomeAssistantIncludeByDefault(
-            result.data["homeAssistantIncludeByDefault"]
-          );
-        if ("homeAssistantUseHttps" in result.data)
-          setHomeAssistantUseHttps(result.data["homeAssistantUseHttps"]);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [HOST_IP, API_KEY]);
+const HA = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const [enable, setEnable] = useState(CONFIG.config.homeassistant?.enabled || false);
+  const [homeAssistantIp, setHomeAssistantIp] = useState(CONFIG.config.homeassistant?.homeAssistantIp || "192.168.x.x");
+  const [homeAssistantPort, setHomeAssistantPort] = useState(CONFIG.config.homeassistant?.homeAssistantPort || 8123);
+  const [homeAssistantToken, setHomeAssistantToken] = useState (CONFIG.config.homeassistant?.homeAssistantToken || "");
+  const [homeAssistantIncludeByDefault, setHomeAssistantIncludeByDefault] = useState(CONFIG.config.homeassistant?.homeAssistantIncludeByDefault || false);
+  const [homeAssistantUseHttps, setHomeAssistantUseHttps] = useState(CONFIG.config.homeassistant?.homeAssistantUseHttps || false);
 
   const onSubmit = () => {
     axios

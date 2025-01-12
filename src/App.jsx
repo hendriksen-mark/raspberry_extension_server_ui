@@ -51,8 +51,11 @@ const App = () => {
     };
 
     const fetchConfig = () => {
+      if (!API_KEY) {
+        getAPI_KEY();
+      }
       axios
-        .get(`${HOST_IP}/all_data`)
+        .get(`${HOST_IP}/api/${API_KEY}/all_data`)
         .then((fetchedData) => {
           //console.log(fetchedData.data);
           setConfig(fetchedData.data);

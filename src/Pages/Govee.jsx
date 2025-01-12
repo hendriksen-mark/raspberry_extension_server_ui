@@ -10,22 +10,9 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const Govee = ({ HOST_IP, API_KEY }) => {
-  const [enable, setEnable] = useState(false);
-  const [goveeAPI_KEY, setGoveeAPI_KEY] = useState("");
-
-  useEffect(() => {
-    axios
-      .get(`${HOST_IP}/api/${API_KEY}/config/govee`)
-      .then((result) => {
-        setEnable(result.data["enabled"]);
-        if ("api_key" in result.data)
-            setGoveeAPI_KEY(result.data["api_key"]);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [HOST_IP, API_KEY]);
+const Govee = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const [enable, setEnable] = useState(CONFIG.config.govee?.enabled || false);
+  const [goveeAPI_KEY, setGoveeAPI_KEY] = useState(CONFIG.config.govee?.api_key || "");
 
   const onSubmit = () => {
     axios

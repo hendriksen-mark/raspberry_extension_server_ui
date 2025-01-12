@@ -10,33 +10,13 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const Mqtt = ({ HOST_IP, API_KEY }) => {
-  const [enable, setEnable] = useState(false);
-  const [mqttServer, setMqttServer] = useState("mqtt");
-  const [mqttPort, setMqttPort] = useState(1883);
-  const [mqttUser, setMqttUser] = useState("");
-  const [mqttPass, setMqttPass] = useState("");
-  const [discoveryPrefix, setDiscoveryPrefix] = useState("homeassistant");
-
-  useEffect(() => {
-    axios
-      .get(`${HOST_IP}/api/${API_KEY}/config/mqtt`)
-      .then((result) => {
-        setEnable(result.data["enabled"]);
-        if ("mqttServer" in result.data)
-          setMqttServer(result.data["mqttServer"]);
-        if ("mqttPort" in result.data) setMqttPort(result.data["mqttPort"]);
-        if ("mqttUser" in result.data) setMqttUser(result.data["mqttUser"]);
-        if ("mqttPassword" in result.data)
-          setMqttPass(result.data["mqttPassword"]);
-        if ("discoveryPrefix" in result.data)
-          setDiscoveryPrefix(result.data["discoveryPrefix"]);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Error occurred: ${error.message}`);
-      });
-  }, [HOST_IP, API_KEY]);
+const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const [enable, setEnable] = useState(CONFIG.config.mqtt?.enabled || false);
+  const [mqttServer, setMqttServer] = useState(CONFIG.config.mqtt?.mqttServer || "mqtt");
+  const [mqttPort, setMqttPort] = useState(CONFIG.config.mqtt?.mqttPort || 1883);
+  const [mqttUser, setMqttUser] = useState(CONFIG.config.mqtt?.mqttUser || "");
+  const [mqttPass, setMqttPass] = useState(CONFIG.config.mqtt?.mqttPassword || "");
+  const [discoveryPrefix, setDiscoveryPrefix] = useState(CONFIG.config.mqtt?.discoveryPrefix || "homeassistant");
 
   const onSubmit = () => {
     axios

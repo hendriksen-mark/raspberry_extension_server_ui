@@ -10,29 +10,11 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const Deconz = ({ HOST_IP, API_KEY }) => {
-  const [enable, setEnable] = useState(false);
-  const [deconzHost, setDeconzHost] = useState("127.0.0.1");
-  const [deconzPort, setDeconzPort] = useState(8443);
-  const [deconzUser, setDeconzUser] = useState("");
-
-  useEffect(() => {
-    axios
-      .get(`${HOST_IP}/api/${API_KEY}/config/deconz`)
-      .then((result) => {
-        setEnable(result.data["enabled"]);
-        if ("deconzHost" in result.data)
-          setDeconzHost(result.data["deconzHost"]);
-        if ("deconzPort" in result.data)
-          setDeconzPort(result.data["deconzPort"]);
-        if ("deconzUser" in result.data)
-          setDeconzUser(result.data["deconzUser"]);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error("Error occurred, check browser console");
-      });
-  }, [HOST_IP, API_KEY]);
+const Deconz = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const [enable, setEnable] = useState(CONFIG.config.deconz?.enabled || false);
+  const [deconzHost, setDeconzHost] = useState(CONFIG.config.deconz?.deconzHost || "192.168.x.x");
+  const [deconzPort, setDeconzPort] = useState(CONFIG.config.deconz?.deconzPort || 80);
+  const [deconzUser, setDeconzUser] = useState(CONFIG.config.deconz?.deconzUser || "");
 
   const pairDeconz = () => {
     axios

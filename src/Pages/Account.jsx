@@ -9,24 +9,12 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const Account = ({ HOST_IP, API_KEY }) => {
-  const [email, setEmail] = useState("");
+const Account = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const email = Object.keys(CONFIG.config.users)[0];
   const [pass, setPass] = useState("");
   const [pass1, setPass1] = useState("");
   const [strength, setStrength] = useState('');
   const [strengthColor, setStrengthColor] = useState('black');
-
-  useEffect(() => {
-    axios
-      .get(`${HOST_IP}/api/${API_KEY}/config/users`)
-      .then((result) => {
-        setEmail(Object.keys(result.data)[0]);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Error: ${error.message}`);
-      });
-  }, [HOST_IP, API_KEY]);
 
   const onSubmit = () => {
     if (pass !== pass1) {

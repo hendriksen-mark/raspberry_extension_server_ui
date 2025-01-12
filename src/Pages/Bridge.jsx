@@ -17,21 +17,21 @@ import CardGrid from "../components/CardGrid/CardGrid";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const readonlyConf = CONFIG.config;
+  const timezones = CONFIG.timezones.values;
+  const DebugInfo = CONFIG.info;
+  const UpdateTime = CONFIG.config["swupdate2"]["autoinstall"]["updatetime"].replace("T", "");
   const [bridgeName, setBridgeName] = useState(CONFIG.config["name"]);
   const [swversion, setSwversion] = useState(CONFIG.config["swversion"]);
   const [apiVersion, setApiVersion] = useState(CONFIG.config["apiversion"]);
   const [remoteApi, setRemoteApi] = useState(CONFIG.config["Remote API enabled"]);
   const [discovery, setDiscovery] = useState(CONFIG.config["discovery"]);
   const [timezone, setTimezone] = useState(CONFIG.config["timezone"]);
-  const [timezones, setTimezones] = useState([]);
-  const [DebugInfo, setDebugInfo] = useState({});
+  const [LogLevel, setLogLevel] = useState(CONFIG.config["LogLevel"]);
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
   const [WizardName, setWizardName] = useState("");
   const [WizardContent, setWizardContent] = useState({});
   const [AdvanceConfig, setAdvanceConfig] = useState(false);
-  const [UpdateTime, setUpdateTime] = useState(CONFIG.config["swupdate2"]["autoinstall"]["updatetime"].replace("T", ""));
-  const [LogLevel, setLogLevel] = useState(CONFIG.config["LogLevel"]);
-  const readonlyConf = CONFIG.config;
 
   const openWizard = () => {
     setWizardIsOpen(true);
@@ -40,28 +40,6 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
   const closeWizard = () => {
     setWizardIsOpen(false);
   };
-
-  useEffect(() => {
-    axios
-    .get(`${HOST_IP}/api/${API_KEY}/info/timezones`)
-    .then((fetchedData) => {
-      //console.log(fetchedData.data);
-      setTimezones(fetchedData.data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-    axios
-      .get(`${HOST_IP}/info`)
-      .then((result) => {
-        //console.log(result.data);
-        setDebugInfo(result.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [HOST_IP, API_KEY]);
 
   const onSubmit = () => {
     //console.log("submit");
