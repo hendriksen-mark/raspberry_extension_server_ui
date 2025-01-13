@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import iro from "@jaames/iro";
-import { cieToRgb, rgbToCie, } from "../ColorFormatConverter/ColorFormatConverter";
+import './gradientColorpicker.scss';
 
 export default function GradientColorpicker({ HOST_IP, API_KEY, lights }) {
   const pickerRef = useRef(null);
@@ -8,30 +8,34 @@ export default function GradientColorpicker({ HOST_IP, API_KEY, lights }) {
   const [gradientStyle, setGradientStyle] = useState({});
 
   useEffect(() => {
+    const interpolateColor = (color1, color2, factor) => {
+      const result = color1.slice(1).match(/.{2}/g).map((hex, i) => {
+        return Math.round(parseInt(hex, 16) + factor * (parseInt(color2.slice(1).match(/.{2}/g)[i], 16) - parseInt(hex, 16)));
+      });
+      return `#${result.map(value => value.toString(16).padStart(2, '0')).join('')}`;
+    };
+
     const onChange = () => {
       const colors = picker.current.colors.map(color => color.hexString);
+      const interpolatedColors = [
+        colors[0],
+        interpolateColor(colors[0], colors[1], 0.5),
+        colors[1],
+        interpolateColor(colors[1], colors[2], 0.5),
+        colors[2]
+      ];
       const gradient = {
-        colors: colors,
+        colors: interpolatedColors,
       };
       console.log(gradient);
       const activeColor = picker.current.color.hexString;
       const activeColorIndex = picker.current.colors.findIndex(color => color.hexString === activeColor);
       console.log("Active color:", activeColor, "at position:", activeColorIndex);
 
-      // Update handle styles
-      const handles = document.querySelectorAll('.IroHandle');
-      handles.forEach((handle, index) => {
-        const circleElement = handle.querySelector('circle:nth-child(2)');
-        if (handle.classList.contains('IroHandle--isActive')) {
-          circleElement.setAttribute('stroke', '#000');
-        } else {
-          circleElement.setAttribute('stroke', '#fff');
-        }
-      });
 
       // Update gradient style
       setGradientStyle({
-        background: `linear-gradient(to right, ${colors[0]}, ${colors[1]}, ${colors[2]})`,
+        background: `linear-gradient(to right, ${interpolatedColors.join(', ')})`,
       });
     };
 
@@ -52,7 +56,7 @@ export default function GradientColorpicker({ HOST_IP, API_KEY, lights }) {
   return (
     <div>
       <div ref={pickerRef}></div>
-      <div style={{ height: '10px', marginTop: '10px', ...gradientStyle }}></div>
+      <div className="gradientDisplay" style={{  ...gradientStyle }}></div>
     </div>
   );
 }

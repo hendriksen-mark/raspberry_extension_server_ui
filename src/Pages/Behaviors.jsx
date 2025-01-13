@@ -10,6 +10,8 @@ import CardGrid from "../components/CardGrid/CardGrid";
 import Map_Behavior from "../components/Behaviors/Map_behavior";
 import Make_Behaviors from "../components/Behaviors/Make_behavior";
 
+import "../components/reactConfirmAlert/reactConfirmAlert.scss";
+
 const Behaviors = ({ HOST_IP, API_KEY }) => {
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
   const [Behaviors, setBehaviors] = useState([]);
@@ -26,15 +28,15 @@ const Behaviors = ({ HOST_IP, API_KEY }) => {
       } else {
         console.log("Close wizard without saving");
         confirmAlert({
-          title: "Confirm to close",
-          message: "You have unsaved changes. Are you sure you want to close?",
+          title: "Unsaved changes",
+          message: "You have unsaved changes. Are you sure you want to leave without saving?",
           buttons: [
             {
-              label: "Yes",
+              label: "Leave without saving",
               onClick: () => setWizardIsOpen(false),
             },
             {
-              label: "No",
+              label: "Cancel",
               onClick: () => {},
             },
           ],
