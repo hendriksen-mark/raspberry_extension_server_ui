@@ -38,12 +38,6 @@ const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, API_KEY, CONFIG }
       });
   };
 
-  useEffect(() => {
-    if (CONFIG.group0 && CONFIG.group0.state) {
-      setGroup0State(CONFIG.group0.state.any_on);
-    }
-  }, [CONFIG]);
-
   return (
     <div className="topbarRight">
       <motion.div
