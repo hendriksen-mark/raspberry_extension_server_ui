@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { FaChevronDown } from "react-icons/fa";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
@@ -6,6 +6,7 @@ import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import ButtonRow from "./ButtonRow";
 import ColorPickerSection from "./ColorPickerSection";
 import ColorTempPickerSection from "./ColorTempPickerSection";
+import GradientpickerSection from "./GradientpickerSection";
 import GroupHeader from "./GroupHeader";
 import LightsSection from "./LightsSection";
 import Scenes from "../Scenes/Scenes";
@@ -18,26 +19,35 @@ const Group = ({ HOST_IP, api_key, id, group, lights, scenes }) => {
   });
   const [sceneModal, setSceneModal] = useState(false);
   const [lightsCapabilities, setLightsCapabilities] = useState([]);
+  const [gradientLights, setGradientLights] = useState([]);
 
-  // Include the functions inspectLightsCapabilities, defaultContainerView, handleToggleChange, handleBriChange, statusLights here
+  useEffect(() => {
+    inspectLightsCapabilities();
+  }, [group.lights, lights]);
+
   const inspectLightsCapabilities = () => {
     for (const light of group.lights) {
       if (
         "xy" in lights[light]["state"] &&
         !lightsCapabilities.includes("xy")
       ) {
-        setLightsCapabilities([...lightsCapabilities, "xy"]);
+        setLightsCapabilities((prev) => [...prev, "xy"]);
       }
       if (
         "ct" in lights[light]["state"] &&
         !lightsCapabilities.includes("ct")
       ) {
-        setLightsCapabilities([...lightsCapabilities, "ct"]);
+        setLightsCapabilities((prev) => [...prev, "ct"]);
+      }
+      if (
+        (lights[light]["modelid"].startsWith("LCX") || lights[light]["modelid"] === "915005987201") &&
+        !lightsCapabilities.includes("gradient")
+      ) {
+        setLightsCapabilities((prev) => [...prev, "gradient"]);
+        setGradientLights((prev) => [...prev, { value: light, label: lights[light].name }]);
       }
     }
   };
-  inspectLightsCapabilities();
-  //lightsCapabilities);
 
   const defaultContainerView = () => {
     let newShowContainer;
@@ -46,6 +56,8 @@ const Group = ({ HOST_IP, api_key, id, group, lights, scenes }) => {
         newShowContainer = "colorPicker";
       } else if (lightsCapabilities.includes("ct")) {
         newShowContainer = "colorTempPicker";
+      } else if (lightsCapabilities.includes("gradient")) {
+        newShowContainer = "gradient";
       } else {
         newShowContainer = "lights";
       }
@@ -85,6 +97,12 @@ const Group = ({ HOST_IP, api_key, id, group, lights, scenes }) => {
           setSceneModal={setSceneModal}
         />
 
+        <GradientpickerSection
+          showContainer={showContainer}
+          gradientLights={gradientLights}
+          HOST_IP={HOST_IP}
+          api_key={api_key}
+        />
         <ColorPickerSection
           showContainer={showContainer}
           group={group}

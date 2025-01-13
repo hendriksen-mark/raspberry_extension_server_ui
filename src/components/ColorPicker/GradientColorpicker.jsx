@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import iro from "@jaames/iro";
+import { cieToRgb, rgbToCie, } from "../ColorFormatConverter/ColorFormatConverter";
 
-export default function GradientColorpicker() {
+export default function GradientColorpicker({ HOST_IP, API_KEY, lights }) {
   const pickerRef = useRef(null);
   const picker = useRef(null);
   const [gradientStyle, setGradientStyle] = useState({});

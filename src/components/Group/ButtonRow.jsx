@@ -1,7 +1,7 @@
 import React from "react";
 
 import { FaPalette, FaImages, FaLightbulb } from "react-icons/fa";
-import { MdInvertColors } from "react-icons/md";
+import { MdInvertColors, MdGradient } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ButtonRow = ({
@@ -33,6 +33,16 @@ const ButtonRow = ({
               duration: 0.2,
             }}
           >
+            {lightsCapabilities.includes("gradient") && (
+              <motion.div
+                className={`btn ${showContainer === "gradient" ? "active" : ""}`}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <MdGradient onClick={() => setShowContainer("gradient")} />
+              </motion.div>
+            )}
+
             {lightsCapabilities.includes("xy") && (
               <motion.div
                 className={`btn ${showContainer === "colorPicker" ? "active" : ""}`}

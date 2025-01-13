@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import GenericSwitch from "../components/POC/GenericSwitch";
 import HueSwitch from "../components/POC/HueSwitch";
 import Wizard from "../components/Wizard/Wizard";
-import { HueIcons, HUE_ICONS_MAP } from "../static/icons/hass-hue-icons";
+import SelectMenu from "../components/SelectMenu/SelectMenu";
 
 import GradientColorpicker from "../components/ColorPicker/GradientColorpicker";
 
-export default function Testpage({ HOST_IP, API_KEY }) {
+export default function Testpage({ HOST_IP, API_KEY, CONFIG }) {
+  const lights = CONFIG.lights;
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
+  const [selectedLight, setSelectedLight] = useState(null);
 
   const openWizard = () => {
     setWizardIsOpen(true);
@@ -17,12 +19,24 @@ export default function Testpage({ HOST_IP, API_KEY }) {
   const closeWizard = () => {
     setWizardIsOpen(false);
   };
-  const iconTypes = Object.keys(HUE_ICONS_MAP);
+
+  const lightOptions = Object.keys(lights).map(key => ({
+    value: key,
+    label: lights[key].name
+  }));
 
   return (
     <div className="inner">
-
-      <GradientColorpicker/>
+      <SelectMenu
+        options={lightOptions}
+        onChange={setSelectedLight}
+        value={selectedLight}
+      />
+      <GradientColorpicker
+        HOST_IP={HOST_IP}
+        API_KEY={API_KEY}
+        selectedLight={selectedLight}
+      />
 
       <GenericSwitch />
       <HueSwitch />
@@ -32,19 +46,6 @@ export default function Testpage({ HOST_IP, API_KEY }) {
         <Wizard isOpen={WizardIsOpen} closeWizard={closeWizard}>
           <p>Test Text</p>
         </Wizard>
-      </div>
-      <div className="icon-list">
-        <h3>Available Icons:</h3>
-        <ul>
-          {iconTypes.map((iconType) => (
-            <li key={iconType}>
-              {iconType}
-              <div className="hueicon">
-                <HueIcons type={iconType} color="#eeeeee" />
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
