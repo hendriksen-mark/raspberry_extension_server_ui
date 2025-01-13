@@ -13,7 +13,7 @@ const loading = (
 );
 
 const App = () => {
-  const [API_KEY, setAPI_KEY] = useState();
+  const [API_KEY, setAPI_KEY] = useState("");
   const [CONFIG, setConfig] = useState({
     config: {},
     lights: {},
@@ -37,8 +37,9 @@ const App = () => {
         .get(`${HOST_IP}/get-key`)
         .then((result) => {
           if (typeof result.data === "string" && result.data.length === 32) {
-            //console.log(`API_KEY from ${HOST_IP}: ${result.data}`);
+            console.log(`API_KEY from ${HOST_IP}: ${result.data}`);
             setAPI_KEY(result.data);
+            return result.data;
           } else {
             console.error(`Unable to fetch API_KEY! from ${HOST_IP}/get-key`);
           }
@@ -50,15 +51,20 @@ const App = () => {
       //console.log(`API_KEY: ${API_KEY}`);
     };
 
-    const fetchConfig = () => {
-      if (!API_KEY) {
-        getAPI_KEY();
+    const fetchConfig = (api_key) => {
+      console.log(`Fetching config from ${HOST_IP}/api/${api_key}/all_data`);
+      if (api_key === "") {
+        api_key = getAPI_KEY();
       }
       axios
-        .get(`${HOST_IP}/api/${API_KEY}/all_data`)
+        .get(`${HOST_IP}/api/${api_key}/all_data`)
         .then((fetchedData) => {
-          //console.log(fetchedData.data);
-          setConfig(fetchedData.data);
+          if (fetchedData.data.config && fetchedData.data.groups && fetchedData.data.lightTypes) {
+            console.log("CONFIG data fetched!" + fetchedData.data);
+            setConfig(fetchedData.data);
+          } else {
+            console.error("Incomplete CONFIG data fetched!");
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -66,18 +72,27 @@ const App = () => {
         });
     };
 
-    fetchConfig();
     getAPI_KEY();
+    if (API_KEY === "") {
+      getAPI_KEY();
+    } else {
+      fetchConfig(API_KEY);
+    }
 
     const interval = setInterval(() => {
-      fetchConfig();
+      if (API_KEY === "") {
+        getAPI_KEY();
+      } else {
+        fetchConfig(API_KEY);
+      }
     }, 2000); // <<-- ⏱ 1000ms = 1s
 
     return () => clearInterval(interval);
   }, []);
 
-  if (!API_KEY || !CONFIG.config || !CONFIG.groups || !CONFIG.lightTypes) {
-    console.warn("API_KEY is undefined!");
+  if (API_KEY === "" || !CONFIG.config || !CONFIG.groups || !CONFIG.lightTypes) {
+    console.error("API_KEY is " + (API_KEY === ""? "missing!" : "pressesnt!") + API_KEY);
+    console.error("CONFIG is " + (CONFIG.config? "missing!" : "empty!") + CONFIG);
     return loading;
   } else {
     return (
