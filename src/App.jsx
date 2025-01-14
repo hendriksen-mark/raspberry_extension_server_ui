@@ -32,13 +32,14 @@ const App = () => {
 
   useEffect(() => {
     const getAPI_KEY = () => {
-      console.log(`${HOST_IP}/get-key`);
+      //console.log(`${HOST_IP}/get-key`);
       axios
         .get(`${HOST_IP}/get-key`)
         .then((result) => {
           if (typeof result.data === "string" && result.data.length === 32) {
-            console.log(`API_KEY from ${HOST_IP}: ${result.data}`);
+            //console.log(`API_KEY from ${HOST_IP}: ${result.data}`);
             setAPI_KEY(result.data);
+            fetchConfig(result.data);
             return result.data;
           } else {
             console.error(`Unable to fetch API_KEY! from ${HOST_IP}/get-key`);
@@ -52,18 +53,17 @@ const App = () => {
     };
 
     const fetchConfig = (api_key) => {
-      console.log(`Fetching config from ${HOST_IP}/api/${api_key}/all_data`);
-      if (api_key === "") {
-        api_key = getAPI_KEY();
-      }
+      //console.log(`Fetching config from ${HOST_IP}/api/${api_key}/all_data`);
+      console.log("API_KEY: ", api_key, API_KEY);
       axios
         .get(`${HOST_IP}/api/${api_key}/all_data`)
         .then((fetchedData) => {
           if (fetchedData.data.config && fetchedData.data.groups && fetchedData.data.lightTypes) {
-            console.log("CONFIG data fetched!" + fetchedData.data);
+            //console.log("CONFIG data fetched!", fetchedData.data);
             setConfig(fetchedData.data);
           } else {
-            console.error("Incomplete CONFIG data fetched!");
+            console.error("Incomplete CONFIG data fetched!", api_key, fetchedData.data);
+            getAPI_KEY();
           }
         })
         .catch((error) => {
@@ -73,28 +73,21 @@ const App = () => {
     };
 
     getAPI_KEY();
-    if (API_KEY === "") {
-      getAPI_KEY();
-    } else {
-      fetchConfig(API_KEY);
-    }
 
     const interval = setInterval(() => {
-      if (API_KEY === "") {
-        getAPI_KEY();
-      } else {
-        fetchConfig(API_KEY);
-      }
+      fetchConfig(API_KEY);
     }, 2000); // <<-- ⏱ 1000ms = 1s
 
     return () => clearInterval(interval);
   }, []);
 
-  if (API_KEY === "" || !CONFIG.config || !CONFIG.groups || !CONFIG.lightTypes) {
-    console.error("API_KEY is " + (API_KEY === ""? "missing!" : "pressesnt!") + API_KEY);
-    console.error("CONFIG is " + (CONFIG.config? "missing!" : "empty!") + CONFIG);
+  if (API_KEY === "" || !("bridgeid" in CONFIG.config)) {
+    console.error("API_KEY is " + (API_KEY === ""? "missing!" : "pressesnt!"), API_KEY);
+    console.error("CONFIG is " + (CONFIG.config? "missing!" : "empty!"), CONFIG);
     return loading;
   } else {
+    //console.log("API_KEY is present: " + API_KEY);
+    //console.log("CONFIG is present: ", CONFIG);
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <React.Suspense fallback={loading}>
