@@ -18,7 +18,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 
 const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
   const readonlyConf = CONFIG.config;
-  const timezones = CONFIG.timezones.values;
+  const timezones = CONFIG.timezones;
   const DebugInfo = CONFIG.info;
   const UpdateTime = CONFIG.config["swupdate2"]["autoinstall"]["updatetime"].replace("T", "");
   const [bridgeName, setBridgeName] = useState(CONFIG.config["name"]);

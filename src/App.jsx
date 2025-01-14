@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { toast } from "react-hot-toast";
 
 import axios from "axios";
 
@@ -54,7 +55,10 @@ const App = () => {
 
     const fetchConfig = (api_key) => {
       //console.log(`Fetching config from ${HOST_IP}/api/${api_key}/all_data`);
-      console.log("API_KEY: ", api_key, API_KEY);
+      if (api_key === "") {
+        return;
+      }
+      //console.log("API_KEY: ", api_key, API_KEY);
       axios
         .get(`${HOST_IP}/api/${api_key}/all_data`)
         .then((fetchedData) => {
