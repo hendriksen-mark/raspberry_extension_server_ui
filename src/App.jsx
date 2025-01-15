@@ -54,11 +54,7 @@ const App = () => {
     };
 
     const fetchConfig = (api_key) => {
-      //console.log(`Fetching config from ${HOST_IP}/api/${api_key}/all_data`);
-      if (api_key === "") {
-        return;
-      }
-      //console.log("API_KEY: ", api_key, API_KEY);
+      //console.log("Fetching CONFIG data...", apiKey ? apiKey : "undefined");
       axios
         .get(`${HOST_IP}/api/${api_key}/all_data`)
         .then((fetchedData) => {
@@ -67,7 +63,6 @@ const App = () => {
             setConfig(fetchedData.data);
           } else {
             console.error("Incomplete CONFIG data fetched!", api_key, fetchedData.data);
-            getAPI_KEY();
           }
         })
         .catch((error) => {
@@ -79,15 +74,21 @@ const App = () => {
     getAPI_KEY();
 
     const interval = setInterval(() => {
-      fetchConfig(API_KEY);
+      if (API_KEY.length === 32) {
+        fetchConfig(API_KEY);
+      } else {
+        console.error("API_KEY is missing: " + (API_KEY ? API_KEY : "undefined"));
+        getAPI_KEY();
+      }
     }, 2000); // <<-- ⏱ 1000ms = 1s
-
     return () => clearInterval(interval);
-  }, []);
+  }, [API_KEY]);
 
-  if (API_KEY === "" || !("bridgeid" in CONFIG.config)) {
-    console.error("API_KEY is " + (API_KEY === ""? "missing!" : "pressesnt!"), API_KEY);
-    console.error("CONFIG is " + (CONFIG.config? "missing!" : "empty!"), CONFIG);
+  if (!CONFIG.config || !("bridgeid" in CONFIG.config)) {
+    console.error("CONFIG is missing!"), CONFIG;
+    return loading;
+  } else if (API_KEY.length !== 32) {
+    console.error("API_KEY is missing: " + API_KEY);
     return loading;
   } else {
     //console.log("API_KEY is present: " + API_KEY);
