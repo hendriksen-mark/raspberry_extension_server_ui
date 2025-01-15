@@ -11,12 +11,12 @@ export default function GradientColorpicker({ HOST_IP, API_KEY, light }) {
 
   useEffect(() => {
     if (!light) {
-      console.log("No light selected");
+      //console.log("No light selected");
       return;
     }
 
     const interpolateColor = (color1, color2, factor) => {
-      console.log("Interpolating colors", color1, color2, factor);
+      //console.log("Interpolating colors", color1, color2, factor);
       const result = color1.slice(1).match(/.{2}/g).map((hex, i) => {
         return Math.round(parseInt(hex, 16) + factor * (parseInt(color2.slice(1).match(/.{2}/g)[i], 16) - parseInt(hex, 16)));
       });
@@ -24,7 +24,7 @@ export default function GradientColorpicker({ HOST_IP, API_KEY, light }) {
     };
 
     const onChange = () => {
-      console.log("change light:", light);
+      //console.log("change light:", light);
       const colors = picker.current.colors.map(color => color.hexString);
       const interpolatedColors = [
         colors[0],
@@ -36,10 +36,10 @@ export default function GradientColorpicker({ HOST_IP, API_KEY, light }) {
       const gradient = {
         colors: interpolatedColors,
       };
-      console.log(gradient);
+      //console.log(gradient);
       const activeColor = picker.current.color.hexString;
       const activeColorIndex = picker.current.colors.findIndex(color => color.hexString === activeColor);
-      console.log("Active color:", activeColor, "at position:", activeColorIndex);
+      //console.log("Active color:", activeColor, "at position:", activeColorIndex);
 
       // Convert hex colors to RGB
       const rgbColors = interpolatedColors.map(hex => {
