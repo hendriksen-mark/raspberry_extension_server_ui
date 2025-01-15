@@ -14,6 +14,7 @@ import GenericButton from "../GenericButton/GenericButton";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 const User = ({ HOST_IP, api_key, id, user, whitelist }) => {
+  console.log("User", user);
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
   const [WizardName, setWizardName] = useState("");
   const [WizardContent, setWizardContent] = useState({});
@@ -119,8 +120,8 @@ const User = ({ HOST_IP, api_key, id, user, whitelist }) => {
         </div>
         <div className="row2">
           <ul>
-            <li>Last use date: {user["last use date"].replace("T", " ")}</li>
-            <li>Create date: {user["create date"].replace("T", " ")}</li>
+            <li>Last use date: {user["last_use_date"].replace("T", " ")}</li>
+            <li>Create date: {user["create_date"].replace("T", " ")}</li>
           </ul>
           <IconButton
             iconName={MdDeleteForever}

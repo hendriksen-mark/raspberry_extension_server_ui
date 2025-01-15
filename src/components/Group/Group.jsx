@@ -19,7 +19,7 @@ const Group = ({ HOST_IP, api_key, id, group, lights, scenes }) => {
   });
   const [sceneModal, setSceneModal] = useState(false);
   const [lightsCapabilities, setLightsCapabilities] = useState([]);
-  const [gradientLights, setGradientLights] = useState([]);
+  const [gradientLights, setGradientLights] = useState([{ value: "", label: "Select a light" }]);
 
   useEffect(() => {
     inspectLightsCapabilities();
@@ -44,7 +44,12 @@ const Group = ({ HOST_IP, api_key, id, group, lights, scenes }) => {
         !lightsCapabilities.includes("gradient")
       ) {
         setLightsCapabilities((prev) => [...prev, "gradient"]);
-        setGradientLights((prev) => [...prev, { value: light, label: lights[light].name }]);
+        setGradientLights((prev) => {
+          if (!prev.some((item) => item.value === light)) {
+            return [...prev, { value: light, label: lights[light].name }];
+          }
+          return prev;
+        });
       }
     }
   };

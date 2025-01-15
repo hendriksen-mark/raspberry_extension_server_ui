@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -11,7 +11,18 @@ const GradientpickerSection = ({
   HOST_IP,
   api_key,
 }) => {
-    const [selectedLight, setSelectedLight] = useState(null);
+  //console.log("GradientpickerSection", gradientLights);
+  const [selectedLight, setSelectedLight] = useState(gradientLights.length > 0 ? gradientLights[0].value : "");
+
+  useEffect(() => {
+    //console.log("Selected light state updated:", selectedLight);
+  }, [selectedLight]);
+
+  const handleChange = (selectedOption) => {
+    //console.log("Selected light", selectedOption.value);
+    setSelectedLight(selectedOption.value);
+  };
+
   return (
     <motion.div className="row colorpicker">
       <AnimatePresence initial={false} mode="wait">
@@ -39,9 +50,9 @@ const GradientpickerSection = ({
           >
 
             <SelectMenu
+                defaultValue={gradientLights.find(option => option.value === selectedLight)}
                 options={gradientLights}
-                onChange={setSelectedLight}
-                value={selectedLight}
+                onChange={handleChange}
             />
             <br />
             <GradientColorpicker
@@ -53,6 +64,7 @@ const GradientpickerSection = ({
         )}
       </AnimatePresence>
     </motion.div>);
+
 };
 
 export default GradientpickerSection;

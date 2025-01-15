@@ -2,7 +2,6 @@ import Select from "react-select";
 import "./selectMenu.scss";
 
 const SelectMenu = ({ label, defaultValue, placeholder, options, onChange, close = true , multie = false, classOptions = ""}) => {
-    //console.log(options);
     return (
         <div className={`dropdown ${classOptions}`}>
             <label>{label}</label>
@@ -12,7 +11,10 @@ const SelectMenu = ({ label, defaultValue, placeholder, options, onChange, close
                 isMulti={multie}
                 options={options}
                 placeholder={placeholder}
-                onChange={(e) => onChange(e)}
+                onChange={(e) => {
+                    //console.log("SelectMenu onChange event:", e);
+                    onChange(e);
+                }}
                 menuPortalTarget={document.body}
                 menuPosition={"fixed"}
             />

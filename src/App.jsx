@@ -62,7 +62,7 @@ const App = () => {
       axios
         .get(`${HOST_IP}/api/${api_key}/all_data`)
         .then((fetchedData) => {
-          if (fetchedData.data.config && fetchedData.data.groups && fetchedData.data.lightTypes) {
+          if (fetchedData.data) {
             //console.log("CONFIG data fetched!", fetchedData.data);
             setConfig(fetchedData.data);
           } else {
