@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import axios from "axios";
 import { RiApps2Fill } from "react-icons/ri";
@@ -14,14 +14,20 @@ import GenericButton from "../GenericButton/GenericButton";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 const User = ({ HOST_IP, api_key, id, user, whitelist }) => {
+  console.log("User: ", HOST_IP, api_key, id, user, whitelist);
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
   const [WizardName, setWizardName] = useState("");
   const [WizardContent, setWizardContent] = useState({});
+  const [userData, setUserData] = useState(user);
+
+  useEffect(() => {
+    setUserData(user);
+  }, [user]);
 
   const deleteAlert = () => {
-    if (user["name"] === "WebUi") {
+    if (userData["name"] === "WebUi") {
       confirmAlert({
-        title: "Delete User " + user["name"] + " not allowed",
+        title: "Delete User " + userData["name"] + " not allowed",
         message: "This can't be done",
         buttons: [
           {
@@ -31,7 +37,7 @@ const User = ({ HOST_IP, api_key, id, user, whitelist }) => {
       });
     } else {
       confirmAlert({
-        title: "Delete User " + user["name"],
+        title: "Delete User " + userData["name"],
         message: "Are you sure to do this?",
         buttons: [
           {
@@ -115,12 +121,12 @@ const User = ({ HOST_IP, api_key, id, user, whitelist }) => {
           <div className="icon">
             <RiApps2Fill />
           </div>
-          <div className="text">{user["name"]}</div>
+          <div className="text">{userData["name"]}</div>
         </div>
         <div className="row2">
           <ul>
-            <li>Last use date: {user["last_use_date"].replace("T", " ")}</li>
-            <li>Create date: {user["create_date"].replace("T", " ")}</li>
+            <li>Last use date: {userData["last_use_date"].replace("T", " ")}</li>
+            <li>Create date: {userData["create_date"].replace("T", " ")}</li>
           </ul>
           <IconButton
             iconName={MdDeleteForever}

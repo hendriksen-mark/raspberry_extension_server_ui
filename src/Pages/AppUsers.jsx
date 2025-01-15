@@ -7,7 +7,7 @@ import CardGrid from "../components/CardGrid/CardGrid";
 import User from "../components/User/User";
 
 const Config = ({ HOST_IP, API_KEY, CONFIG }) => {
-  const whitelist = CONFIG.config.whitelist;
+  const whitelist = CONFIG.apiUsers;
 
   return (
       <div className="inner">
