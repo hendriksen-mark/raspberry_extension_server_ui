@@ -3,6 +3,7 @@ import React from "react";
 import { FaPalette, FaImages, FaLightbulb } from "react-icons/fa";
 import { MdInvertColors, MdGradient } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import { Tooltip } from "@mui/material";
 
 const ButtonRow = ({
   showContainer,
@@ -39,7 +40,14 @@ const ButtonRow = ({
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <MdGradient onClick={() => setShowContainer("gradient")} />
+                <Tooltip
+                  title={<p style={{ fontSize: "18px" }}>{"Gradient"}</p>}
+                  arrow
+                >
+                  <div>
+                    <MdGradient onClick={() => setShowContainer("gradient")} />
+                  </div>
+                </Tooltip>
               </motion.div>
             )}
 
@@ -49,7 +57,14 @@ const ButtonRow = ({
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <FaPalette onClick={() => setShowContainer("colorPicker")} />
+                <Tooltip
+                  title={<p style={{ fontSize: "18px" }}>{"ColorPicker"}</p>}
+                  arrow
+                >
+                  <div>
+                    <FaPalette onClick={() => setShowContainer("colorPicker")} />
+                  </div>
+                </Tooltip>
               </motion.div>
             )}
 
@@ -59,9 +74,14 @@ const ButtonRow = ({
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <MdInvertColors
-                  onClick={() => setShowContainer("colorTempPicker")}
-                />
+                <Tooltip
+                  title={<p style={{ fontSize: "18px" }}>{"ColorTempPicker"}</p>}
+                  arrow
+                >
+                  <div>
+                    <MdInvertColors onClick={() => setShowContainer("colorTempPicker")} />
+                  </div>
+                </Tooltip>
               </motion.div>
             )}
 
@@ -70,7 +90,14 @@ const ButtonRow = ({
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaImages onClick={() => setSceneModal(true)} />
+              <Tooltip
+                title={<p style={{ fontSize: "18px" }}>{"Scenes"}</p>}
+                arrow
+              >
+                <div>
+                  <FaImages onClick={() => setSceneModal(true)} />
+                </div>
+              </Tooltip>
             </motion.div>
 
             <motion.div
@@ -78,7 +105,14 @@ const ButtonRow = ({
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaLightbulb onClick={() => setShowContainer("lights")} />
+              <Tooltip
+                title={<p style={{ fontSize: "18px" }}>{"Lights"}</p>}
+                arrow
+              >
+                <div>
+                  <FaLightbulb onClick={() => setShowContainer("lights")} />
+                </div>
+              </Tooltip>
             </motion.div>
           </motion.div>
         )}

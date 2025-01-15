@@ -7,10 +7,13 @@ import './gradientColorpicker.scss';
 export default function GradientColorpicker({ HOST_IP, API_KEY, light }) {
   const pickerRef = useRef(null);
   const picker = useRef(null);
-  const [gradientStyle, setGradientStyle] = useState({});
+  const [gradientStyle, setGradientStyle] = useState({
+    background: 'linear-gradient(to right, #f00, #0f0, #00f)',
+  });
 
   useEffect(() => {
     if (!light) {
+      pickerRef.current.innerHTML = "";
       //console.log("No light selected");
       return;
     }
@@ -89,6 +92,15 @@ export default function GradientColorpicker({ HOST_IP, API_KEY, light }) {
     }
   }, [HOST_IP, API_KEY, light]);
 
+  if (!light) {
+    //console.log("No light selected");
+    return(
+    <div>
+      <div ref={pickerRef}></div>
+      <div className="empty"></div>
+    </div>
+    );
+  }
   return (
     <div>
       <div ref={pickerRef}></div>
