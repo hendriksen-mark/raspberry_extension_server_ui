@@ -14,7 +14,6 @@ import GenericButton from "../GenericButton/GenericButton";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 const User = ({ HOST_IP, api_key, id, user, whitelist }) => {
-  console.log("User: ", HOST_IP, api_key, id, user, whitelist);
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
   const [WizardName, setWizardName] = useState("");
   const [WizardContent, setWizardContent] = useState({});
