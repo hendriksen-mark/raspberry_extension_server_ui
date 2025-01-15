@@ -17,7 +17,11 @@ import CardGrid from "../components/CardGrid/CardGrid";
 export default function LinkButton({ HOST_IP, API_KEY, CONFIG }) {
   //console.log(API_KEY)
   const clientTimezone = dayjs.tz.guess();
-  const configTimezone = CONFIG.config["timezone"];
+  const [configTimezone, setConfigTimezone] = useState(CONFIG.config["timezone"]);
+
+  useEffect(() => {
+    setConfigTimezone(CONFIG.config["timezone"]);
+  }, [CONFIG.config]);
 
   const pushLinkButton = () => {
     axios

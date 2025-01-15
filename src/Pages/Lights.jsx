@@ -15,8 +15,8 @@ import IconButton from "../components/IconButton/IconButton";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
-  const lights = CONFIG.lights;
   const modelIds = CONFIG.lightTypes;
+  const [lights, setLights] = useState(CONFIG.lights);
   const [lightsCatalog, setlightsCatalog] = useState({});
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
 
@@ -61,6 +61,7 @@ export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
   };
 
   useEffect(() => {
+    setLights(CONFIG.lights);
 
     const fetchLightsCatalog = () => {
       if (API_KEY !== undefined) {
@@ -79,7 +80,7 @@ export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
       }
     };
     fetchLightsCatalog();
-  }, [HOST_IP, API_KEY]);
+  }, [HOST_IP, API_KEY, CONFIG]);
 
   return (
     <div className="content">

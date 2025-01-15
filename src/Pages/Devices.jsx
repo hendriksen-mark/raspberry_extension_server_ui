@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import Device from "../components/Device/Device";
 
 const Devices = ({ HOST_IP, API_KEY, CONFIG }) => {
-  const devices = CONFIG.sensors;
+  const [devices, setDevices] = useState(CONFIG.sensors);
+
+  useEffect(() => {
+    setDevices(CONFIG.sensors);
+  }, [CONFIG.sensors]);
 
   return (
     <div className="content">

@@ -11,7 +11,11 @@ import "./headerSection.scss";
 import NotificationCenter from "../components/NotificationCenter/NotificationCenter";
 
 const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, API_KEY, CONFIG }) => {
-  const [group0State, setGroup0State] = useState(CONFIG.groups[0]?.state?.any_on || false);
+  const [group0State, setGroup0State] = useState(CONFIG.groups[0].state.any_on);
+
+  useEffect(() => {
+    setGroup0State(CONFIG.groups[0].state.any_on);
+  }, [CONFIG.groups[0].state.any_on]);
 
   const iconVariants = {
     opened: {
