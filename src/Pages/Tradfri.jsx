@@ -15,6 +15,13 @@ const Tradfri = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [tradfriIdentity, setTradfriIdentity] = useState(CONFIG.config.tradfri?.identity || "");
   const [tradfriPsk, setTradfriPsk] = useState(CONFIG.config.tradfri?.psk || "");
 
+  useEffect(() => {
+    setTradfriGwIp(CONFIG.config.tradfri?.tradfriGwIp || "192.168.x.x");
+    setTradfriCode(CONFIG.config.tradfri?.tradfriCode || "");
+    setTradfriIdentity(CONFIG.config.tradfri?.identity || "");
+    setTradfriPsk(CONFIG.config.tradfri?.psk || "");
+  }, [CONFIG]);
+
   const pairTradfri = () => {
     axios
       .post(

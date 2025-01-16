@@ -16,6 +16,13 @@ const Deconz = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [deconzPort, setDeconzPort] = useState(CONFIG.config.deconz?.deconzPort || 80);
   const [deconzUser, setDeconzUser] = useState(CONFIG.config.deconz?.deconzUser || "");
 
+  useEffect(() => {
+    setEnable(CONFIG.config.deconz?.enabled || false);
+    setDeconzHost(CONFIG.config.deconz?.deconzHost || "192.168.x.x");
+    setDeconzPort(CONFIG.config.deconz?.deconzPort || 80);
+    setDeconzUser(CONFIG.config.deconz?.deconzUser || "");
+  }, [CONFIG]);
+
   const pairDeconz = () => {
     axios
       .post(

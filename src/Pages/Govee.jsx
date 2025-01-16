@@ -11,8 +11,13 @@ import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
 const Govee = ({ HOST_IP, API_KEY, CONFIG }) => {
-  const [enable, setEnable] = useState(CONFIG.config.govee?.enabled || false);
-  const [goveeAPI_KEY, setGoveeAPI_KEY] = useState(CONFIG.config.govee?.api_key || "");
+  const [enable, setEnable] = useState(false);
+  const [goveeAPI_KEY, setGoveeAPI_KEY] = useState("");
+
+  useEffect(() => {
+    setEnable(CONFIG.config.govee?.enabled || false);
+    setGoveeAPI_KEY(CONFIG.config.govee?.api_key || "");
+  }, [CONFIG]);
 
   const onSubmit = () => {
     axios

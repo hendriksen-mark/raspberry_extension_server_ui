@@ -91,8 +91,6 @@ const App = () => {
     console.error("API_KEY is missing: " + API_KEY);
     return loading;
   } else {
-    //console.log("API_KEY is present: " + API_KEY);
-    //console.log("CONFIG is present: ", CONFIG);
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <React.Suspense fallback={loading}>

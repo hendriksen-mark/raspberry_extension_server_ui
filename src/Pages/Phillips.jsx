@@ -14,6 +14,12 @@ const Phillips = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [hueUser, setHueUser] = useState(CONFIG.config.hue?.hueUser || "");
   const [hueKey, setHueKey] = useState(CONFIG.config.hue?.hueKey || "");
 
+  useEffect(() => {
+    setBridgeIp(CONFIG.config.hue?.ip || "192.168.x.x");
+    setHueUser(CONFIG.config.hue?.hueUser || "");
+    setHueKey(CONFIG.config.hue?.hueKey || "");
+  }, [CONFIG]);
+
   const pairBridge = () => {
     axios
       .post(`http://${bridgeIp}/api`, {

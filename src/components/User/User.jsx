@@ -124,16 +124,18 @@ const User = ({ HOST_IP, api_key, id, user, whitelist }) => {
         </div>
         <div className="row2">
           <ul>
-            <li>Last use date: {userData["last_use_date"].replace("T", " ")}</li>
-            <li>Create date: {userData["create_date"].replace("T", " ")}</li>
+            <li>Last use date: {userData["last use date"].replace("T", " ")}</li>
+            <li>Create date: {userData["create date"].replace("T", " ")}</li>
           </ul>
-          <IconButton
-            iconName={MdDeleteForever}
-            title="Delete"
-            size="small"
-            color="red"
-            onClick={() => deleteAlert()}
-          />
+          {userData["name"] !== "WebUi" && (
+            <IconButton
+              iconName={MdDeleteForever}
+              title="Delete"
+              size="small"
+              color="red"
+              onClick={() => deleteAlert()}
+            />
+          )}
         </div>
         <Wizard
           isOpen={WizardIsOpen}

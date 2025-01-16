@@ -18,6 +18,15 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [mqttPass, setMqttPass] = useState(CONFIG.config.mqtt?.mqttPassword || "");
   const [discoveryPrefix, setDiscoveryPrefix] = useState(CONFIG.config.mqtt?.discoveryPrefix || "homeassistant");
 
+  useEffect(() => {
+    setEnable(CONFIG.config.mqtt?.enabled || false);
+    setMqttServer(CONFIG.config.mqtt?.mqttServer || "mqtt");
+    setMqttPort(CONFIG.config.mqtt?.mqttPort || 1883);
+    setMqttUser(CONFIG.config.mqtt?.mqttUser || "");
+    setMqttPass(CONFIG.config.mqtt?.mqttPassword || "");
+    setDiscoveryPrefix(CONFIG.config.mqtt?.discoveryPrefix || "homeassistant");
+  }, [CONFIG]);
+
   const onSubmit = () => {
     axios
       .put(`${HOST_IP}/api/${API_KEY}/config`, {

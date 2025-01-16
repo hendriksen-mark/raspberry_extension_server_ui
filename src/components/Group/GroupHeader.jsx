@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import axios from "axios";
 import debounce from "lodash.debounce";
@@ -10,16 +10,22 @@ import GradientIndicator from "../GradientIndicator/GradientIndicator";
 
 
 const GroupHeader = ({ HOST_IP, api_key, id, group, lights }) => {
+  const [groupState, setGroupState] = useState(group.state);
+
+  useEffect(() => {
+    setGroupState(group.state);
+  }, [group]);
+
   const handleToggleChange = (state) => {
     const newState = {
       on: state,
     };
-    group.state["any_on"] = state;
+    setGroupState((prevState) => ({ ...prevState, any_on: state }));
     axios.put(`${HOST_IP}/api/${api_key}/groups/${id}/action`, newState);
   };
 
   const handleBriChange = (state) => {
-    group.action["bri"] = state;
+    setGroupAction((prevAction) => ({ ...prevAction, bri: state }));
     const newState = {
       bri: state,
     };
@@ -63,17 +69,17 @@ const GroupHeader = ({ HOST_IP, api_key, id, group, lights }) => {
         <div className="flipSwitch">
           <FlipSwitch
             id={"group " + id}
-            value={group.state["any_on"]}
+            value={groupState["any_on"]}
             onChange={(e) => handleToggleChange(e)}
-            checked={group.state["any_on"]}
+            checked={groupState["any_on"]}
           />
         </div>
       </div>
       <div className="row background">
         <AnimatePresence initial={false}>
-          {group.state["any_on"] && (
+          {groupState["any_on"] && (
             <BrightnessSlider
-              defaultValue={group.state["avr_bri"]}
+              defaultValue={groupState["avr_bri"]}
               onChange={debouncedHandleBriChange}
             />
           )}

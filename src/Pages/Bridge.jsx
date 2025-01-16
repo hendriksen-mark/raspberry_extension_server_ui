@@ -17,7 +17,6 @@ import CardGrid from "../components/CardGrid/CardGrid";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
-  const readonlyConf = CONFIG.config;
   const timezones = CONFIG.timezones;
   const DebugInfo = CONFIG.info;
   const UpdateTime = CONFIG.config["swupdate2"]["autoinstall"]["updatetime"].replace("T", "");
@@ -32,6 +31,18 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [WizardName, setWizardName] = useState("");
   const [WizardContent, setWizardContent] = useState({});
   const [AdvanceConfig, setAdvanceConfig] = useState(false);
+  const [readonlyConf, setReadonlyConf] = useState(CONFIG.config);
+
+  useEffect(() => {
+    setBridgeName(CONFIG.config["name"]);
+    setSwversion(CONFIG.config["swversion"]);
+    setApiVersion(CONFIG.config["apiversion"]);
+    setRemoteApi(CONFIG.config["Remote API enabled"]);
+    setDiscovery(CONFIG.config["discovery"]);
+    setTimezone(CONFIG.config["timezone"]);
+    setLogLevel(CONFIG.config["LogLevel"]);
+    setReadonlyConf(CONFIG.config);
+  }, [CONFIG]);
 
   const openWizard = () => {
     setWizardIsOpen(true);

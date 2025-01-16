@@ -29,6 +29,26 @@ const Settings = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [IP, setIp] = useState(CONFIG.config.ipaddress.replace("http://", ""));
   const [ScanOnHostIP, setScanOnHostIP] = useState(CONFIG.config.scanonhostip);
 
+  useEffect(() => {
+    setPort_Enable(CONFIG.config.port.enabled);
+    setPort(CONFIG.config.port.ports);
+    setYeelight(CONFIG.config.yeelight.enabled);
+    setNative_multi(CONFIG.config.native_multi.enabled);
+    setTasmota(CONFIG.config.tasmota.enabled);
+    setWled(CONFIG.config.wled.enabled);
+    setShelly(CONFIG.config.shelly.enabled);
+    setEsphome(CONFIG.config.esphome.enabled);
+    setHyperion(CONFIG.config.hyperion.enabled);
+    setTpkasa(CONFIG.config.tpkasa.enabled);
+    setElgato(CONFIG.config.elgato.enabled);
+    setIpRangeStart(CONFIG.config.IP_RANGE.IP_RANGE_START);
+    setIpRangeStop(CONFIG.config.IP_RANGE.IP_RANGE_END);
+    setSubIpRangeStart(CONFIG.config.IP_RANGE.SUB_IP_RANGE_START);
+    setSubIpRangeStop(CONFIG.config.IP_RANGE.SUB_IP_RANGE_END);
+    setIp(CONFIG.config.ipaddress.replace("http://", ""));
+    setScanOnHostIP(CONFIG.config.scanonhostip);
+  }, [CONFIG]);
+
   const onSubmit = () => {
     axios
       .put(`${HOST_IP}/api/${API_KEY}/config`, {

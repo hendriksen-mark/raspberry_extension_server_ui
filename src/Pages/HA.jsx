@@ -18,6 +18,15 @@ const HA = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [homeAssistantIncludeByDefault, setHomeAssistantIncludeByDefault] = useState(CONFIG.config.homeassistant?.homeAssistantIncludeByDefault || false);
   const [homeAssistantUseHttps, setHomeAssistantUseHttps] = useState(CONFIG.config.homeassistant?.homeAssistantUseHttps || false);
 
+  useEffect(() => {
+    setEnable(CONFIG.config.homeassistant?.enabled || false);
+    setHomeAssistantIp(CONFIG.config.homeassistant?.homeAssistantIp || "192.168.x.x");
+    setHomeAssistantPort(CONFIG.config.homeassistant?.homeAssistantPort || 8123);
+    setHomeAssistantToken(CONFIG.config.homeassistant?.homeAssistantToken || "");
+    setHomeAssistantIncludeByDefault(CONFIG.config.homeassistant?.homeAssistantIncludeByDefault || false);
+    setHomeAssistantUseHttps(CONFIG.config.homeassistant?.homeAssistantUseHttps || false);
+  }, [CONFIG]);
+
   const onSubmit = () => {
     axios
       .put(`${HOST_IP}/api/${API_KEY}/config`, {

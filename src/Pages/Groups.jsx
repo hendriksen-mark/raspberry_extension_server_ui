@@ -1,9 +1,14 @@
+import React, { useEffect, useState } from "react";
 import Group from "../components/Group/Group";
 import RoomSetup from "../components/RoomSetup/RoomSetup";
 import CardGrid from "../components/CardGrid/CardGrid";
 
 export default function Groups({ HOST_IP, API_KEY, CONFIG }) {
-  const config = CONFIG;
+  const [config, setConfig] = useState(CONFIG);
+
+  useEffect(() => {
+    setConfig(CONFIG);
+  }, [CONFIG]);
 
   return (
     <div className="inner">

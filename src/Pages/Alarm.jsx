@@ -14,6 +14,11 @@ const Alarm = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [enable, setEnable] = useState(CONFIG.config.alarm?.enabled || false);
   const [email, setEmail] = useState(CONFIG.config.alarm?.email || "");
 
+  useEffect(() => {
+    setEnable(CONFIG.config.alarm?.enabled || false);
+    setEmail(CONFIG.config.alarm?.email || "");
+  }, [CONFIG]);
+
   const onSubmit = () => {
     axios
       .put(`${HOST_IP}/api/${API_KEY}/config`, {
