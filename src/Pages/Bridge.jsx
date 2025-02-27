@@ -13,10 +13,17 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import Wizard from "../components/Wizard/Wizard";
 import CardGrid from "../components/CardGrid/CardGrid";
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 import "react-confirm-alert/src/react-confirm-alert.css";
 
 const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
+  const clientTimezone = dayjs.tz.guess();
   const timezones = CONFIG.timezones;
   const DebugInfo = CONFIG.info;
   const UpdateTime = CONFIG.config["swupdate2"]["autoinstall"]["updatetime"].replace("T", "");
@@ -423,7 +430,7 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
             </div>
             <div className="form-control">
               <SelectMenu
-                label="Timezone"
+                label={`Timezone (suggested: ${clientTimezone})`}
                 options={options}
                 onChange={(e) => setTimezone(e.value)}
                 placeholder={timezone}
