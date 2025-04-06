@@ -6,16 +6,18 @@ import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import FlipSwitch from "../components/FlipSwitch/FlipSwitch";
 
-
 import "./headerSection.scss";
 import NotificationCenter from "../components/NotificationCenter/NotificationCenter";
 
-const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, API_KEY, CONFIG }) => {
-  const [group0State, setGroup0State] = useState(CONFIG.groups[0].state.any_on);
+const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, API_KEY, CONFIG, isLoading }) => {
+  console.log("HeaderSection: ", HOST_IP, API_KEY, CONFIG);
+  const [group0State, setGroup0State] = useState(false);
 
   useEffect(() => {
-    setGroup0State(CONFIG.groups[0].state.any_on);
-  }, [CONFIG.groups[0].state.any_on]);
+    if (!isLoading && CONFIG.groups[0]?.state) {
+      setGroup0State(CONFIG.groups[0].state.any_on);
+    }
+  }, [isLoading, CONFIG.groups]);
 
   const iconVariants = {
     opened: {
@@ -41,6 +43,10 @@ const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, API_KEY, CONFIG }
         console.error("Error updating state: ", error);
       });
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Show a loading indicator while CONFIG is loading
+  }
 
   return (
     <div className="topbarRight">

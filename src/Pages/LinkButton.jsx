@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import QRCode from "react-qr-code";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -18,9 +19,11 @@ export default function LinkButton({ HOST_IP, API_KEY, CONFIG }) {
   //console.log(API_KEY)
   const clientTimezone = dayjs.tz.guess();
   const [configTimezone, setConfigTimezone] = useState(CONFIG.config["timezone"]);
+  const [BridgeId, setBridgeId] = useState(CONFIG.config["bridgeid"]);
 
   useEffect(() => {
     setConfigTimezone(CONFIG.config["timezone"]);
+    setBridgeId(CONFIG.config["bridgeid"]);
   }, [CONFIG.config]);
 
   const pushLinkButton = () => {
@@ -49,18 +52,35 @@ export default function LinkButton({ HOST_IP, API_KEY, CONFIG }) {
   return (
     <div className="inner">
       <CardGrid options="main">
-          <GlassContainer options="red spacer">
-            <PageContent>
-              <div className="headline" style={{ color: "red" }}>
-                Caution!
-              </div>
-              <p>Check<Link to="/bridge">TimeZone</Link> before pressing Link Button</p>
-              <br />
-              <p style={{ fontSize: ".8rem" }}>Timezone in config: {configTimezone} </p>
-              <p style={{ fontSize: ".8rem" }} >Your Timezone: {clientTimezone}</p>
-              
-            </PageContent>
-          </GlassContainer>
+      {configTimezone !== clientTimezone && (
+        <GlassContainer options="red spacer">
+          <PageContent>
+            <div className="headline" style={{ color: "red" }}>
+              Caution!
+            </div>
+            <p>Check<Link to="/bridge">TimeZone</Link> before pressing Link Button</p>
+            <br />
+            <p style={{ fontSize: ".8rem" }}>Timezone in config: {configTimezone} </p>
+            <p style={{ fontSize: ".8rem" }} >Your Timezone: {clientTimezone}</p>
+            
+          </PageContent>
+         </GlassContainer>
+        )}
+        <GlassContainer options="spacer">
+          <PageContent>
+            <div className="headline">Connection QR-Code</div>
+            <p>Scan this QR-Code with the Hue app</p>
+            <br />
+            <QRCode
+              value={`HUE:I:${BridgeId}`}
+              size={256}
+              style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+              viewBox={`0 0 256 256`}
+              bgColor="none"
+              fgColor="#ffffff"
+            />
+          </PageContent>
+        </GlassContainer>
         <GlassContainer options="spacer">
           <PageContent>
             <div className="headline">Link Button</div>

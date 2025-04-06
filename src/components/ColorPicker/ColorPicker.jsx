@@ -5,6 +5,8 @@ import iro from "@jaames/iro";
 
 import { cieToRgb, rgbToCie, } from "../ColorFormatConverter/ColorFormatConverter";
 
+import "./colorPicker.scss";
+
 export default function KelvinPicker({
   HOST_IP,
   api_key,
@@ -53,7 +55,7 @@ export default function KelvinPicker({
         colors: colors,
       });
       //console.log(picker.current.state.color.rgb)
-      picker.current.on("input:end", onChange, { passive: true });
+      picker.current.on("input:end", onChange);
     }
   }, [groupLights, lights, HOST_IP, api_key]);
   return <div ref={pickerRef}></div>;
