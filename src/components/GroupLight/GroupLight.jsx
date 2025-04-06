@@ -11,7 +11,7 @@ import { HueIcons } from "../../static/icons/hass-hue-icons";
 
 const Light = ({ HOST_IP, api_key, id, light }) => {
   const [lightState, setLightState] = useState(light);
-  console.log("Light state: ", lightState);
+  //console.log("Light state: ", lightState);
 
   useEffect(() => {
     setLightState(light);

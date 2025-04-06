@@ -10,7 +10,7 @@ import "./headerSection.scss";
 import NotificationCenter from "../components/NotificationCenter/NotificationCenter";
 
 const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, API_KEY, CONFIG, isLoading }) => {
-  console.log("HeaderSection: ", HOST_IP, API_KEY, CONFIG);
+  //console.log("HeaderSection: ", HOST_IP, API_KEY, CONFIG);
   const [group0State, setGroup0State] = useState(false);
 
   useEffect(() => {
