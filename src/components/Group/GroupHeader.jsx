@@ -25,7 +25,7 @@ const GroupHeader = ({ HOST_IP, api_key, id, group, lights }) => {
   };
 
   const handleBriChange = (state) => {
-    setGroupAction((prevAction) => ({ ...prevAction, bri: state }));
+    setGroupState((prevAction) => ({ ...prevAction, bri: state }));
     const newState = {
       bri: state,
     };
