@@ -61,7 +61,6 @@ const Layout = ({ HOST_IP, API_KEY }) => {
   }, [API_KEY]);
 
   if (isLoading) {
-    console.log("Loading CONFIG data...");
     return loading; // Show loading spinner while fetching CONFIG data
   }
 
