@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./brightnessSlider.scss";
 
 const BrightnessSlider = ({ defaultValue, onChange, max = "254" }) => {
-  const [value, setValue] = useState(Math.round((defaultValue / 100) * max));
+  const [value, setValue] = useState(Math.round(defaultValue));
 
   const handleChange = (e) => {
     const newValue = parseInt(e.target.value);
