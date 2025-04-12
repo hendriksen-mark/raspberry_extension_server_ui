@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import "./brightnessSlider.scss";
 
-const BrightnessSlider = ({ defaultValue, onChange, max = "254" }) => {
+const BrightnessSlider = ({ defaultValue, onChange, max = 254 }) => {
   const [value, setValue] = useState(Math.round(defaultValue));
 
   const handleChange = (e) => {
@@ -34,10 +34,10 @@ const BrightnessSlider = ({ defaultValue, onChange, max = "254" }) => {
     >
       <input
         type="range"
-        min="1"
+        min={1}
         max={max}
         value={value}
-        step="1"
+        step={1}
         className="slider"
         onChange={handleChange}
       />
