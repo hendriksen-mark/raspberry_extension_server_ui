@@ -81,6 +81,7 @@ const GroupHeader = ({ HOST_IP, api_key, id, group, lights }) => {
             <BrightnessSlider
               defaultValue={groupState["avr_bri"]}
               onChange={debouncedHandleBriChange}
+              max={100}
             />
           )}
         </AnimatePresence>
