@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import Layout from "./Mainframe/Layout";
 import loading from "./components/Loader/Loader";
@@ -13,21 +14,29 @@ const App = () => {
   const HOST_IP = ""; // Pass the IP (http://x.x.x.x) of the diyHue Bridge, if running through npm start
 
   useEffect(() => {
-    axios
-      .get(`${HOST_IP}/get-key`)
-      .then((result) => {
-        if (typeof result.data === "string" && result.data.length === 32) {
-          setAPI_KEY(result.data);
-        } else {
-          console.error(`Unable to fetch API_KEY! from ${HOST_IP}/get-key`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false); // Ensure loading is set to false after the request
-      });
+    if (HOST_IP) {
+      axios
+        .get(`${HOST_IP}/get-key`)
+        .then((result) => {
+          if (typeof result.data === "string" && result.data.length === 32) {
+            setAPI_KEY(result.data);
+          } else {
+            console.error(`Unable to fetch API_KEY! from ${HOST_IP}/get-key`);
+            toast.error("Unable to fetch API_KEY!");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error(`Error occurred: ${error.message}`);
+        })
+        .finally(() => {
+          setIsLoading(false); // Ensure loading is set to false after the request
+        });
+    } else {
+      console.error("HOST_IP is not defined.");
+      toast.error("HOST_IP is not defined.");
+      setIsLoading(true);
+    }
   }, []);
 
   if (isLoading) {
