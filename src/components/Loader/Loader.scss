@@ -14,6 +14,12 @@
   font-size: 1.5rem;
 }
 
+.additional-text {
+  color: #fff;
+  font-size: 1.2rem; // Slightly smaller than loading-text
+  text-align: center;
+}
+
 .spinner {
   position: relative;
   width: 40px;
