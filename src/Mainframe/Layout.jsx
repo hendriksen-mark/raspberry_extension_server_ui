@@ -50,6 +50,13 @@ const Layout = ({ HOST_IP, API_KEY }) => {
           toast.error(`Error occurred: ${error.message}`);
         });
     };
+
+    if (API_KEY.length === 32) {
+      fetchConfig(API_KEY); // Call fetchConfig immediately
+    } else {
+      console.error("API_KEY is missing: " + (API_KEY ? API_KEY : "undefined"));
+    }
+
     const interval = setInterval(() => {
       if (API_KEY.length === 32) {
         fetchConfig(API_KEY);
@@ -57,6 +64,7 @@ const Layout = ({ HOST_IP, API_KEY }) => {
         console.error("API_KEY is missing: " + (API_KEY ? API_KEY : "undefined"));
       }
     }, 2000); // <<-- ⏱ 1000ms = 1s
+
     return () => clearInterval(interval);
   }, [API_KEY]);
 
