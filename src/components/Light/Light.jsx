@@ -1,5 +1,4 @@
 import axios from "axios";
-import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-hot-toast";
 import { MdDeleteForever } from "react-icons/md";
 import { Tooltip } from "@mui/material";
@@ -9,8 +8,7 @@ import { HueIcons } from "../../static/icons/hass-hue-icons";
 import IconButton from "../IconButton/IconButton";
 import LightUpdate from "../LightUpdate/LightUpdate";
 import SelectMenu from "../SelectMenu/SelectMenu";
-
-import "react-confirm-alert/src/react-confirm-alert.css";
+import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 
 const Light = ({ HOST_IP, api_key, id, light, modelIds, lightsCatalog }) => {
   const deleteAlert = () => {
@@ -139,13 +137,6 @@ const Light = ({ HOST_IP, api_key, id, light, modelIds, lightsCatalog }) => {
               <li>IP: {light["protocol_cfg"]["ip"]}</li>
             )}
           </ul>
-          <IconButton
-            iconName={MdDeleteForever}
-            title="Delete"
-            size="small"
-            color="red"
-            onClick={() => deleteAlert()}
-          />
           <LightUpdate
             light={light}
             lightsCatalog={lightsCatalog}

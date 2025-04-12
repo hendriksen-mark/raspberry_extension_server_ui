@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { BsPlusCircle } from "react-icons/bs";
-import { confirmAlert } from "react-confirm-alert";
 
 import AddLight from "../components/AddLight/AddLight";
 import CardGrid from "../components/CardGrid/CardGrid";
@@ -11,8 +10,7 @@ import { ScanIcon } from "../static/icons/scan";
 import Light from "../components/Light/Light";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
-
-import "react-confirm-alert/src/react-confirm-alert.css";
+import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
 
 export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
   const modelIds = CONFIG.lightTypes;

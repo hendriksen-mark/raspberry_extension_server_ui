@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-hot-toast";
 import { MdDeleteForever } from "react-icons/md";
 import { MdEditNotifications } from "react-icons/md";
@@ -12,8 +11,7 @@ import IconButton from "../IconButton/IconButton";
 import Wizard from "../Wizard/Wizard";
 import Edit_behavior from "./Edit_behavior";
 import FlipSwitch from "../FlipSwitch/FlipSwitch";
-
-import "react-confirm-alert/src/react-confirm-alert.css";
+import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 
 const Map_Behavior = ({ HOST_IP, API_KEY, id, Behavior, rooms}) => {
   //console.log("rooms", rooms);

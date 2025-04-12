@@ -1,5 +1,4 @@
 import axios from "axios";
-import { confirmAlert } from "react-confirm-alert";
 import { FaMagic } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { TiBatteryLow, TiBatteryMid, TiBatteryHigh, TiBatteryFull, } from "react-icons/ti";
@@ -9,8 +8,7 @@ import { Tooltip } from "@mui/material";
 import FlipSwitch from "../FlipSwitch/FlipSwitch";
 import IconButton from "../IconButton/IconButton";
 import GlassContainer from "../GlassContainer/GlassContainer";
-
-import "react-confirm-alert/src/react-confirm-alert.css";
+import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 
 const Device = ({ HOST_IP, api_key, id, device }) => {
   const deleteAlert = () => {

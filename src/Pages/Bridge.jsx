@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { confirmAlert } from "react-confirm-alert";
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import { saveAs } from "file-saver";
 
 import FlipSwitch from "../components/FlipSwitch/FlipSwitch";
@@ -13,14 +15,10 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import Wizard from "../components/Wizard/Wizard";
 import CardGrid from "../components/CardGrid/CardGrid";
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
+import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-
-import "react-confirm-alert/src/react-confirm-alert.css";
 
 const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
   const clientTimezone = dayjs.tz.guess();
