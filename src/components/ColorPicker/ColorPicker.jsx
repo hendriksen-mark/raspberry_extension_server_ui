@@ -34,13 +34,12 @@ export default function KelvinPicker({
     for (var light of groupLights.entries()) {
       light = light[1];
       if ("xy" in lights[light]["state"]) {
-        colors.push(
-          cieToRgb(
-            lights[light]["state"]["xy"][0],
-            lights[light]["state"]["xy"][1],
-            254
-          )
-        );
+        const [x, y] = lights[light]["state"]["xy"];
+        if (x === 0.0 && y === 0.0) {
+          colors.push({ r: 255, g: 255, b: 255 }); // Default to white if xy is [0.0, 0.0]
+        } else {
+          colors.push(cieToRgb(x, y, 254));
+        }
       }
     }
 
