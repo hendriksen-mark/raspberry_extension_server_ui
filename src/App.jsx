@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { toast } from "react-hot-toast";
-
 import axios from "axios";
 
 import Layout from "./Mainframe/Layout";
-
-const loading = (
-  <div className="pt-3 text-center">
-    <div className="sk-spinner sk-spinner-pulse"></div>
-  </div>
-);
+import loading from "./components/Loader/Loader";
 
 const App = () => {
   const [API_KEY, setAPI_KEY] = useState(""); // Initialize API_KEY with an empty string
@@ -52,9 +45,7 @@ const App = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <React.Suspense fallback={loading}>
-        <Layout HOST_IP={HOST_IP} API_KEY={API_KEY} />
-      </React.Suspense>
+      <Layout HOST_IP={HOST_IP} API_KEY={API_KEY} />
     </LocalizationProvider>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import ContentSection from "./ContentSection";
 import SidebarSection from "./SidebarSection";
 import HeaderSection from "./HeaderSection";
+import loading from "../components/Loader/Loader";
 
 import "./layout.scss";
 import "./scrollbar.scss";
@@ -58,6 +59,11 @@ const Layout = ({ HOST_IP, API_KEY }) => {
     }, 2000); // <<-- ⏱ 1000ms = 1s
     return () => clearInterval(interval);
   }, [API_KEY]);
+
+  if (isLoading) {
+    console.log("Loading CONFIG data...");
+    return loading; // Show loading spinner while fetching CONFIG data
+  }
 
   return (
     <>
