@@ -1,13 +1,13 @@
 import Select from "react-select";
 import "./selectMenu.scss";
 
-const SelectMenu = ({ label, defaultValue, placeholder, options, onChange, close = true , multie = false, classOptions = ""}) => {
+const SelectMenu = ({ label, value, placeholder, options, onChange, close = true , multie = false, classOptions = ""}) => {
     return (
         <div className={`dropdown ${classOptions}`}>
             <label>{label}</label>
             <Select
                 closeMenuOnSelect={close}
-                defaultValue={defaultValue}
+                defaultValue={value}
                 isMulti={multie}
                 options={options}
                 placeholder={placeholder}

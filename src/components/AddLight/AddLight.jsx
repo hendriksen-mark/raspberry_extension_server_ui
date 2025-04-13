@@ -77,7 +77,7 @@ const AddLight = ({ HOST_IP, API_KEY, closeWizard }) => {
   return (<>
       <SelectMenu
         label="Protocol:"
-        defaultValue={protocols[0]}
+        value={protocols[0]}
         options={protocols}
         placeholder={lightData.protocol}
         onChange={(e) => handleChange("protocol", e.value)}

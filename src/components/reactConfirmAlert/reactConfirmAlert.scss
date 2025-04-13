@@ -15,11 +15,13 @@
             font-size: 1rem;
             border-radius: 30px;
     
-            &[label="Yes"] {
+            &[label="Yes"],
+            &[label="Confirm"] {
               background: #e74c3c;
             }
     
-            &[label="No"] {
+            &[label="No"],
+            &[label="Dismiss"] {
               background: #2ecc71;
             }
           }

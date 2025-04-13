@@ -61,16 +61,15 @@ const Light = ({ HOST_IP, api_key, id, light, modelIds, lightsCatalog }) => {
         https://diyhue.readthedocs.io/en/latest/lights/lightTypes.html`,
         buttons: [
           {
-            label: "Continue",
+            label: "Confirm",
             onClick: () => setModelId(modelid),
           },
           {
-            label: "No",
+            label: "Dismiss",
           },
         ],
       });
-    }
-    else {
+    } else {
       setModelId(modelid);
     }
   };
@@ -109,7 +108,7 @@ const Light = ({ HOST_IP, api_key, id, light, modelIds, lightsCatalog }) => {
           <div className="text">{light["name"]} </div>
         </div>
         <SelectMenu
-          defaultValue={{ value: light["modelid"], label: light["modelid"] }}
+          value={{ value: light["modelid"], label: light["modelid"] }}
           label=""
           options={options}
           onChange={(e) => modelIdAlert(e.value)}

@@ -75,7 +75,7 @@ const Make_Behaviors = ({ HOST_IP, API_KEY, closeWizard }) => {
     <div className="form-control">
       <SelectMenu
         label="Protocol:"
-        defaultValue={types[0]}
+        value={types[0]}
         options={types}
         placeholder={"Wake Up"}
         onChange={(e) => handleChange("script_id", e)}
@@ -95,7 +95,7 @@ const Make_Behaviors = ({ HOST_IP, API_KEY, closeWizard }) => {
         close={false}
         multie={true}
         label="Recurrence Days:"
-        defaultValue={days[0]}
+        value={days[0]}
         options={days}
         placeholder={"Monday"}
         onChange={(e) => handleChange("recurrence_days", e)}

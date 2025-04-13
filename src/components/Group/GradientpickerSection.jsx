@@ -50,7 +50,7 @@ const GradientpickerSection = ({
           >
 
             <SelectMenu
-                defaultValue={gradientLights.find(option => option.value === selectedLight)}
+                value={gradientLights.find(option => option.value === selectedLight)}
                 options={gradientLights}
                 onChange={handleChange}
             />

@@ -302,7 +302,7 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, rooms, closeWizard }) 
                   <SelectMenu
                     label="Start At"
                     options={startEndOptions}
-                    defaultValue={startEndOptions.find(option => option.value === behaviorData.start_at.type)}
+                    value={startEndOptions.find(option => option.value === behaviorData.start_at.type)}
                     onChange={(e) => handleChange("start_at", { type: e.value })}
                     close={true}
                     multie={false}
@@ -330,7 +330,7 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, rooms, closeWizard }) 
                   <SelectMenu
                     label="End At"
                     options={startEndOptions}
-                    defaultValue={startEndOptions.find(option => option.value === behaviorData.end_at.type)}
+                    value={startEndOptions.find(option => option.value === behaviorData.end_at.type)}
                     onChange={(e) => handleChange("end_at", { type: e.value })}
                     close={true}
                     multie={false}
@@ -364,7 +364,7 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, rooms, closeWizard }) 
             <SelectMenu
               label="Recurrence Days"
               options={days}
-              defaultValue={selectedDays}
+              value={selectedDays}
               onChange={(e) => handleChange("recurrence_days", e ? e.map(day => day.value) : [])}
               close={false}
               multie={true}
@@ -376,7 +376,7 @@ const Edit_behavior = ({ HOST_IP, API_KEY, Behavior_item, rooms, closeWizard }) 
           <SelectMenu
             label="Where"
             options={rooms}
-            defaultValue={selectedRooms}
+            value={selectedRooms}
             onChange={(e) => handleChange("where", e ? e.map(option => ({ group: { rtype: "room", rid: option.value } })) : [])}
             close={false}
             multie={true}
