@@ -89,6 +89,7 @@ const Device = ({ HOST_IP, api_key, id, device }) => {
             <li>ModelID: {device["modelid"]}</li>
             <li>Type: {device["type"]}</li>
             <li>Protocol: {device["protocol"]}</li>
+            <li>Last Active: {device["state"]["lastupdated"].replace(/T|Z|\.\d+/g, " ")}</li>
           </ul>
           </div>
         <div className="row2">
