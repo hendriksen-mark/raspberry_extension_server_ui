@@ -1,9 +1,13 @@
 .react-confirm-alert-overlay{
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
 
   .react-confirm-alert-body{
-      background: rgba(0, 0, 0, 0.95);
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.2) 100%
+      );
       color: #fff9f9;
 
       .react-confirm-alert-button-group {
