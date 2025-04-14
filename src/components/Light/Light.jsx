@@ -91,7 +91,7 @@ const Light = ({ HOST_IP, api_key, id, light, modelIds, lightsCatalog }) => {
   let options = modelIds.map(function (modelid) {
     return { value: modelid, label: modelid };
   });
-
+// #region HTML
   return (
     <GlassContainer>
       <div className="top">

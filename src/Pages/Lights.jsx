@@ -79,7 +79,7 @@ export default function Lights({ HOST_IP, API_KEY, CONFIG }) {
     };
     fetchLightsCatalog();
   }, [HOST_IP, API_KEY, CONFIG]);
-
+// #region HTML
   return (
     <div className="content">
       <div className="inner">

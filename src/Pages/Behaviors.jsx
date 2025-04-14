@@ -104,7 +104,7 @@ const Behaviors = ({ HOST_IP, API_KEY }) => {
     }, 10000); // <<-- ⏱ 1000ms = 1s
     return () => clearInterval(interval);
   }, [HOST_IP, API_KEY]);
-
+// #region HTML
   return (
     <div className="content">
       <div className="inner">

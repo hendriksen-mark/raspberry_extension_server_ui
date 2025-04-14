@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Light from "../GroupLight/GroupLight";
 
 const LightsSection = ({ showContainer, group, lights, HOST_IP, api_key }) => {
+  // #region HTML
   return (
     <motion.div className="row colorpicker">
       <AnimatePresence initial={false} mode="wait">

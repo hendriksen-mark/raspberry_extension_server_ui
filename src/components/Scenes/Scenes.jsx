@@ -38,7 +38,7 @@ const Scenes = ({
     }
     return color;
   };
-
+// #region HTML
   return (
     <Wizard
       isOpen={sceneModal}

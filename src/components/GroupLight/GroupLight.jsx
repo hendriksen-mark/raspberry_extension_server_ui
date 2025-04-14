@@ -47,7 +47,7 @@ const Light = ({ HOST_IP, api_key, id, light }) => {
       return { background: lightBg };
     }
   };
-
+// #region HTML
   return (
     <div className="groupCard light">
       <div className="row top">

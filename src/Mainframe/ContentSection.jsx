@@ -6,7 +6,7 @@ import routes from "../routes";
 import "./contentSection.scss";
 
 const ContentSection = ({ HOST_IP, API_KEY, CONFIG }) => {
-
+// #region HTML
   return (
     <div className="content">
       <Toaster position="top-right" />

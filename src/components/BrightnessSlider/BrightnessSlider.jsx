@@ -11,7 +11,7 @@ const BrightnessSlider = ({ defaultValue, onChange, max = 254 }) => {
     setValue(newValue);
     onChange(newValue);
   };
-
+// #region HTML
   return (
     <motion.div
       className="sliderContainer"

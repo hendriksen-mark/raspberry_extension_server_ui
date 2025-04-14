@@ -42,7 +42,7 @@ const GradientBackground = ({ group, lights }) => {
       };
     }
   };
-
+// #region HTML
   return (
     <div className="gradient" style={getStyle()}>
       {group["type"] === "Zone" ? (

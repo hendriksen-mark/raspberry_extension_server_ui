@@ -386,7 +386,7 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
   let options = timezones.map(function (timezone) {
     return { value: timezone, label: timezone };
   });
-
+// #region HTML
   return (
     <div className="inner">
       <CardGrid options="main">

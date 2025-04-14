@@ -110,7 +110,7 @@ const User = ({ HOST_IP, api_key, id, user, whitelist }) => {
     );
     openWizard();
   };
-
+// #region HTML
   return (
     <GlassContainer>
       <div className="top">

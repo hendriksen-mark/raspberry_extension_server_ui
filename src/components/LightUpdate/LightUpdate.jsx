@@ -24,7 +24,7 @@ const LightUpdate = ({ light, lightsCatalog }) => {
   const UpdateLight = () => {
     toast.success("Begin light firmware update");
   };
-
+// #region HTML
   return (
     <>
       {["native_single", "native_multi"].includes(light["protocol"]) &&

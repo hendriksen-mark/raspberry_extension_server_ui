@@ -64,7 +64,7 @@ const SidebarSection = ({ showSidebar, setShowSidebar, isMobile }) => {
     { label: "About", icon: FaInfoCircle, link: "#about" },
     { label: "Logout", icon: FaSignOutAlt, link: "/logout" },
   ];
-
+// #region HTML
   return (
     <AnimatePresence initial={false}>
       {showSidebar && (

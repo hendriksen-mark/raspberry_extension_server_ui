@@ -70,7 +70,7 @@ const Make_Behaviors = ({ HOST_IP, API_KEY, closeWizard }) => {
     const type = types.find((type) => type.value === script_id);
     return type ? type.label : "";
   };
-
+// #region HTML
   return (<>
     <div className="form-control">
       <SelectMenu

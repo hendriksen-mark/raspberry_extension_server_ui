@@ -77,7 +77,7 @@ const Account = ({ HOST_IP, API_KEY, CONFIG }) => {
     setPass(event);
     setStrength(evaluatePasswordStrength(event));
   };
-
+// #region HTML
   return (
     <div className="inner">
       <CardGrid options="main">

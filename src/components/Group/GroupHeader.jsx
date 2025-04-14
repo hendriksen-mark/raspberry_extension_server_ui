@@ -57,7 +57,7 @@ const GroupHeader = ({ HOST_IP, api_key, id, group, lights }) => {
     // eslint-disable-next-line
     []
   );
-
+// #region HTML
   return (
     <>
       <div className="row top">

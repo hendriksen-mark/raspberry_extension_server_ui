@@ -9,7 +9,7 @@ const CustomTimePicker = ({ label, value, onChange }) => {
                 mode: 'dark',
             },
         });
-
+// #region HTML
     return (<>
         <label htmlFor={label}>{label}</label>
         <ThemeProvider theme={theme}>

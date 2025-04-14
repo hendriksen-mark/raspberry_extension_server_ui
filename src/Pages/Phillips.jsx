@@ -55,7 +55,7 @@ const Phillips = ({ HOST_IP, API_KEY, CONFIG }) => {
         toast.error(`Error occurred: ${error.message}`);
       });
   };
-
+// #region HTML
   return (
     <div className="inner">
       <CardGrid options="main">

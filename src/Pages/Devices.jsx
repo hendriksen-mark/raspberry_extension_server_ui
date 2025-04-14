@@ -9,7 +9,7 @@ const Devices = ({ HOST_IP, API_KEY, CONFIG }) => {
   useEffect(() => {
     setDevices(CONFIG.sensors);
   }, [CONFIG.sensors]);
-
+// #region HTML
   return (
     <div className="content">
       <div className="inner">

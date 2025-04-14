@@ -22,7 +22,7 @@ const GradientpickerSection = ({
     //console.log("Selected light", selectedOption.value);
     setSelectedLight(selectedOption.value);
   };
-
+// #region HTML
   return (
     <motion.div className="row colorpicker">
       <AnimatePresence initial={false} mode="wait">

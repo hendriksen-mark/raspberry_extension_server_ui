@@ -47,7 +47,7 @@ const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, API_KEY, CONFIG, 
   if (isLoading) {
     return <div>Loading...</div>; // Show a loading indicator while CONFIG is loading
   }
-
+// #region HTML
   return (
     <div className="topbarRight">
       <motion.div

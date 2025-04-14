@@ -5,7 +5,7 @@ import "./wizard.scss";
 
 const Wizard = ({ isOpen, closeWizard, children, headline, type='' }) => {
   function afterOpenModal() {}
-
+// #region HTML
   return (
     <Modal
       isOpen={isOpen}

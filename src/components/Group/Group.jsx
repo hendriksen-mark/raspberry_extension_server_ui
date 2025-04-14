@@ -72,7 +72,7 @@ const Group = ({ HOST_IP, api_key, id, group, lights, scenes }) => {
     setShowContainer(newShowContainer);
     localStorage.setItem(`showContainer-${id}`, newShowContainer);
   };
-
+// #region HTML
   return (
     <div className="groupCard">
       <Scenes

@@ -11,6 +11,7 @@ const ColorTempPickerSection = ({
   HOST_IP,
   api_key,
 }) => {
+  // #region HTML
   return (
     <motion.div className="row colorpicker">
       <AnimatePresence initial={false} mode="wait">

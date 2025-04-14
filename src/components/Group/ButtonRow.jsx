@@ -19,7 +19,7 @@ const ButtonRow = ({
       opacity: 0,
     },
   };
-
+// #region HTML
   return (
       <AnimatePresence mode="wait">
         {showContainer !== "closed" && (

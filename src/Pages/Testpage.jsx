@@ -24,7 +24,7 @@ export default function Testpage({ HOST_IP, API_KEY, CONFIG }) {
     value: key,
     label: lights[key].name
   }));
-
+// #region HTML
   return (
     <div className="inner">
       <SelectMenu

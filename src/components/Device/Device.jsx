@@ -69,7 +69,7 @@ const Device = ({ HOST_IP, api_key, id, device }) => {
       return <TiBatteryLow color="#e74c3c" title={battryLevel} />;
     }
   };
-
+// #region HTML
   return (
     <GlassContainer>
       <div className="top">

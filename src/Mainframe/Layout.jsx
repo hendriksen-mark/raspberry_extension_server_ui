@@ -71,7 +71,7 @@ const Layout = ({ HOST_IP, API_KEY }) => {
   if (isLoading) {
     return loading("Config"); // Show loading spinner while fetching CONFIG data
   }
-
+// #region HTML
   return (
     <>
       <SidebarSection

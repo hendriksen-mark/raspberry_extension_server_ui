@@ -9,7 +9,7 @@ export default function Groups({ HOST_IP, API_KEY, CONFIG }) {
   useEffect(() => {
     setConfig(CONFIG);
   }, [CONFIG]);
-
+// #region HTML
   return (
     <div className="inner">
       <CardGrid>

@@ -73,7 +73,7 @@ const AddLight = ({ HOST_IP, API_KEY, closeWizard }) => {
     { value: "LCT015", label: "Color Light" },
     { value: "LST002", label: "Color Strip" },
   ];
-
+// #region HTML
   return (<>
       <SelectMenu
         label="Protocol:"

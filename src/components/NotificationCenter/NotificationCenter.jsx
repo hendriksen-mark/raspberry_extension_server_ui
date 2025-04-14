@@ -106,7 +106,7 @@ const NotificationCenter = ({HOST_IP, API_KEY, updating, notifications, CONFIG }
   const closeWizard = () => {
     setWizardIsOpen(false);
   };
-
+// #region HTML
   return (
     <div className="notificationCenterContainer">
       <div className="notificationBtn" onClick={openWizard}>
