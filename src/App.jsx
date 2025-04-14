@@ -34,7 +34,6 @@ const App = () => {
   }, []);
 
   if (isLoading) {
-    return loading; // Show loading spinner while fetching API_KEY
     return loading("API KEY"); // Show loading spinner while fetching API_KEY
   }
 
