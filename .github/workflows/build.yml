@@ -8,6 +8,8 @@ on:
       - ".gitignore"
       - "README.md"
 
+name: Test Build
+
 jobs:
   build-project:
     name: Build Project
