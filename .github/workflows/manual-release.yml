@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ensure all tags are fetched
 
       - name: Get latest tag
         id: get_latest_tag
@@ -39,6 +41,8 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ensure all tags are fetched
 
       - name: Create and push new tag
         env:
