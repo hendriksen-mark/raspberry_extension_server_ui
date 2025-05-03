@@ -59,3 +59,13 @@ jobs:
             --title "Release ${{ needs.determine-next-tag.outputs.next_tag }}" \
             --notes "Automated release created by GitHub Actions." \
             --latest
+
+      - name: Trigger Release Workflow
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/actions/workflows/release.yml/dispatches \
+            -d '{"ref":"${{ needs.determine-next-tag.outputs.next_tag }}"}'
