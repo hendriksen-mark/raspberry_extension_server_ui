@@ -15,13 +15,26 @@ const Deconz = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [deconzHost, setDeconzHost] = useState(CONFIG.config.deconz?.deconzHost || "192.168.x.x");
   const [deconzPort, setDeconzPort] = useState(CONFIG.config.deconz?.deconzPort || 80);
   const [deconzUser, setDeconzUser] = useState(CONFIG.config.deconz?.deconzUser || "");
+  const [isModified, setIsModified] = useState(false); // Track user modifications
 
   useEffect(() => {
-    setEnable(CONFIG.config.deconz?.enabled || false);
-    setDeconzHost(CONFIG.config.deconz?.deconzHost || "192.168.x.x");
-    setDeconzPort(CONFIG.config.deconz?.deconzPort || 80);
-    setDeconzUser(CONFIG.config.deconz?.deconzUser || "");
-  }, [CONFIG]);
+    if (!isModified) {
+      setEnable(CONFIG.config.deconz?.enabled || false);
+      setDeconzHost(CONFIG.config.deconz?.deconzHost || "192.168.x.x");
+      setDeconzPort(CONFIG.config.deconz?.deconzPort || 80);
+      setDeconzUser(CONFIG.config.deconz?.deconzUser || "");
+    }
+  }, [CONFIG, isModified]);
+
+  const handleDeconzHostChange = (value) => {
+    setDeconzHost(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleDeconzPortChange = (value) => {
+    setDeconzPort(parseInt(value));
+    setIsModified(true); // Mark as modified
+  };
 
   const pairDeconz = () => {
     axios
@@ -91,7 +104,7 @@ const Deconz = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="Deconz host"
                   value={deconzHost}
-                  onChange={(e) => setDeconzHost(e)}
+                  onChange={(e) => handleDeconzHostChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -100,7 +113,7 @@ const Deconz = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="number"
                   placeholder="Deconz port"
                   value={deconzPort}
-                  onChange={(e) => setDeconzPort(parseInt(e))}
+                  onChange={(e) => handleDeconzPortChange(e)}
                 />
               </div>
               <div className="form-control">

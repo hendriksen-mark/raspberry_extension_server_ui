@@ -13,12 +13,20 @@ const Phillips = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [bridgeIp, setBridgeIp] = useState(CONFIG.config.hue?.ip || "192.168.x.x");
   const [hueUser, setHueUser] = useState(CONFIG.config.hue?.hueUser || "");
   const [hueKey, setHueKey] = useState(CONFIG.config.hue?.hueKey || "");
+  const [isModified, setIsModified] = useState(false); // Track user modifications
 
   useEffect(() => {
-    setBridgeIp(CONFIG.config.hue?.ip || "192.168.x.x");
-    setHueUser(CONFIG.config.hue?.hueUser || "");
-    setHueKey(CONFIG.config.hue?.hueKey || "");
-  }, [CONFIG]);
+    if (!isModified) {
+      setBridgeIp(CONFIG.config.hue?.ip || "192.168.x.x");
+      setHueUser(CONFIG.config.hue?.hueUser || "");
+      setHueKey(CONFIG.config.hue?.hueKey || "");
+    }
+  }, [CONFIG, isModified]);
+
+  const handleBridgeIpChange = (value) => {
+    setBridgeIp(value);
+    setIsModified(true); // Mark as modified
+  };
 
   const pairBridge = () => {
     axios
@@ -69,7 +77,7 @@ const Phillips = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="192.168.x.x"
                   value={bridgeIp}
-                  onChange={(e) => setBridgeIp(e)}
+                  onChange={(e) => handleBridgeIpChange(e)}
                 />
               </div>
               <div className="form-control">

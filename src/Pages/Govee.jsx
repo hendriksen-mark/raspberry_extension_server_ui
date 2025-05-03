@@ -13,11 +13,24 @@ import CardGrid from "../components/CardGrid/CardGrid";
 const Govee = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [enable, setEnable] = useState(false);
   const [goveeAPI_KEY, setGoveeAPI_KEY] = useState("");
+  const [isModified, setIsModified] = useState(false); // Track user modifications
 
   useEffect(() => {
-    setEnable(CONFIG.config.govee?.enabled || false);
-    setGoveeAPI_KEY(CONFIG.config.govee?.api_key || "");
-  }, [CONFIG]);
+    if (!isModified) {
+      setEnable(CONFIG.config.govee?.enabled || false);
+      setGoveeAPI_KEY(CONFIG.config.govee?.api_key || "");
+    }
+  }, [CONFIG, isModified]);
+
+  const handleEnableChange = (value) => {
+    setEnable(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleGoveeAPIKeyChange = (value) => {
+    setGoveeAPI_KEY(value);
+    setIsModified(true); // Mark as modified
+  };
 
   const onSubmit = () => {
     axios
@@ -47,7 +60,7 @@ const Govee = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="govee"
                 value={enable}
-                onChange={(e) => setEnable(e)}
+                onChange={(e) => handleEnableChange(e)}
                 checked={enable}
                 label="Enable"
                 position="right"
@@ -58,7 +71,7 @@ const Govee = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="API key"
                   value={goveeAPI_KEY}
-                  onChange={(e) => setGoveeAPI_KEY(e)}
+                  onChange={(e) => handleGoveeAPIKeyChange(e)}
                 />
               </div>
               <div className="form-control">

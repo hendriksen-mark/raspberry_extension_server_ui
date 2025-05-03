@@ -14,18 +14,51 @@ const HA = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [enable, setEnable] = useState(CONFIG.config.homeassistant?.enabled || false);
   const [homeAssistantIp, setHomeAssistantIp] = useState(CONFIG.config.homeassistant?.homeAssistantIp || "192.168.x.x");
   const [homeAssistantPort, setHomeAssistantPort] = useState(CONFIG.config.homeassistant?.homeAssistantPort || 8123);
-  const [homeAssistantToken, setHomeAssistantToken] = useState (CONFIG.config.homeassistant?.homeAssistantToken || "");
+  const [homeAssistantToken, setHomeAssistantToken] = useState(CONFIG.config.homeassistant?.homeAssistantToken || "");
   const [homeAssistantIncludeByDefault, setHomeAssistantIncludeByDefault] = useState(CONFIG.config.homeassistant?.homeAssistantIncludeByDefault || false);
   const [homeAssistantUseHttps, setHomeAssistantUseHttps] = useState(CONFIG.config.homeassistant?.homeAssistantUseHttps || false);
+  const [isModified, setIsModified] = useState(false); // Track user modifications
 
   useEffect(() => {
-    setEnable(CONFIG.config.homeassistant?.enabled || false);
-    setHomeAssistantIp(CONFIG.config.homeassistant?.homeAssistantIp || "192.168.x.x");
-    setHomeAssistantPort(CONFIG.config.homeassistant?.homeAssistantPort || 8123);
-    setHomeAssistantToken(CONFIG.config.homeassistant?.homeAssistantToken || "");
-    setHomeAssistantIncludeByDefault(CONFIG.config.homeassistant?.homeAssistantIncludeByDefault || false);
-    setHomeAssistantUseHttps(CONFIG.config.homeassistant?.homeAssistantUseHttps || false);
-  }, [CONFIG]);
+    if (!isModified) {
+      setEnable(CONFIG.config.homeassistant?.enabled || false);
+      setHomeAssistantIp(CONFIG.config.homeassistant?.homeAssistantIp || "192.168.x.x");
+      setHomeAssistantPort(CONFIG.config.homeassistant?.homeAssistantPort || 8123);
+      setHomeAssistantToken(CONFIG.config.homeassistant?.homeAssistantToken || "");
+      setHomeAssistantIncludeByDefault(CONFIG.config.homeassistant?.homeAssistantIncludeByDefault || false);
+      setHomeAssistantUseHttps(CONFIG.config.homeassistant?.homeAssistantUseHttps || false);
+    }
+  }, [CONFIG, isModified]);
+
+  const handleEnableChange = (value) => {
+    setEnable(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleHomeAssistantIpChange = (value) => {
+    setHomeAssistantIp(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleHomeAssistantPortChange = (value) => {
+    setHomeAssistantPort(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleHomeAssistantTokenChange = (value) => {
+    setHomeAssistantToken(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleHomeAssistantIncludeByDefaultChange = (value) => {
+    setHomeAssistantIncludeByDefault(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleHomeAssistantUseHttpsChange = (value) => {
+    setHomeAssistantUseHttps(value);
+    setIsModified(true); // Mark as modified
+  };
 
   const onSubmit = () => {
     axios
@@ -59,7 +92,7 @@ const HA = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="ha"
                 value={enable}
-                onChange={(e) => setEnable(e)}
+                onChange={(e) => handleEnableChange(e)}
                 checked={enable}
                 label="Enable"
                 position="right"
@@ -70,7 +103,7 @@ const HA = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="IP or hostname"
                   value={homeAssistantIp}
-                  onChange={(e) => setHomeAssistantIp(e)}
+                  onChange={(e) => handleHomeAssistantIpChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -79,7 +112,7 @@ const HA = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="number"
                   placeholder="8123"
                   value={homeAssistantPort}
-                  onChange={(e) => setHomeAssistantPort(e)}
+                  onChange={(e) => handleHomeAssistantPortChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -88,12 +121,12 @@ const HA = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="password"
                   placeholder="Token"
                   value={homeAssistantToken}
-                  onChange={(e) => setHomeAssistantToken(e)}
+                  onChange={(e) => handleHomeAssistantTokenChange(e)}
                 />
               </div>
               <FlipSwitch
                 value={homeAssistantIncludeByDefault}
-                onChange={(e) => setHomeAssistantIncludeByDefault(e)}
+                onChange={(e) => handleHomeAssistantIncludeByDefaultChange(e)}
                 checked={homeAssistantIncludeByDefault}
                 label="Included by default"
                 position="right"
@@ -101,7 +134,7 @@ const HA = ({ HOST_IP, API_KEY, CONFIG }) => {
 
               <FlipSwitch
                 value={homeAssistantUseHttps}
-                onChange={(e) => setHomeAssistantUseHttps(e)}
+                onChange={(e) => handleHomeAssistantUseHttpsChange(e)}
                 checked={homeAssistantUseHttps}
                 label="Enable HTTPS"
                 position="right"

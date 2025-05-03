@@ -17,15 +17,43 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [mqttUser, setMqttUser] = useState(CONFIG.config.mqtt?.mqttUser || "");
   const [mqttPass, setMqttPass] = useState(CONFIG.config.mqtt?.mqttPassword || "");
   const [discoveryPrefix, setDiscoveryPrefix] = useState(CONFIG.config.mqtt?.discoveryPrefix || "homeassistant");
+  const [isModified, setIsModified] = useState(false); // Track user modifications
 
   useEffect(() => {
-    setEnable(CONFIG.config.mqtt?.enabled || false);
-    setMqttServer(CONFIG.config.mqtt?.mqttServer || "mqtt");
-    setMqttPort(CONFIG.config.mqtt?.mqttPort || 1883);
-    setMqttUser(CONFIG.config.mqtt?.mqttUser || "");
-    setMqttPass(CONFIG.config.mqtt?.mqttPassword || "");
-    setDiscoveryPrefix(CONFIG.config.mqtt?.discoveryPrefix || "homeassistant");
-  }, [CONFIG]);
+    if (!isModified) {
+      setEnable(CONFIG.config.mqtt?.enabled || false);
+      setMqttServer(CONFIG.config.mqtt?.mqttServer || "mqtt");
+      setMqttPort(CONFIG.config.mqtt?.mqttPort || 1883);
+      setMqttUser(CONFIG.config.mqtt?.mqttUser || "");
+      setMqttPass(CONFIG.config.mqtt?.mqttPassword || "");
+      setDiscoveryPrefix(CONFIG.config.mqtt?.discoveryPrefix || "homeassistant");
+    }
+  }, [CONFIG, isModified]);
+
+  const handleMqttServerChange = (value) => {
+    setMqttServer(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleMqttPortChange = (value) => {
+    setMqttPort(parseInt(value));
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleMqttUserChange = (value) => {
+    setMqttUser(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleMqttPassChange = (value) => {
+    setMqttPass(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleDiscoveryPrefixChange = (value) => {
+    setDiscoveryPrefix(value);
+    setIsModified(true); // Mark as modified
+  };
 
   const onSubmit = () => {
     axios
@@ -59,7 +87,10 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="mqtt"
                 value={enable}
-                onChange={(e) => setEnable(e)}
+                onChange={(e) => {
+                  setEnable(e);
+                  setIsModified(true); // Mark as modified
+                }}
                 checked={enable}
                 label="Enable"
                 position="right"
@@ -70,7 +101,7 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="MQTT server"
                   value={mqttServer}
-                  onChange={(e) => setMqttServer(e)}
+                  onChange={(e) => handleMqttServerChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -79,7 +110,7 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="number"
                   placeholder="MQTT port"
                   value={mqttPort}
-                  onChange={(e) => setMqttPort(parseInt(e))}
+                  onChange={(e) => handleMqttPortChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -88,7 +119,7 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="MQTT username"
                   value={mqttUser}
-                  onChange={(e) => setMqttUser(e)}
+                  onChange={(e) => handleMqttUserChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -97,7 +128,7 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="password"
                   placeholder="MQTT password"
                   value={mqttPass}
-                  onChange={(e) => setMqttPass(e)}
+                  onChange={(e) => handleMqttPassChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -106,7 +137,7 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="Discovery prefix"
                   value={discoveryPrefix}
-                  onChange={(e) => setDiscoveryPrefix(e)}
+                  onChange={(e) => handleDiscoveryPrefixChange(e)}
                 />
               </div>
               <div className="form-control">

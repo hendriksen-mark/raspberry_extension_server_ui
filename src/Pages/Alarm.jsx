@@ -13,11 +13,24 @@ import CardGrid from "../components/CardGrid/CardGrid";
 const Alarm = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [enable, setEnable] = useState(CONFIG.config.alarm?.enabled || false);
   const [email, setEmail] = useState(CONFIG.config.alarm?.email || "");
+  const [isModified, setIsModified] = useState(false); // Track user modifications
 
   useEffect(() => {
-    setEnable(CONFIG.config.alarm?.enabled || false);
-    setEmail(CONFIG.config.alarm?.email || "");
-  }, [CONFIG]);
+    if (!isModified) {
+      setEnable(CONFIG.config.alarm?.enabled || false);
+      setEmail(CONFIG.config.alarm?.email || "");
+    }
+  }, [CONFIG, isModified]);
+
+  const handleEnableChange = (value) => {
+    setEnable(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleEmailChange = (value) => {
+    setEmail(value);
+    setIsModified(true); // Mark as modified
+  };
 
   const onSubmit = () => {
     axios
@@ -25,8 +38,8 @@ const Alarm = ({ HOST_IP, API_KEY, CONFIG }) => {
         alarm: { enabled: enable, email: email },
       })
       .then((fetchedData) => {
-        //console.log(fetchedData.data);
         toast.success("Successfully saved");
+        setIsModified(false); // Reset modification state after saving
       })
       .catch((error) => {
         console.error(error);
@@ -44,7 +57,7 @@ const Alarm = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="alarm"
                 value={enable}
-                onChange={(e) => setEnable(e)}
+                onChange={(e) => handleEnableChange(e)}
                 checked={enable}
                 label="Enable"
                 position="right"
@@ -55,7 +68,7 @@ const Alarm = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="Notification email"
                   value={email}
-                  onChange={(e) => setEmail(e)}
+                  onChange={(e) => handleEmailChange(e.target.value)}
                 />
               </div>
               <div className="form-control">

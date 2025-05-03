@@ -14,13 +14,31 @@ const Tradfri = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [tradfriCode, setTradfriCode] = useState(CONFIG.config.tradfri?.tradfriCode || "");
   const [tradfriIdentity, setTradfriIdentity] = useState(CONFIG.config.tradfri?.identity || "");
   const [tradfriPsk, setTradfriPsk] = useState(CONFIG.config.tradfri?.psk || "");
+  const [isModified, setIsModified] = useState(false); // Track user modifications
 
   useEffect(() => {
-    setTradfriGwIp(CONFIG.config.tradfri?.tradfriGwIp || "192.168.x.x");
-    setTradfriCode(CONFIG.config.tradfri?.tradfriCode || "");
-    setTradfriIdentity(CONFIG.config.tradfri?.identity || "");
-    setTradfriPsk(CONFIG.config.tradfri?.psk || "");
-  }, [CONFIG]);
+    if (!isModified) {
+      setTradfriGwIp(CONFIG.config.tradfri?.tradfriGwIp || "192.168.x.x");
+      setTradfriCode(CONFIG.config.tradfri?.tradfriCode || "");
+      setTradfriIdentity(CONFIG.config.tradfri?.identity || "");
+      setTradfriPsk(CONFIG.config.tradfri?.psk || "");
+    }
+  }, [CONFIG, isModified]);
+
+  const handleTradfriGwIpChange = (value) => {
+    setTradfriGwIp(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleTradfriCodeChange = (value) => {
+    setTradfriCode(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleTradfriIdentityChange = (value) => {
+    setTradfriIdentity(value);
+    setIsModified(true); // Mark as modified
+  };
 
   const pairTradfri = () => {
     axios
@@ -61,7 +79,7 @@ const Tradfri = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="192.168.x.x"
                   value={tradfriGwIp}
-                  onChange={(e) => setTradfriGwIp(e)}
+                  onChange={(e) => handleTradfriGwIpChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -70,7 +88,7 @@ const Tradfri = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="Identity used for pairing"
                   value={tradfriIdentity}
-                  onChange={(e) => setTradfriIdentity(e)}
+                  onChange={(e) => handleTradfriIdentityChange(e)}
                 />
               </div>
               {tradfriPsk === "" && (
@@ -80,7 +98,7 @@ const Tradfri = ({ HOST_IP, API_KEY, CONFIG }) => {
                     type="password"
                     placeholder="Located on gateway label"
                     value={tradfriCode}
-                    onChange={(e) => setTradfriCode(e)}
+                    onChange={(e) => handleTradfriCodeChange(e)}
                   />
                 </div>
               )}

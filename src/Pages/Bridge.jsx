@@ -37,17 +37,45 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
   const [WizardContent, setWizardContent] = useState({});
   const [AdvanceConfig, setAdvanceConfig] = useState(false);
   const [readonlyConf, setReadonlyConf] = useState(CONFIG.config);
+  const [isModified, setIsModified] = useState(false); // Track user modifications
 
   useEffect(() => {
-    setBridgeName(CONFIG.config["name"]);
-    setSwversion(CONFIG.config["swversion"]);
-    setApiVersion(CONFIG.config["apiversion"]);
-    setRemoteApi(CONFIG.config["Remote API enabled"]);
-    setDiscovery(CONFIG.config["discovery"]);
-    setTimezone(CONFIG.config["timezone"]);
-    setLogLevel(CONFIG.config["LogLevel"]);
-    setReadonlyConf(CONFIG.config);
-  }, [CONFIG]);
+    if (!isModified) {
+      setBridgeName(CONFIG.config["name"]);
+      setSwversion(CONFIG.config["swversion"]);
+      setApiVersion(CONFIG.config["apiversion"]);
+      setRemoteApi(CONFIG.config["Remote API enabled"]);
+      setDiscovery(CONFIG.config["discovery"]);
+      setTimezone(CONFIG.config["timezone"]);
+      setLogLevel(CONFIG.config["LogLevel"]);
+      setReadonlyConf(CONFIG.config);
+    }
+  }, [CONFIG, isModified]);
+
+  const handleBridgeNameChange = (value) => {
+    setBridgeName(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleSwversionChange = (value) => {
+    setSwversion(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleApiVersionChange = (value) => {
+    setApiVersion(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleTimezoneChange = (value) => {
+    setTimezone(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleLogLevelChange = (value) => {
+    setLogLevel(value);
+    setIsModified(true); // Mark as modified
+  };
 
   const openWizard = () => {
     setWizardIsOpen(true);
@@ -399,7 +427,7 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
                 type="text"
                 placeholder="Bridge Name"
                 value={bridgeName}
-                onChange={(e) => setBridgeName(e)}
+                onChange={(e) => handleBridgeNameChange(e)}
               />
             </div>
             <div className="form-control">
@@ -409,7 +437,7 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
                 pattern="[0-9]+"
                 placeholder="swversion"
                 value={swversion}
-                onChange={(e) => setSwversion(e)}
+                onChange={(e) => handleSwversionChange(e)}
               />
               <p>
                 <a href="https://www.philips-hue.com/en-gb/support/release-notes/bridge">
@@ -423,14 +451,14 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
                 type="text"
                 placeholder="apiversion"
                 value={apiVersion}
-                onChange={(e) => setApiVersion(e)}
+                onChange={(e) => handleApiVersionChange(e)}
               />
             </div>
             <div className="form-control">
               <SelectMenu
                 label={`Timezone (suggested: ${clientTimezone})`}
                 options={options}
-                onChange={(e) => setTimezone(e.value)}
+                onChange={(e) => handleTimezoneChange(e.value)}
                 placeholder={timezone}
               />
             </div>
@@ -438,7 +466,7 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="Debug"
                 value={LogLevel === "DEBUG" ? true : false}
-                onChange={(e) => setLogLevel(e === true ? "DEBUG" : "INFO")}
+                onChange={(e) => handleLogLevelChange(e === true ? "DEBUG" : "INFO")}
                 checked={LogLevel === "DEBUG" ? true : false}
                 label="Temporarily Enable Debug Log"
                 position="right"
