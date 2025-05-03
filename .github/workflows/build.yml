@@ -3,6 +3,10 @@ on:
     branches:
       - "main"
       - "restructure"
+    paths-ignore:
+      - ".github/**"
+      - ".gitignore"
+      - "README.md"
 
 jobs:
   build-project:
