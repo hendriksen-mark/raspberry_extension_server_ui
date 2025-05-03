@@ -68,7 +68,7 @@ const Alarm = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="Notification email"
                   value={email}
-                  onChange={(e) => handleEmailChange(e.target.value)}
+                  onChange={(e) => handleEmailChange(e)}
                 />
               </div>
               <div className="form-control">

@@ -26,6 +26,11 @@ const Deconz = ({ HOST_IP, API_KEY, CONFIG }) => {
     }
   }, [CONFIG, isModified]);
 
+  const handleEnable = (value) => {
+    setEnable(value);
+    setIsModified(true); // Mark as modified
+  };
+
   const handleDeconzHostChange = (value) => {
     setDeconzHost(value);
     setIsModified(true); // Mark as modified
@@ -69,19 +74,6 @@ const Deconz = ({ HOST_IP, API_KEY, CONFIG }) => {
       });
   };
 
-  const toggleEnable = (e) => {
-    setEnable(e);
-    axios
-      .put(`${HOST_IP}/api/${API_KEY}/config`, { deconz: { enabled: e } })
-      .then((fetchedData) => {
-        //console.log(fetchedData.data);
-        toast.success(`Deconz ${e ? "enabled" : "disabled"}`);
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(`Error: ${error.message}`);
-      });
-  };
 // #region HTML
   return (
     <div className="inner">
@@ -93,7 +85,7 @@ const Deconz = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="Deconz"
                 value={enable}
-                onChange={(e) => toggleEnable(e)}
+                onChange={(e) => handleEnable(e)}
                 checked={enable}
                 label="Enable"
                 position="right"

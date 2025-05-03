@@ -30,6 +30,11 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
     }
   }, [CONFIG, isModified]);
 
+  const handleEnableChange = (value) => {
+    setEnable(value);
+    setIsModified(true); // Mark as modified
+  };
+
   const handleMqttServerChange = (value) => {
     setMqttServer(value);
     setIsModified(true); // Mark as modified
@@ -87,10 +92,7 @@ const Mqtt = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="mqtt"
                 value={enable}
-                onChange={(e) => {
-                  setEnable(e);
-                  setIsModified(true); // Mark as modified
-                }}
+                onChange={(e) => handleEnableChange(e)}
                 checked={enable}
                 label="Enable"
                 position="right"

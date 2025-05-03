@@ -77,6 +77,16 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
     setIsModified(true); // Mark as modified
   };
 
+  const handleRemoteApiChange = (value) => {
+    setRemoteApi(value);
+    setIsModified(true); // Mark as modified
+  };
+
+  const handleDiscoveryChange = (value) => {
+    setDiscovery(value);
+    setIsModified(true); // Mark as modified
+  };
+
   const openWizard = () => {
     setWizardIsOpen(true);
   };
@@ -476,7 +486,7 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="Remote API"
                 value={remoteApi}
-                onChange={(e) => setRemoteApi(e)}
+                onChange={(e) => handleRemoteApiChange(e)}
                 checked={remoteApi}
                 label="Remote API"
                 position="right"
@@ -486,7 +496,7 @@ const Bridge = ({ HOST_IP, API_KEY, CONFIG }) => {
               <FlipSwitch
                 id="Discovery"
                 value={discovery}
-                onChange={(e) => setDiscovery(e)}
+                onChange={(e) => handleDiscoveryChange(e)}
                 checked={discovery}
                 label="Discovery"
                 position="right"

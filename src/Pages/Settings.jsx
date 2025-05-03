@@ -69,9 +69,9 @@ const Settings = ({ HOST_IP, API_KEY, CONFIG }) => {
   }, [CONFIG, isModified]);
 
   // Handlers
-  const handlePortChange = (value) => {
-    setPortConfig((prev) => ({ ...prev, ports: value }));
-    setIsModified(true);
+  const handlePortConfigChange = (key, value) => {
+    setPortConfig((prev) => ({ ...prev, [key]: value }));
+    setIsModified(true); // Mark as modified
   };
 
   const handleProtocolChange = (key, value) => {
@@ -141,7 +141,7 @@ const Settings = ({ HOST_IP, API_KEY, CONFIG }) => {
                 <FlipSwitch
                   id="ports"
                   value={portConfig.enabled}
-                  onChange={(e) => setPortConfig((prev) => ({ ...prev, enabled: e }))}
+                  onChange={(e) => handlePortConfigChange("enabled", e)}
                   checked={portConfig.enabled}
                   label="Enable"
                   position="right"
@@ -153,7 +153,7 @@ const Settings = ({ HOST_IP, API_KEY, CONFIG }) => {
                   type="text"
                   placeholder="Additional ports"
                   value={portConfig.ports}
-                  onChange={(e) => handlePortChange(e)}
+                  onChange={(e) => handlePortConfigChange("ports", e)}
                 />
               </div>
               <div className="form-control">
