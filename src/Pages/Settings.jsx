@@ -132,29 +132,39 @@ const Settings = ({ HOST_IP, API_KEY, CONFIG }) => {
         <GlassContainer options="spacer">
           <PageContent>
             <div className="headline">Add extra port for searching</div>
+            <p>This wil make the bridge search on other ports.</p>
+            <p>If disabled the bridge wil only search on port 80.</p>
+            <p>The standard port is 80, always include port 80.</p>
+            <p>To add ports separate the ports with "," ex: 80,81,82</p>
             <form className="add-form">
-              <FlipSwitch
-                id="ports"
-                value={portConfig.enabled}
-                onChange={(e) => setPortConfig((prev) => ({ ...prev, enabled: e }))}
-                checked={portConfig.enabled}
-                label="Enable"
-                position="right"
-              />
-              <GenericText
-                label="Port"
-                type="text"
-                placeholder="Additional ports"
-                value={portConfig.ports}
-                onChange={(e) => handlePortChange(e)}
-              />
-              <GenericButton
-                value="Save"
-                color="blue"
-                size=""
-                type="submit"
-                onClick={onSubmitPort}
-              />
+              <div className="form-control">
+                <FlipSwitch
+                  id="ports"
+                  value={portConfig.enabled}
+                  onChange={(e) => setPortConfig((prev) => ({ ...prev, enabled: e }))}
+                  checked={portConfig.enabled}
+                  label="Enable"
+                  position="right"
+                />
+              </div>
+              <div className="form-control">
+                <GenericText
+                  label="Port"
+                  type="text"
+                  placeholder="Additional ports"
+                  value={portConfig.ports}
+                  onChange={(e) => handlePortChange(e)}
+                />
+              </div>
+              <div className="form-control">
+                <GenericButton
+                  value="Save"
+                  color="blue"
+                  size=""
+                  type="submit"
+                  onClick={onSubmitPort}
+                />
+              </div>
             </form>
           </PageContent>
         </GlassContainer>
@@ -162,31 +172,35 @@ const Settings = ({ HOST_IP, API_KEY, CONFIG }) => {
         <GlassContainer options="spacer">
           <PageContent>
             <div className="headline">Search IP Range Config</div>
+            <p>Set IP range for light search.</p>
             <GenericText
-              label={`IP Range Start (${ip.split(".")[0]}.${ip.split(".")[1]}.xxx.yyy)`}
+              label={`IP Range Start (you can change ${ip.split(".")[0]}.${ip.split(".")[1]}.xxx.yyy)`}
               type="text"
               value={`${ip.split(".")[0]}.${ip.split(".")[1]}.${ipRange.SUB_IP_RANGE_START}.${ipRange.IP_RANGE_START}`}
               onChange={(e) => handleIpRangeChange(e, "start")}
             />
             <GenericText
-              label={`IP Range End (${ip.split(".")[0]}.${ip.split(".")[1]}.XXX.YYY)`}
+              label={`IP Range End (you can change ${ip.split(".")[0]}.${ip.split(".")[1]}.XXX.YYY)`}
               type="text"
               value={`${ip.split(".")[0]}.${ip.split(".")[1]}.${ipRange.SUB_IP_RANGE_END}.${ipRange.IP_RANGE_END}`}
               onChange={(e) => handleIpRangeChange(e, "end")}
             />
-            <GenericButton
-              value="Save"
-              color="blue"
-              size=""
-              type="submit"
-              onClick={onSubmitIpRange}
-            />
+            <div className="form-control">
+              <GenericButton
+                value="Save"
+                color="blue"
+                size=""
+                type="submit"
+                onClick={onSubmitIpRange}
+              />
+            </div>
           </PageContent>
         </GlassContainer>
 
         <GlassContainer options="spacer">
           <PageContent>
             <div className="headline">Search Protocol Config</div>
+            <p>Set which protocol to find.</p>
             <form className="add-form">
               {Object.keys(protocols).map((key) => (
                 <FlipSwitch
@@ -199,6 +213,8 @@ const Settings = ({ HOST_IP, API_KEY, CONFIG }) => {
                   position="right"
                 />
               ))}
+            </form>
+            <div className="form-control">
               <GenericButton
                 value="Save"
                 color="blue"
@@ -206,7 +222,7 @@ const Settings = ({ HOST_IP, API_KEY, CONFIG }) => {
                 type="submit"
                 onClick={onSubmitProtocols}
               />
-            </form>
+            </div>
           </PageContent>
         </GlassContainer>
 
