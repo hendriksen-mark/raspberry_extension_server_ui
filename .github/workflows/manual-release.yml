@@ -29,9 +29,9 @@ jobs:
           next_patch=$((patch + 1))
           next_tag="v${major}.${minor}.${next_patch}"
           echo "Next tag: $next_tag"
-          echo "::set-output name=next_tag::$next_tag"
+          echo "NEXT_TAG=$next_tag" >> $GITHUB_ENV
     outputs:
-      next_tag: ${{ steps.calculate_next_tag.outputs.next_tag }}
+      next_tag: ${{ env.NEXT_TAG }}
 
   create-new-tag:
     name: Create New Tag
@@ -55,7 +55,7 @@ jobs:
 
       - name: Create and push new tag
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            git tag ${{ needs.determine-next-tag.outputs.next_tag }}
-            git push origin ${{ needs.determine-next-tag.outputs.next_tag }}
+          git tag ${{ needs.determine-next-tag.outputs.next_tag }}
+          git push origin ${{ needs.determine-next-tag.outputs.next_tag }}
