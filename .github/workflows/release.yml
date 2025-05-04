@@ -1,5 +1,4 @@
 on:
-  workflow_dispatch: # Allow manual triggering of the workflow
   push:
     # Sequence of patterns matched against refs/tags
     tags:
@@ -9,59 +8,9 @@ name: Create Release
 
 jobs:
 
-  determine-next-tag:
-    name: Determine Next Tag
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'push' || github.event.ref_type != 'tag' }}
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get latest tag
-        id: get_latest_tag
-        run: |
-          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          echo "Latest tag: $latest_tag"
-          echo "latest_tag=$latest_tag" >> $GITHUB_ENV
-
-      - name: Calculate next tag
-        id: calculate_next_tag
-        run: |
-          IFS='.' read -r major minor patch <<< "${latest_tag#v}"
-          next_patch=$((patch + 1))
-          next_tag="v${major}.${minor}.${next_patch}"
-          echo "Next tag: $next_tag"
-          echo "NEXT_TAG=$next_tag" >> $GITHUB_ENV
-    outputs:
-      next_tag: ${{ env.NEXT_TAG }}
-
-  create-new-tag:
-    name: Create New Tag
-    runs-on: ubuntu-latest
-    needs: determine-next-tag
-    if: ${{ github.event_name != 'push' || github.event.ref_type != 'tag' }}
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-
-      - name: Create and push new tag
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NEXT_TAG: ${{ needs.determine-next-tag.outputs.next_tag }}
-        run: |
-          git tag $NEXT_TAG
-          git push origin $NEXT_TAG
-
   build-project:
     name: Build Project
     runs-on: ubuntu-latest
-    needs: [create-new-tag]
-
-    if: ${{ github.event_name != 'push' || github.ref_type != 'tag' }}
 
     strategy:
       matrix:
@@ -71,23 +20,13 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Determine version
-        run: |
-          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/* ]]; then
-            TAG_VERSION=${GITHUB_REF#refs/tags/}
-            echo "VERSION=$TAG_VERSION" >> $GITHUB_ENV
-          else
-            echo "VERSION=${{ needs.determine-next-tag.outputs.next_tag }}" >> $GITHUB_ENV
-          fi
-
       - name: Install dependencies
         run: npm install    
-
+  
       - name: Generate build
         run: npm run build
         env:
           CI: false
-          VERSION: ${{ env.VERSION }}
       
       # Share artifact inside workflow
       - name: Share artifact inside workflow
@@ -120,9 +59,9 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ needs.determine-next-tag.outputs.next_tag }}
-          name: DiyHue UI release ${{ needs.determine-next-tag.outputs.next_tag }}
+          tag_name: ${{ github.ref_name }}
+          name: DiyHue UI release ${{ github.ref_name }}
           files: DiyHueUI-release.zip
           make_latest: true
