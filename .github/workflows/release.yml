@@ -47,19 +47,10 @@ jobs:
     needs: build-project
 
     steps:
-      - name: Determine tag name
-        id: determine_tag
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_run" ]]; then
-            echo "TAG_NAME=${{ github.event.workflow_run.outputs.next_tag }}" >> $GITHUB_ENV
-          else
-            echo "TAG_NAME=${{ github.ref_name }}" >> $GITHUB_ENV
-
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: DiyHueUI
-
       - name: Test artifact download
         run: ls -R
 
@@ -74,7 +65,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ env.TAG_NAME }}
-          name: DiyHue UI release ${{ env.TAG_NAME }}
+          tag_name: ${{ github.ref_name }}
+          name: DiyHue UI release ${{ github.ref_name }}
           files: DiyHueUI-release.zip
           make_latest: true
