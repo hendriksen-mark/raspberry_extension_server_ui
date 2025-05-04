@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ensure all tags are fetched
 
       - name: Install dependencies
         run: npm install    
@@ -40,6 +42,15 @@ jobs:
           path: |
             build
             dist
+
+      - name: Get latest tag
+        id: get_latest_tag
+        run: |
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "Latest tag: $latest_tag"
+          echo "latest_tag=$latest_tag" >> $GITHUB_ENV
+    outputs:
+      latest_tag: ${{ env.latest_tag }}
 
   release-project:
     name: Create Release
@@ -59,20 +70,13 @@ jobs:
         with:
           filename: DiyHueUI-release.zip
 
-      - name: Get latest tag
-        id: get_latest_tag
-        run: |
-          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          echo "Latest tag: $latest_tag"
-          echo "latest_tag=$latest_tag" >> $GITHUB_ENV
-
       - name: Create and Upload Release
         id: create_release
         uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ env.latest_tag }}
-          name: DiyHue UI release ${{ env.latest_tag }}
+          tag_name: ${{ needs.build-project.outputs.latest_tag }}
+          name: DiyHue UI release ${{ needs.build-project.outputs.latest_tag }}
           files: DiyHueUI-release.zip
           make_latest: true
