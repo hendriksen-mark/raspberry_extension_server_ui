@@ -26,9 +26,21 @@ jobs:
         with:
           fetch-depth: 0 # Ensure all tags are fetched
 
+      - name: Determine latest tag
+        id: determine_latest_tag
+        run: |
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            echo "latest_tag=${{ github.ref_name }}" >> $GITHUB_ENV
+          else
+            latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+            echo "latest_tag=$latest_tag" >> $GITHUB_ENV
+          fi
+        env:
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+
       - name: Install dependencies
         run: npm install    
-  
+
       - name: Generate build
         run: npm run build
         env:
@@ -42,13 +54,6 @@ jobs:
           path: |
             build
             dist
-
-      - name: Get latest tag
-        id: get_latest_tag
-        run: |
-          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          echo "Latest tag: $latest_tag"
-          echo "latest_tag=$latest_tag" >> $GITHUB_ENV
     outputs:
       latest_tag: ${{ env.latest_tag }}
 
