@@ -49,9 +49,10 @@ jobs:
       - name: Create and push new tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEXT_TAG: ${{ needs.determine-next-tag.outputs.next_tag }}
         run: |
-          git tag ${{ env.NEXT_TAG }}
-          git push origin ${{ env.NEXT_TAG }}
+          git tag $NEXT_TAG
+          git push origin $NEXT_TAG
 
   build-project:
     name: Build Project
@@ -107,7 +108,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.NEXT_TAG }}
-          name: DiyHue UI release ${{ env.NEXT_TAG }}
+          tag_name: ${{ needs.determine-next-tag.outputs.next_tag }}
+          name: DiyHue UI release ${{ needs.determine-next-tag.outputs.next_tag }}
           files: DiyHueUI-release.zip
           make_latest: true
