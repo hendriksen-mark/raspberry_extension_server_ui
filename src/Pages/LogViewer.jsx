@@ -23,6 +23,7 @@ const LogViewer = ({ HOST_IP }) => {
       if (wsRef.current) wsRef.current.close();
     };
   }, [following, HOST_IP]);
+  if (following && HOST_IP) {
 
   // Auto-scroll to bottom when log updates
   useEffect(() => {
