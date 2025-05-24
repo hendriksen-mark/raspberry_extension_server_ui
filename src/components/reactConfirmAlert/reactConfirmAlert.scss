@@ -44,7 +44,8 @@
         }
 
         &[label="Yes"],
-        &[label="Confirm"] {
+        &[label="Confirm"],
+        &[label="Proceed"] {
           background-image: linear-gradient(45deg, #ff8698, #e74c3c);
           z-index: 1;
 
@@ -58,7 +59,8 @@
         }
 
         &[label="No"],
-        &[label="Dismiss"] {
+        &[label="Dismiss"],
+        &[label="Cancel"] {
           background-image: linear-gradient(45deg, #86ffcd, #2ecc71);
           z-index: 1;
 

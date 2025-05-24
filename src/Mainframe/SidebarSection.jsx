@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { FaHome, FaLightbulb, FaLink, FaCog, FaSignOutAlt, FaInfoCircle, FaExclamationTriangle, FaUser } from "react-icons/fa";
+import { FaHome, FaLightbulb, FaLink, FaCog, FaSignOutAlt, FaInfoCircle, FaExclamationTriangle, FaUser, FaCode, FaTerminal } from "react-icons/fa";
 import { SiHomeassistant } from "react-icons/si";
 import { MdSettingsRemote } from "react-icons/md";
 import { IoExtensionPuzzle } from "react-icons/io5";
@@ -46,6 +46,8 @@ const SidebarSection = ({ showSidebar, setShowSidebar, isMobile }) => {
         { label: "App Users", icon: PiUserListFill, link: "#users" },
         { label: "Alarm", icon: FaExclamationTriangle, link: "#alarm" },
         { label: "Settings", icon: FaCog, link: "#settings" },
+        { label: "Debug", icon: FaCode, link: "#debug" },
+        { label: "Log Viewer", icon: FaTerminal, link: "#logviewer" },
       ],
     },
     {

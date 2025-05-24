@@ -1,8 +1,3 @@
-import { useState, useEffect } from "react";
-
-import axios from "axios";
-import { toast } from "react-hot-toast";
-
 import CardGrid from "../components/CardGrid/CardGrid";
 import User from "../components/User/User";
 

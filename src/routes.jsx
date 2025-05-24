@@ -20,6 +20,8 @@ const Users = React.lazy(() => import("./Pages/AppUsers"));
 const Govee = React.lazy(() => import("./Pages/Govee"));
 const Behaviors = React.lazy(() => import("./Pages/Behaviors"));
 const EntertainmentGroups = React.lazy(() => import("./Pages/EntertainmentGroups"));
+const Debug = React.lazy(() => import("./Pages/Debug"));
+const LogViewer = React.lazy(() => import("./Pages/LogViewer"));
 
 const routes = [
   { path: "/testpage", exact: true, name: "Testpage", component: Testpage },
@@ -42,6 +44,8 @@ const routes = [
   { path: "/govee", exact: true, name: "Govee", component: Govee },
   { path: "/behaviors", exact: true, name: "Behaviors", component: Behaviors },
   { path: "/entertainment", exact: true, name: "Entertainment", component: EntertainmentGroups },
+  { path: "/debug", exact: true, name: "Debug", component: Debug },
+  { path: "/logviewer", exact: true, name: "Log Viewer", component: LogViewer }
 ];
 
 export default routes;
