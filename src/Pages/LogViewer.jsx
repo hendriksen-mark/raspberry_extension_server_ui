@@ -11,7 +11,7 @@ const LogViewer = ({ HOST_IP }) => {
   const logEndRef = useRef(null);
 
   useEffect(() => {
-    if (following) {
+    if (following && HOST_IP) {
       const ws = new window.WebSocket(`ws://${(HOST_IP).replace(/^https?:\/\//, "")}:9000/ws`);
       wsRef.current = ws;
       ws.onmessage = (event) => setLog((prev) => prev + event.data);
@@ -23,7 +23,6 @@ const LogViewer = ({ HOST_IP }) => {
       if (wsRef.current) wsRef.current.close();
     };
   }, [following, HOST_IP]);
-  if (following && HOST_IP) {
 
   // Auto-scroll to bottom when log updates
   useEffect(() => {
