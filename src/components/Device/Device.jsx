@@ -9,6 +9,7 @@ import FlipSwitch from "../FlipSwitch/FlipSwitch";
 import IconButton from "../IconButton/IconButton";
 import GlassContainer from "../GlassContainer/GlassContainer";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
+import Battery from "./Battery";
 
 const Device = ({ HOST_IP, api_key, id, device }) => {
   const deleteAlert = () => {
@@ -57,16 +58,16 @@ const Device = ({ HOST_IP, api_key, id, device }) => {
 
   const batteryLevel = () => {
     let battery = device["config"]["battery"];
-    let battryLevel = battery + "%";
+    let batteryLevel = battery + "%";
     //console.log(battery);
     if (battery > 90) {
-      return <TiBatteryFull color="#27ae60" title={battryLevel} />;
+      return <TiBatteryFull color="#27ae60" title={batteryLevel} />;
     } else if (battery > 70) {
-      return <TiBatteryHigh color="#1abc9c" title={battryLevel} />;
+      return <TiBatteryHigh color="#1abc9c" title={batteryLevel} />;
     } else if (battery > 40) {
-      return <TiBatteryMid color="#e67e22" title={battryLevel} />;
+      return <TiBatteryMid color="#e67e22" title={batteryLevel} />;
     } else {
-      return <TiBatteryLow color="#e74c3c" title={battryLevel} />;
+      return <TiBatteryLow color="#e74c3c" title={batteryLevel} />;
     }
   };
 // #region HTML
@@ -93,7 +94,8 @@ const Device = ({ HOST_IP, api_key, id, device }) => {
           </ul>
           </div>
         <div className="row2">
-          {"battery" in device["config"] &&
+          <Battery battery={device["config"]["battery"]} />
+          {/*{"battery" in device["config"] &&
             <Tooltip
               title={<p style={{ fontSize: "18px" }}>{device["config"]["battery"] + "%"}</p>}
               arrow
@@ -102,7 +104,8 @@ const Device = ({ HOST_IP, api_key, id, device }) => {
                 {batteryLevel()}
               </div>
             </Tooltip>
-          }
+          }*/}
+          
 
           <IconButton
             iconName={MdDeleteForever}
