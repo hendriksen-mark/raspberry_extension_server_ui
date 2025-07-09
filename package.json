@@ -1,5 +1,5 @@
 {
-  "name": "diyhue",
+  "name": "raspberry_extention_server",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

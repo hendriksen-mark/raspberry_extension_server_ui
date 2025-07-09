@@ -11,7 +11,7 @@ import GenericButton from "../GenericButton/GenericButton";
 import "./notificationCenter.scss";
 
 
-const NotificationCenter = ({HOST_IP, API_KEY, updating, notifications, CONFIG }) => {
+const NotificationCenter = ({HOST_IP, CONFIG }) => {
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
   //const [WizardName, setWizardName] = useState("");
   const [WizardContent, setWizardContent] = useState({});
@@ -20,7 +20,7 @@ const NotificationCenter = ({HOST_IP, API_KEY, updating, notifications, CONFIG }
   const handleupdate = (state) => {
     if (state === "anyreadytoinstall" || state === "allreadytoinstall") {
       axios
-        .put(`${HOST_IP}/api/${API_KEY}/config`, {
+        .put(`${HOST_IP}/api/config`, {
           swupdate2: { install: true },
         })
         .then((fetchedData) => {
@@ -34,7 +34,7 @@ const NotificationCenter = ({HOST_IP, API_KEY, updating, notifications, CONFIG }
     }
     if (state === "noupdates" || state === "unknown") {
       axios
-        .put(`${HOST_IP}/api/${API_KEY}/config`, {
+        .put(`${HOST_IP}/api/config`, {
           swupdate2: { checkforupdate: true, install: false },
         })
         .then((fetchedData) => {

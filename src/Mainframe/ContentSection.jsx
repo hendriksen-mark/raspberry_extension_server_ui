@@ -5,7 +5,7 @@ import routes from "../routes";
 
 import "./contentSection.scss";
 
-const ContentSection = ({ HOST_IP, API_KEY, CONFIG }) => {
+const ContentSection = ({ HOST_IP, CONFIG }) => {
 // #region HTML
   return (
     <div className="content">
@@ -19,7 +19,7 @@ const ContentSection = ({ HOST_IP, API_KEY, CONFIG }) => {
                     key={idx}
                     path={route.path}
                     element={
-                      <route.component API_KEY={API_KEY} HOST_IP={HOST_IP} CONFIG={CONFIG} />
+                      <route.component HOST_IP={HOST_IP} CONFIG={CONFIG} />
                     }
                   />
                 )
