@@ -50,7 +50,7 @@ const SidebarSection = ({ showSidebar, setShowSidebar, isMobile }) => {
             <div className="logo">
               <img src={logo} alt="Raspberry Pi Logo" />
             </div>
-            <div className="headline">Raspberry Pi</div>
+            <div className="headline">Server</div>
           </div>
           <div className="sidebar">
             <SubMenu

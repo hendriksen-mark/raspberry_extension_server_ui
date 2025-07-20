@@ -6,22 +6,6 @@ import { FaAngleDown } from "react-icons/fa";
 const MenuItem = ({ label, icon, onClick, isActive, children, link, items, currentElement }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const submenuActive = () => {
-    if (label === "DiyHue" || label === "Addons") {
-      for (let x = 0; x < items.length; x++) {
-        if (items[x]["label"] === label) {
-          const subItems = items[x].subItems
-          for (let i = 0; i < subItems.length; i++) {
-            if (subItems[i].link === currentElement) {
-              setIsOpen(true);
-            }
-          }
-        }
-      }
-    }
-  }
-
-
   const handleParentClick = (e) => {
     if (children) {
       e.stopPropagation();
@@ -42,14 +26,14 @@ const MenuItem = ({ label, icon, onClick, isActive, children, link, items, curre
         {icon}
         <p>{label}</p>
         <motion.div
-          animate={{ rotate: (isOpen || submenuActive()) ? 180 : 0 }}
+          animate={{ rotate: (isOpen) ? 180 : 0 }}
           transition={{ duration: 0.3 }}
           className="submenuIcon"
         >
           {children && <FaAngleDown />}
         </motion.div>
       </div>
-      <div className="submenu">{(isOpen || submenuActive()) && children}</div>
+      <div className="submenu">{(isOpen) && children}</div>
     </li>
   );
 

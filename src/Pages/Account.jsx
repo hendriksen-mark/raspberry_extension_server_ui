@@ -10,7 +10,7 @@ import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
 const Account = ({ HOST_IP, API_KEY, CONFIG }) => {
-  const email = Object.keys(CONFIG.config.users)[0];
+  const userName = Object.keys(CONFIG.config.users)[0];
   const [pass, setPass] = useState("");
   const [pass1, setPass1] = useState("");
   const [strength, setStrength] = useState('');
@@ -26,7 +26,7 @@ const Account = ({ HOST_IP, API_KEY, CONFIG }) => {
     } else if (pass === pass1) {
       axios
         .put(`${HOST_IP}/api/${API_KEY}/config`, {
-          users: { [email]: { password: pass } },
+          users: { [userName]: { password: pass } },
         })
         .then((fetchedData) => {
           //console.log(fetchedData.data);
@@ -90,7 +90,7 @@ const Account = ({ HOST_IP, API_KEY, CONFIG }) => {
                   label="User Name"
                   readOnly={true}
                   type="text"
-                  value={email}
+                  value={userName}
                   autoComplete="username"
                 />
               </div>

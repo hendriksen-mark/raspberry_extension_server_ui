@@ -11,31 +11,25 @@ import loading from "../components/Loader/Loader";
 import "./layout.scss";
 import "./scrollbar.scss";
 
-const Layout = ({ HOST_IP, API_KEY }) => {
+const Layout = ({ HOST_IP }) => {
   //console.log("Layout: ", HOST_IP, API_KEY, CONFIG);
 
   const isMobile = useMediaQuery({ query: `(max-width: 750px)` });
   const [showSidebar, setShowSidebar] = useState(!isMobile);
   const [CONFIG, setConfig] = useState({
     config: {},
-    lights: {},
-    groups: {},
-    scenes: {},
-    rules: {},
-    resourcelinks: {},
-    schedules: {},
-    sensors: {},
-    behavior_instance: {},
-    smart_scene: {},
-    lightTypes: {},
+    thermostats: {},
+    dht: {},
+    klok: {},
+    fan: {},
+    powerbutton: {},
   });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchConfig = () => {
-      //console.log("Fetching CONFIG data...", apiKey ? apiKey : "undefined");
       axios
-        .get(`${HOST_IP}/api/all_data`)
+        .get(`${HOST_IP}/system/all`)
         .then((fetchedData) => {
           if (fetchedData.data) {
             //console.log("CONFIG data fetched!", fetchedData.data);

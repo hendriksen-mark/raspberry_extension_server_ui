@@ -16,7 +16,7 @@
     line-height: 40px;
     font-size: 20px;
     cursor: pointer;
-    margin-left: auto;
+    margin: auto;
 
     svg {
       height: 1.5em;
@@ -35,7 +35,7 @@
 
     &.blue {
       background: #1a5088;
-      margin-right: 20px; // Adjust margin-right for blue button
+      //margin-right: 20px; // Adjust margin-right for blue button
 
       &:hover,
       &:active {
@@ -45,7 +45,7 @@
 
     &.green {
       background: #27ae60;
-      margin-right: 20px;
+      //margin-right: 20px;
 
       &:hover,
       &:active {

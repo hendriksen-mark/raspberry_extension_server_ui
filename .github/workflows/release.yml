@@ -50,7 +50,7 @@ jobs:
       - name: Share artifact inside workflow
         uses: actions/upload-artifact@v4
         with:
-          name: DiyHueUI
+          name: RaspberryPiServerUI
           path: |
             build
             dist
@@ -66,14 +66,14 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: DiyHueUI
+          name: RaspberryPiServerUI
       - name: Test artifact download
         run: ls -R
 
       - name: Archive artifact
         uses: thedoctor0/zip-release@main
         with:
-          filename: DiyHueUI-release.zip
+          filename: RaspberryPiServerUI-release.zip
 
       - name: Create and Upload Release
         id: create_release
@@ -82,6 +82,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ needs.build-project.outputs.latest_tag }}
-          name: DiyHue UI release ${{ needs.build-project.outputs.latest_tag }}
-          files: DiyHueUI-release.zip
+          name: Raspberry Pi Server UI release ${{ needs.build-project.outputs.latest_tag }}
+          files: RaspberryPiServerUI-release.zip
           make_latest: true
