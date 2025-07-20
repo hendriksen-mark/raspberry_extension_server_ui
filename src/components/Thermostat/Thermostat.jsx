@@ -12,6 +12,8 @@ import GlassContainer from "../GlassContainer/GlassContainer";
 import IconButton from "../IconButton/IconButton";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 import GenericText from "../GenericText/GenericText";
+import GenericButton from "../GenericButton/GenericButton";
+
 import "./ThermostatControl.scss";
 
 const Thermostat = ({ HOST_IP, id, thermostat }) => {
@@ -24,6 +26,8 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
     const [WizardName, setWizardName] = useState("");
     const [WizardContent, setWizardContent] = useState({});
     const [isModified, setIsModified] = useState(false); // Track user modifications
+    const [MaxTemperature, setMaxTemperature] = useState(thermostat.max_temperature);
+    const [MinTemperature, setMinTemperature] = useState(thermostat.min_temperature);
 
     // Thermostat mode constants
     const MODES = {
@@ -49,6 +53,8 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
             setThermostat(thermostat);
             setTargetTemperature(thermostat.targetTemperature);
             setTargetMode(thermostat.targetHeatingCoolingState);
+            setMaxTemperature(thermostat.max_temperature);
+            setMinTemperature(thermostat.min_temperature);
         }
     }, [thermostat, isModified]);
 
@@ -72,18 +78,49 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
     };
 
     const handleTemperatureChange = (newTemp) => {
-        setIsModified(true); // Mark as modified
         if (!isDragging) {
             setTargetTemperature(newTemp);
             updateThermostat(`/targetTemperature/?value=${newTemp}`);
         } else {
             setTargetTemperature(newTemp);
         }
+        setIsModified(true); // Mark as modified
     };
 
     const handleTemperatureDragEnd = () => {
         setIsDragging(false);
         updateThermostat(`/targetTemperature/?value=${targetTemperature}`);
+    };
+
+    const handleMaxTemperatureChange = (value) => {
+        setMaxTemperature(value);
+        setIsModified(true); // Mark as modified
+    };
+
+    const handleMinTemperatureChange = (value) => {
+        setMinTemperature(value);
+        setIsModified(true); // Mark as modified
+    };
+
+    const onSubmit = () => {
+        if (!isModified) {
+            toast.error("No changes made to save.");
+            return;
+        }
+        axios
+            .post(`${HOST_IP}/${thermostatinfo["mac"]}`, {
+                max_temperature: MaxTemperature,
+                min_temperature: MinTemperature
+            })
+            .then((response) => {
+                toast.success("Thermostat configuration saved successfully");
+                setIsModified(false); // Reset modified state after saving
+                closeWizard();
+            })
+            .catch((error) => {
+                console.error("Error saving thermostat configuration:", error);
+                toast.error("Failed to save thermostat configuration");
+            });
     };
 
     const getTemperatureCircleClass = () => {
@@ -128,10 +165,11 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                 toast.error("Error occured, check browser console");
             });
     };
-    const Info_thermostat = () => {
+    const InfoThermostat = () => {
         setWizardName("Device Information");
         setWizardContent(
-            <div className="device-info">
+            <>
+                <p>Device Information for {thermostatinfo.mac}</p>
                 <div className="form-control">
                     <GenericText
                         label="MAC Address"
@@ -164,13 +202,54 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                         label="DHT Sensor"
                         readOnly={true}
                         type="text"
-                        placeholder="bridgeid"
+                        placeholder="DHT Sensor"
                         value={thermostatinfo.DHT_connected ? 'Connected' : 'Disconnected'}
                     />
                 </div>
-            </div>
+            </>
         );
         openWizard();
+    };
+    const configureThermostat = () => {
+        setWizardName("Device Configuration");
+        openWizard();
+    };
+
+    const getConfigurationContent = () => {
+        return (
+            <>
+                <p>Change Configuration for {thermostatinfo.mac}</p>
+                <div className="form-control">
+                    <GenericText
+                        label="Max Temperature"
+                        readOnly={false}
+                        type="number"
+                        placeholder="max_temperature"
+                        value={String(MaxTemperature)}
+                        onChange={(e) => handleMaxTemperatureChange(e)}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="Min Temperature"
+                        readOnly={false}
+                        type="number"
+                        placeholder="min_temperature"
+                        value={String(MinTemperature)}
+                        onChange={(e) => handleMinTemperatureChange(e)}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericButton
+                        value="Save"
+                        color="blue"
+                        size=""
+                        type="submit"
+                        onClick={() => onSubmit()}
+                    />
+                </div>
+            </>
+        );
     };
 
     const openWizard = () => {
@@ -184,6 +263,7 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
     return (<>
         <GlassContainer>
             <div className="thermostat-display">
+                <h3>{thermostatinfo.mac}</h3>
                 {/* Main Temperature Display */}
                 <div className={`temperature-circle temperature-circle-big ${getTemperatureCircleClass()}`}>
                     {thermostatinfo.currentTemperature.toFixed(1)}°C
@@ -249,8 +329,8 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                 <div className="temperature-slider-container">
                     <input
                         type="range"
-                        min={thermostatinfo.min_temperature}
-                        max={thermostatinfo.max_temperature}
+                        min={MinTemperature}
+                        max={MaxTemperature}
                         step="0.5"
                         value={targetTemperature}
                         onChange={(e) => {
@@ -263,8 +343,8 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                         disabled={thermostatinfo.failed_connection}
                     />
                     <div className="temperature-range">
-                        <span>{thermostatinfo.min_temperature}°C</span>
-                        <span>{thermostatinfo.max_temperature}°C</span>
+                        <span>{MinTemperature}°C</span>
+                        <span>{MaxTemperature}°C</span>
                     </div>
                 </div>
             </div>
@@ -275,14 +355,14 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                     title="Info"
                     size="small"
                     color="green"
-                    onClick={() => Info_thermostat()}
+                    onClick={() => InfoThermostat()}
                 />
                 <IconButton
                     iconName={MdSettings}
                     title="Settings"
                     size="small"
                     color="blue"
-                    onClick={() => navigate(`/thermostat/${thermostatinfo["mac"]}`)}
+                    onClick={() => configureThermostat()}
                 />
                 <IconButton
                     iconName={MdDeleteForever}
@@ -294,11 +374,11 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
             </div>
 
             <Wizard
-              isOpen={WizardIsOpen}
-              closeWizard={closeWizard}
-              headline={WizardName}
+                isOpen={WizardIsOpen}
+                closeWizard={closeWizard}
+                headline={WizardName}
             >
-              {WizardContent}
+                {WizardName === "Device Configuration" ? getConfigurationContent() : WizardContent}
             </Wizard>
         </GlassContainer>
     </>
