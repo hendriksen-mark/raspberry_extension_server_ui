@@ -93,13 +93,19 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
     };
 
     const handleMaxTemperatureChange = (value) => {
-        setMaxTemperature(value);
-        setIsModified(true); // Mark as modified
+        const numValue = parseFloat(value);
+        if (!isNaN(numValue) && numValue >= 0) {
+            setMaxTemperature(numValue);
+            setIsModified(true); // Mark as modified
+        }
     };
 
     const handleMinTemperatureChange = (value) => {
-        setMinTemperature(value);
-        setIsModified(true); // Mark as modified
+        const numValue = parseFloat(value);
+        if (!isNaN(numValue) && numValue >= 0) {
+            setMinTemperature(numValue);
+            setIsModified(true); // Mark as modified
+        }
     };
 
     const onSubmit = () => {
@@ -329,8 +335,8 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                 <div className="temperature-slider-container">
                     <input
                         type="range"
-                        min={MinTemperature}
-                        max={MaxTemperature}
+                        min={thermostat.min_temperature}
+                        max={thermostat.max_temperature}
                         step="0.5"
                         value={targetTemperature}
                         onChange={(e) => {
@@ -343,8 +349,8 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                         disabled={thermostatinfo.failed_connection}
                     />
                     <div className="temperature-range">
-                        <span>{MinTemperature}°C</span>
-                        <span>{MaxTemperature}°C</span>
+                        <span>{thermostat.min_temperature}°C</span>
+                        <span>{thermostat.max_temperature}°C</span>
                     </div>
                 </div>
             </div>
