@@ -1,6 +1,5 @@
 import React from "react";
 
-const Testpage = React.lazy(() => import("./Pages/Testpage"));
 
 const Thermostats = React.lazy(() => import("./Pages/Thermostat"));
 //const DHT = React.lazy(() => import("./Pages/DHT"));
@@ -14,7 +13,6 @@ const Debug = React.lazy(() => import("./Pages/Debug"));
 const LogViewer = React.lazy(() => import("./Pages/LogViewer"));
 
 const routes = [
-  { path: "/testpage", exact: true, name: "Testpage", component: Testpage },
   { path: "/", exact: true, name: "Thermostat", component: Thermostats },
   { path: "/thermostat", exact: true, name: "Thermostat", component: Thermostats },
   //{ path: "/DHT", exact: true, name: "DHT", component: DHT },
