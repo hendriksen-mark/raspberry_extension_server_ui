@@ -91,41 +91,40 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
     return (
         <div className="content">
             <div className="inner">
-                <GlassContainer>
-                    <div className="top">
-                        <div className="row1">
-                            <div className="icon">
-                                <MdDeviceThermostat />
+                <CardGrid options="main">
+                    <GlassContainer options="spacer">
+                        <div className="top">
+                            <div className="row1">
+                                <div className="icon">
+                                    <MdDeviceThermostat />
+                                </div>
+                                <div className="text">Thermostats Settings</div>
+                                <IconButton
+                                    iconName={BsPlusCircle}
+                                    title="Info"
+                                    size="small"
+                                    color="green"
+                                    onClick={() => openWizard()}
+                                />
                             </div>
-                            <div className="text">Thermostats Settings</div>
+                            <FlipSwitch
+                                id="enable"
+                                value={thermostatConfig.enabled}
+                                onChange={(e) => handleEnableChange("enable", e)}
+                                checked={thermostatConfig.enabled}
+                                label="Enable"
+                                position="right"
+                            />
+                            <GenericText
+                                label="Interval"
+                                readOnly={false}
+                                type="number"
+                                placeholder="interval"
+                                value={String(thermostatConfig.interval)}
+                                onChange={(e) => handleIntervalChange(e)}
+                            />
                         </div>
-                        <FlipSwitch
-                            id="enable"
-                            value={thermostatConfig.enabled}
-                            onChange={(e) => handleEnableChange("enable", e)}
-                            checked={thermostatConfig.enabled}
-                            label="Enable"
-                            position="right"
-                        />
-                        <GenericText
-                            label="Interval"
-                            readOnly={false}
-                            type="number"
-                            placeholder="interval"
-                            value={String(thermostatConfig.interval)}
-                            onChange={(e) => handleIntervalChange(e)}
-                        />
-                    </div>
-                </GlassContainer>
-                <CardGrid>
-                    <IconButton
-                        iconName={BsPlusCircle}
-                        title="Add light"
-                        size="big"
-                        color="btn"
-                        label="Add light"
-                        onClick={() => openWizard()}
-                    />
+                    </GlassContainer>
                 </CardGrid>
 
                 <CardGrid>
@@ -143,7 +142,7 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
             <Wizard
                 isOpen={WizardIsOpen}
                 closeWizard={() => closeWizard(false)}
-                headline="Add Light"
+                headline="Add Thermostat"
             >
             </Wizard>
         </div>
