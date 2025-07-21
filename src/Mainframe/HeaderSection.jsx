@@ -1,10 +1,5 @@
-import { useState, useEffect } from "react";
-
-import axios from "axios";
 import { FaBars } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { toast } from "react-hot-toast";
-import FlipSwitch from "../components/FlipSwitch/FlipSwitch";
 
 import "./headerSection.scss";
 import NotificationCenter from "../components/NotificationCenter/NotificationCenter";

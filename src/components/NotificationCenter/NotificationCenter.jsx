@@ -20,7 +20,7 @@ const NotificationCenter = ({HOST_IP, CONFIG }) => {
   const handleupdate = (state) => {
     if (state === "anyreadytoinstall" || state === "allreadytoinstall") {
       axios
-        .put(`${HOST_IP}/api/config`, {
+        .put(`${HOST_IP}/config`, {
           swupdate2: { install: true },
         })
         .then((fetchedData) => {
@@ -34,7 +34,7 @@ const NotificationCenter = ({HOST_IP, CONFIG }) => {
     }
     if (state === "noupdates" || state === "unknown") {
       axios
-        .put(`${HOST_IP}/api/config`, {
+        .put(`${HOST_IP}/config`, {
           swupdate2: { checkforupdate: true, install: false },
         })
         .then((fetchedData) => {
