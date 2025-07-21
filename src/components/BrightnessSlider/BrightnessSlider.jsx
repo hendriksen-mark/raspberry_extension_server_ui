@@ -3,15 +3,18 @@ import { useState } from "react";
 
 import "./brightnessSlider.scss";
 
-const BrightnessSlider = ({ defaultValue, onChange, max = 254 }) => {
+const BrightnessSlider = ({ defaultValue, onChange, max = 254, min = 0, step = 1 }) => {
   const [value, setValue] = useState(Math.round(defaultValue));
 
   const handleChange = (e) => {
     const newValue = parseInt(e.target.value);
     setValue(newValue);
-    onChange(newValue);
   };
-// #region HTML
+
+  const handleDragEnd = () => {
+        onChange(value);
+    };
+  // #region HTML
   return (
     <motion.div
       className="sliderContainer"
@@ -34,12 +37,16 @@ const BrightnessSlider = ({ defaultValue, onChange, max = 254 }) => {
     >
       <input
         type="range"
-        min={1}
+        min={min}
         max={max}
         value={value}
-        step={1}
+        step={step}
         className="slider"
-        onChange={handleChange}
+        onChange={(e) => {
+          handleChange(e);
+        }}
+        onMouseUp={handleDragEnd}
+        onTouchEnd={handleDragEnd}
       />
       <div className="sliderValue">{value}</div>
     </motion.div>
