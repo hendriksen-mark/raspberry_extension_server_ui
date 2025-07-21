@@ -11,6 +11,8 @@ import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
 import GenericText from "../components/GenericText/GenericText";
 import FlipSwitch from "../components/FlipSwitch/FlipSwitch";
+import AddThermostat from "../components/addThermostat/addThermostat";
+import PageContent from "../components/PageContent/PageContent";
 
 export default function Thermostats({ HOST_IP, CONFIG }) {
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
@@ -72,19 +74,24 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
     };
 
     const updateConfig = (key, value) => {
-        axios.put(`${HOST_IP}/config`, {
-            key: key,
-            value: value,
-        })
+        axios
+            .put(`${HOST_IP}/config`, {
+                "thermostats": {
+                    [key]: value
+                }
+            })
             .then((response) => {
-                if (response.data.success) {
+                if (response.status === 200) {
                     console.log(`Configuration updated: ${key} = ${value}`);
+                    if (response.data.changes && response.data.changes.length > 0) {
+                        console.log(`Changes made: ${response.data.changes.join(', ')}`);
+                    }
                 } else {
-                    console.error(`Failed to update configuration: ${response.data.message}`);
+                    console.error(`Failed to update configuration: ${response.data.message || response.data.error}`);
                 }
             })
             .catch((error) => {
-                console.error(`Error updating configuration: ${error}`);
+                console.error(`Error updating configuration: ${error.response?.data?.error || error.message}`);
             });
     };
     // #region HTML
@@ -93,37 +100,39 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
             <div className="inner">
                 <CardGrid options="main">
                     <GlassContainer options="spacer">
-                        <div className="top">
-                            <div className="row1">
-                                <div className="icon">
-                                    <MdDeviceThermostat />
+                        <PageContent>
+                            <div className="top">
+                                <div className="row1">
+                                    <div className="icon">
+                                        <MdDeviceThermostat />
+                                    </div>
+                                    <div className="text">Thermostats Settings</div>
+                                    <IconButton
+                                        iconName={BsPlusCircle}
+                                        title="Info"
+                                        size="small"
+                                        color="green"
+                                        onClick={() => openWizard()}
+                                    />
                                 </div>
-                                <div className="text">Thermostats Settings</div>
-                                <IconButton
-                                    iconName={BsPlusCircle}
-                                    title="Info"
-                                    size="small"
-                                    color="green"
-                                    onClick={() => openWizard()}
+                                <FlipSwitch
+                                    id="enable"
+                                    value={thermostatConfig.enabled}
+                                    onChange={(e) => handleEnableChange("enable", e)}
+                                    checked={thermostatConfig.enabled}
+                                    label="Enable"
+                                    position="right"
+                                />
+                                <GenericText
+                                    label="Interval"
+                                    readOnly={false}
+                                    type="number"
+                                    placeholder="interval"
+                                    value={String(thermostatConfig.interval)}
+                                    onChange={(e) => handleIntervalChange(e)}
                                 />
                             </div>
-                            <FlipSwitch
-                                id="enable"
-                                value={thermostatConfig.enabled}
-                                onChange={(e) => handleEnableChange("enable", e)}
-                                checked={thermostatConfig.enabled}
-                                label="Enable"
-                                position="right"
-                            />
-                            <GenericText
-                                label="Interval"
-                                readOnly={false}
-                                type="number"
-                                placeholder="interval"
-                                value={String(thermostatConfig.interval)}
-                                onChange={(e) => handleIntervalChange(e)}
-                            />
-                        </div>
+                        </PageContent>
                     </GlassContainer>
                 </CardGrid>
 
@@ -144,6 +153,7 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
                 closeWizard={() => closeWizard(false)}
                 headline="Add Thermostat"
             >
+                <AddThermostat HOST_IP={HOST_IP} closeWizard={closeWizard} />
             </Wizard>
         </div>
     );

@@ -190,7 +190,7 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                         readOnly={true}
                         type="text"
                         placeholder="last_updated"
-                        value={thermostatinfo.last_updated.toLocaleString()}
+                        value={thermostatinfo?.last_updated?.toLocaleString()}
                     />
                 </div>
                 <div className="form-control">
@@ -199,7 +199,7 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                         readOnly={true}
                         type="text"
                         placeholder="first_seen"
-                        value={thermostatinfo.first_seen.toLocaleString()}
+                        value={thermostatinfo?.first_seen?.toLocaleString()}
                     />
                 </div>
                 <div className="form-control">
@@ -285,16 +285,18 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
 
                 {/* Status Indicators */}
                 <div className="status-indicators">
-                    <div className="status-item">
-                        <BsThermometerHalf />
-                        <span>Current: {thermostatinfo.currentTemperature.toFixed(1)}°C</span>
-                    </div>
-                    {thermostatinfo.DHT_connected && (
+                    <div className="status-row">
                         <div className="status-item">
-                            <BsDropletHalf />
-                            <span>Humidity: {thermostatinfo.currentRelativeHumidity}%</span>
+                            <BsThermometerHalf />
+                            <span>Current: {thermostatinfo.currentTemperature.toFixed(1)}°C</span>
                         </div>
-                    )}
+                        {thermostatinfo.DHT_connected && (
+                            <div className="status-item">
+                                <BsDropletHalf />
+                                <span>Humidity: {thermostatinfo.currentRelativeHumidity}%</span>
+                            </div>
+                        )}
+                    </div>
                     <div className="status-item">
                         <span className={`connection-status ${thermostatinfo.failed_connection ? 'offline' : 'online'}`}>
                             {thermostatinfo.failed_connection ? 'Offline' : 'Online'}
