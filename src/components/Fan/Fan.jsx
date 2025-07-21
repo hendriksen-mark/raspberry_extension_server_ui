@@ -31,7 +31,7 @@ const fanObject = ({ HOST_IP, fan }) => {
         }
         console.log("Saving fan configuration:", faninfo);
         axios
-            .post(`${HOST_IP}/fan`, { faninfo })
+            .post(`${HOST_IP}/fan`, faninfo)
             .then((response) => {
                 toast.success("fan configuration saved successfully");
                 setIsModified(false); // Reset modified state after saving
