@@ -73,13 +73,13 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
     const handleModeChange = (mode) => {
         setTargetMode(mode);
         setIsModified(true); // Mark as modified
-        updateThermostat(`/targetHeatingCoolingState/?value=${mode}`);
+        updateThermostat(`targetHeatingCoolingState/?value=${mode}`);
     };
 
     const handleTemperatureChange = (newTemp) => {
         if (!isDragging) {
             setTargetTemperature(newTemp);
-            updateThermostat(`/targetTemperature/?value=${newTemp}`);
+            updateThermostat(`targetTemperature/?value=${newTemp}`);
         } else {
             setTargetTemperature(newTemp);
         }
@@ -88,7 +88,7 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
 
     const handleTemperatureDragEnd = () => {
         setIsDragging(false);
-        updateThermostat(`/targetTemperature/?value=${targetTemperature}`);
+        updateThermostat(`targetTemperature/?value=${targetTemperature}`);
     };
 
     const handleMaxTemperatureChange = (value) => {

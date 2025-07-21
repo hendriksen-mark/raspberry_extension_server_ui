@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { BsPlusCircle } from "react-icons/bs";
-import { MdDeviceThermostat } from "react-icons/md";
+import { WiHumidity } from "react-icons/wi";
 import axios from "axios";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
-import Thermostat from "../components/Thermostat/Thermostat";
+import DHTObject from "../components/DHT/DHT";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
 import GenericText from "../components/GenericText/GenericText";
 import FlipSwitch from "../components/FlipSwitch/FlipSwitch";
-import AddThermostat from "../components/addThermostat/addThermostat";
+import AddDHT from "../components/addDHT/addDHT";
 import PageContent from "../components/PageContent/PageContent";
 
-export default function Thermostats({ HOST_IP, CONFIG }) {
+export default function DHT({ HOST_IP, CONFIG }) {
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
-    const [thermostats, setThermostats] = useState(CONFIG.thermostats);
-    const [thermostatConfig, setThermostatConfig] = useState(CONFIG.config.thermostats);
+    const [dhtinfo, setDhtInfo] = useState(CONFIG.dht);
+    const [dhtConfig, setDhtConfig] = useState(CONFIG.config.dht);
     const [isModified, setIsModified] = useState(false); // Track user modifications
 
     const openWizard = () => {
@@ -46,14 +46,14 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
     };
 
     useEffect(() => {
-        setThermostats(CONFIG.thermostats);
+        setDhtInfo(CONFIG.dht);
         if (!isModified) {
-            setThermostatConfig(CONFIG.config.thermostats);
+            setDhtConfig(CONFIG.config.dht);
         }
     }, [CONFIG]);
 
     const handleEnableChange = (key, value) => {
-        setThermostatConfig((prevConfig) => ({
+        setDhtConfig((prevConfig) => ({
             ...prevConfig,
             [key]: value
         }));
@@ -64,7 +64,7 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
     const handleIntervalChange = (e) => {
         const value = parseInt(e, 10);
         if (!isNaN(value)) {
-            setThermostatConfig((prevConfig) => ({
+            setDhtConfig((prevConfig) => ({
                 ...prevConfig,
                 interval: value
             }));
@@ -76,7 +76,7 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
     const updateConfig = (key, value) => {
         axios
             .put(`${HOST_IP}/config`, {
-                "thermostats": {
+                "dht": {
                     [key]: value
                 }
             })
@@ -104,22 +104,24 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
                             <div className="top">
                                 <div className="row1">
                                     <div className="icon">
-                                        <MdDeviceThermostat />
+                                        <WiHumidity />
                                     </div>
-                                    <div className="text">Thermostats Settings</div>
-                                    <IconButton
-                                        iconName={BsPlusCircle}
-                                        title="Add Thermostat"
-                                        size="small"
-                                        color="green"
-                                        onClick={() => openWizard()}
-                                    />
+                                    <div className="text">DHT Settings</div>
+                                    {(!dhtinfo || Object.keys(dhtinfo).length === 0) && (
+                                        <IconButton
+                                            iconName={BsPlusCircle}
+                                            title="Add DHT Sensor"
+                                            size="small"
+                                            color="green"
+                                            onClick={() => openWizard()}
+                                        />
+                                    )}
                                 </div>
                                 <FlipSwitch
                                     id="enable"
-                                    value={thermostatConfig.enabled}
+                                    value={dhtConfig.enabled}
                                     onChange={(e) => handleEnableChange("enable", e)}
-                                    checked={thermostatConfig.enabled}
+                                    checked={dhtConfig.enabled}
                                     label="Enable"
                                     position="right"
                                 />
@@ -128,7 +130,7 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
                                     readOnly={false}
                                     type="number"
                                     placeholder="interval"
-                                    value={String(thermostatConfig.interval)}
+                                    value={String(dhtConfig.interval)}
                                     onChange={(e) => handleIntervalChange(e)}
                                 />
                             </div>
@@ -137,23 +139,21 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
                 </CardGrid>
 
                 <CardGrid>
-                    {Object.entries(thermostats).map(([id, thermostatconfig]) => (
-                        <Thermostat
-                            key={id}
+                    {(dhtinfo && Object.keys(dhtinfo).length > 0) && (
+                        <DHTObject
                             HOST_IP={HOST_IP}
-                            id={id}
-                            thermostat={thermostatconfig}
+                            dht={dhtinfo}
                         />
-                    ))}
+                    )}
                 </CardGrid>
             </div>
 
             <Wizard
                 isOpen={WizardIsOpen}
                 closeWizard={() => closeWizard(false)}
-                headline="Add Thermostat"
+                headline="Add DHT Sensor"
             >
-                <AddThermostat HOST_IP={HOST_IP} closeWizard={closeWizard} />
+                <AddDHT HOST_IP={HOST_IP} closeWizard={closeWizard} />
             </Wizard>
         </div>
     );
