@@ -3,7 +3,7 @@ import React from "react";
 
 const Thermostats = React.lazy(() => import("./Pages/Thermostat"));
 const DHT = React.lazy(() => import("./Pages/DHT"));
-//const Klok = React.lazy(() => import("./Pages/Klok"));
+const Klok = React.lazy(() => import("./Pages/Klok"));
 //const Fan = React.lazy(() => import("./Pages/Fan"));
 //const PowerButton = React.lazy(() => import("./Pages/PowerButton"));
 const About = React.lazy(() => import("./Pages/About"));
@@ -16,7 +16,7 @@ const routes = [
   { path: "/", exact: true, name: "Thermostat", component: Thermostats },
   { path: "/thermostat", exact: true, name: "Thermostat", component: Thermostats },
   { path: "/DHT", exact: true, name: "DHT", component: DHT },
-  //{ path: "/klok", exact: true, name: "Klok", component: Klok },
+  { path: "/klok", exact: true, name: "Klok", component: Klok },
   //{ path: "/fan", exact: true, name: "Fan", component: Fan },
   //{ path: "/powerbutton", exact: true, name: "PowerButton", component: PowerButton },
   { path: "/about", exact: true, name: "About", component: About },
