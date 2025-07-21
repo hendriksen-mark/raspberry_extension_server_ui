@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { MdDeleteForever, MdDeviceThermostat, MdSettings } from "react-icons/md";
-import { FaPowerOff, FaFire, FaInfoCircle, FaAdjust } from "react-icons/fa";
+import { MdDeleteForever, MdSettings } from "react-icons/md";
+import { FaPowerOff, FaFire, FaAdjust } from "react-icons/fa";
 import { BsThermometerHalf, BsDropletHalf } from "react-icons/bs";
 import { IoIosInformationCircle } from "react-icons/io";
 import Wizard from "../Wizard/Wizard";
@@ -17,7 +16,6 @@ import GenericButton from "../GenericButton/GenericButton";
 import "./ThermostatControl.scss";
 
 const Thermostat = ({ HOST_IP, id, thermostat }) => {
-    const navigate = useNavigate();
     const [thermostatinfo, setThermostat] = useState(thermostat);
     const [targetTemperature, setTargetTemperature] = useState(thermostat.targetTemperature);
     const [targetMode, setTargetMode] = useState(thermostat.targetMode);
@@ -49,6 +47,7 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
     };
 
     useEffect(() => {
+        setThermostat(thermostat);
         if (!isModified) {
             setThermostat(thermostat);
             setTargetTemperature(thermostat.targetTemperature);
@@ -313,7 +312,7 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                                 key={value}
                                 className={`mode-button ${targetMode === value ? 'active' : ''}`}
                                 onClick={() => handleModeChange(value)}
-                                disabled={false}
+                                disabled={thermostatinfo.failed_connection}
                             >
                                 <div className="mode-icon">
                                     <IconComponent />
