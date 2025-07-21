@@ -5,7 +5,7 @@ const Thermostats = React.lazy(() => import("./Pages/Thermostat"));
 const DHT = React.lazy(() => import("./Pages/DHT"));
 const Klok = React.lazy(() => import("./Pages/Klok"));
 const Fan = React.lazy(() => import("./Pages/Fan"));
-//const PowerButton = React.lazy(() => import("./Pages/PowerButton"));
+const PowerButton = React.lazy(() => import("./Pages/PowerButton"));
 const About = React.lazy(() => import("./Pages/About"));
 const Settings = React.lazy(() => import("./Pages/Settings"));
 const Account = React.lazy(() => import("./Pages/Account"));
@@ -18,7 +18,7 @@ const routes = [
   { path: "/DHT", exact: true, name: "DHT", component: DHT },
   { path: "/klok", exact: true, name: "Klok", component: Klok },
   { path: "/fan", exact: true, name: "Fan", component: Fan },
-  //{ path: "/powerbutton", exact: true, name: "PowerButton", component: PowerButton },
+  { path: "/powerbutton", exact: true, name: "PowerButton", component: PowerButton },
   { path: "/about", exact: true, name: "About", component: About },
   { path: "/settings", exact: true, name: "Settings", component: Settings },
   { path: "/account", exact: true, name: "Account", component: Account },
