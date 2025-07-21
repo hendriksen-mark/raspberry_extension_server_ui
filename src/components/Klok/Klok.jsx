@@ -13,8 +13,6 @@ import GenericButton from "../GenericButton/GenericButton";
 import BrightnessSlider from "../BrightnessSlider/BrightnessSlider";
 import FlipSwitch from "../FlipSwitch/FlipSwitch";
 
-//import "./Klok.scss";
-
 const KlokObject = ({ HOST_IP, klok }) => {
     const [Klokinfo, setKlokInfo] = useState(klok);
     const [power, setPower] = useState(klok.power_state);
