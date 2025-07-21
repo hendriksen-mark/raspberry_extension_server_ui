@@ -17,7 +17,7 @@ const Layout = ({ HOST_IP }) => {
   const isMobile = useMediaQuery({ query: `(max-width: 750px)` });
   const [showSidebar, setShowSidebar] = useState(!isMobile);
   const [CONFIG, setConfig] = useState({
-    config: { webserver: { interval: 2000 } },
+    config: { webserver: { interval: 2 } },
     thermostats: {},
     dht: {},
     klok: {},
@@ -49,7 +49,7 @@ const Layout = ({ HOST_IP }) => {
 
     const interval = setInterval(() => {
       fetchConfig();
-    }, CONFIG.config.webserver.interval); // <<-- ⏱ 1000ms = 1s
+    }, (CONFIG.config.webserver.interval * 1000)); // <<-- ⏱ 1000ms = 1s
 
     return () => clearInterval(interval);
   }, []);
