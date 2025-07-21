@@ -105,11 +105,11 @@ export default function Klok({ HOST_IP, CONFIG }) {
                                     )}
                                 </div>
                                 <FlipSwitch
-                                    id="enable"
+                                    id="enabled"
                                     value={klokConfig.enabled}
-                                    onChange={(e) => handleEnableChange("enable", e)}
+                                    onChange={(e) => handleEnableChange("enabled", e)}
                                     checked={klokConfig.enabled}
-                                    label="Enable"
+                                    label="enabled"
                                     position="right"
                                 />
                             </div>

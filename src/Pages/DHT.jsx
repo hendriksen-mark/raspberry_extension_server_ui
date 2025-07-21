@@ -118,11 +118,11 @@ export default function DHT({ HOST_IP, CONFIG }) {
                                     )}
                                 </div>
                                 <FlipSwitch
-                                    id="enable"
+                                    id="enabled"
                                     value={dhtConfig.enabled}
-                                    onChange={(e) => handleEnableChange("enable", e)}
+                                    onChange={(e) => handleEnableChange("enabled", e)}
                                     checked={dhtConfig.enabled}
-                                    label="Enable"
+                                    label="enabled"
                                     position="right"
                                 />
                                 <GenericText

@@ -116,11 +116,11 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
                                     />
                                 </div>
                                 <FlipSwitch
-                                    id="enable"
+                                    id="enabled"
                                     value={thermostatConfig.enabled}
-                                    onChange={(e) => handleEnableChange("enable", e)}
+                                    onChange={(e) => handleEnableChange("enabled", e)}
                                     checked={thermostatConfig.enabled}
-                                    label="Enable"
+                                    label="enabled"
                                     position="right"
                                 />
                                 <GenericText
