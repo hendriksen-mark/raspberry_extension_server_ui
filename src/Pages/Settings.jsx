@@ -8,9 +8,10 @@ import GenericText from "../components/GenericText/GenericText";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
+import FlipSwitch from "../components/FlipSwitch/FlipSwitch";
 
 const Settings = ({ HOST_IP, CONFIG }) => {
-  const [webserverConfig, setWebserverConfig] = useState(CONFIG.config.webserver);
+  const [ServerConfig, setServerConfig] = useState(CONFIG.config);
   const [isModified, setIsModified] = useState(false); // Track user modifications
   const [WizardIsOpen, setWizardIsOpen] = useState(false);
   const [WizardName, setWizardName] = useState("");
@@ -27,16 +28,19 @@ const Settings = ({ HOST_IP, CONFIG }) => {
 
   useEffect(() => {
     if (!isModified) {
-      setWebserverConfig(CONFIG.config.webserver);
+      setServerConfig(CONFIG.config);
     }
   }, [CONFIG, isModified]);
 
   const handleIntervalChange = (e) => {
     const value = parseInt(e, 10);
     if (!isNaN(value)) {
-      setWebserverConfig((prevConfig) => ({
+      setServerConfig((prevConfig) => ({
         ...prevConfig,
-        interval: value
+        webserver: {
+          ...prevConfig.webserver,
+          interval: value
+        }
       }));
       setIsModified(true); // Mark as modified
     }
@@ -45,9 +49,19 @@ const Settings = ({ HOST_IP, CONFIG }) => {
   const handleBranchChange = (e) => {
     const value = e.trim();
     if (value) {
-      setWebserverConfig((prevConfig) => ({
+      setServerConfig((prevConfig) => ({
         ...prevConfig,
         branch: value
+      }));
+      setIsModified(true); // Mark as modified
+    }
+  };
+  const handleLogLevelChange = (e) => {
+    const value = e.trim();
+    if (value) {
+      setServerConfig((prevConfig) => ({
+        ...prevConfig,
+        loglevel: value
       }));
       setIsModified(true); // Mark as modified
     }
@@ -56,9 +70,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
   // Modularized submit functions
   const updateConfig = () => {
     axios
-      .put(`${HOST_IP}/config`, {
-        "webserver": webserverConfig
-      })
+      .put(`${HOST_IP}/config`, ServerConfig)
       .then((response) => {
         if (response.status === 200) {
           console.log(`Configuration updated`);
@@ -119,7 +131,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
       .get(`${HOST_IP}/save`)
       .then(() => {
         toast.success("Config dumped to local disk");
-        if (restart === true){
+        if (restart === true) {
           Restart();
         }
       })
@@ -340,7 +352,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     closeWizard()
   };
 
-// #region HTML
+  // #region HTML
   return (
     <div className="inner">
       <CardGrid options="main">
@@ -354,7 +366,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
                   readOnly={false}
                   type="number"
                   placeholder="interval"
-                  value={String(webserverConfig.interval)}
+                  value={String(ServerConfig.webserver.interval)}
                   onChange={(e) => handleIntervalChange(e)}
                 />
               </div>
@@ -364,8 +376,18 @@ const Settings = ({ HOST_IP, CONFIG }) => {
                   readOnly={false}
                   type="text"
                   placeholder="branch"
-                  value={String(webserverConfig.branch)}
+                  value={String(ServerConfig.branch)}
                   onChange={(e) => handleBranchChange(e)}
+                />
+              </div>
+              <div className="form-control">
+                <FlipSwitch
+                  id="Debug"
+                  value={ServerConfig.loglevel === "DEBUG" ? true : false}
+                  onChange={(e) => handleLogLevelChange(e === true ? "DEBUG" : "INFO")}
+                  checked={ServerConfig.loglevel === "DEBUG" ? true : false}
+                  label="Temporarily Enable Debug Log"
+                  position="right"
                 />
               </div>
               <div className="form-control">
