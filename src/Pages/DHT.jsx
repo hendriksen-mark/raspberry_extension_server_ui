@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { WiHumidity } from "react-icons/wi";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
@@ -83,6 +84,7 @@ export default function DHT({ HOST_IP, CONFIG }) {
             .then((response) => {
                 if (response.status === 200) {
                     console.log(`Configuration updated: ${key} = ${value}`);
+                    toast.success(`Configuration updated: ${key} = ${value}`);
                     if (response.data.changes && response.data.changes.length > 0) {
                         console.log(`Changes made: ${response.data.changes.join(', ')}`);
                     }
