@@ -36,7 +36,7 @@ const DHTObject = ({ HOST_IP, dht }) => {
         axios
             .post(`${HOST_IP}/dht`, {
                 sensor_type: dhtinfo.sensor_type,
-                sensor_pin: dhtinfo.sensor_pin,
+                dht_pin: dhtinfo.dht_pin,
                 MAX_DHT_TEMP: dhtinfo.MAX_DHT_TEMP,
                 MIN_DHT_TEMP: dhtinfo.MIN_DHT_TEMP,
                 MAX_HUMIDITY: dhtinfo.MAX_HUMIDITY,
@@ -112,8 +112,8 @@ const DHTObject = ({ HOST_IP, dht }) => {
                         label="Sensor Pin"
                         readOnly={true}
                         type="text"
-                        placeholder="sensor_pin"
-                        value={dhtinfo.sensor_pin}
+                        placeholder="dht_pin"
+                        value={dhtinfo.dht_pin}
                     />
                 </div>
                 <div className="form-control">
