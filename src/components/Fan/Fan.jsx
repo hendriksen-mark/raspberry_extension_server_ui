@@ -171,7 +171,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         type="number"
                         placeholder="gpio_pin"
                         value={faninfo.GPIO_pin}
-                        onChange={(e) => handleConfigChange("GPIO_pin", e)}
+                        onChange={(e) => handleConfigChange("GPIO_pin", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -181,7 +181,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         type="number"
                         placeholder="pwm_frequency"
                         value={faninfo.pwm_frequency}
-                        onChange={(e) => handleConfigChange("pwm_frequency", e)}
+                        onChange={(e) => handleConfigChange("pwm_frequency", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -191,7 +191,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         type="number"
                         placeholder="max_temperature"
                         value={faninfo.max_temperature}
-                        onChange={(e) => handleConfigChange("max_temperature", e)}
+                        onChange={(e) => handleConfigChange("max_temperature", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -201,7 +201,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         type="number"
                         placeholder="min_temperature"
                         value={faninfo.min_temperature}
-                        onChange={(e) => handleConfigChange("min_temperature", e)}
+                        onChange={(e) => handleConfigChange("min_temperature", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -211,7 +211,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         type="number"
                         placeholder="max_speed"
                         value={faninfo.max_speed}
-                        onChange={(e) => handleConfigChange("max_speed", e)}
+                        onChange={(e) => handleConfigChange("max_speed", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -221,7 +221,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         type="number"
                         placeholder="min_speed"
                         value={faninfo.min_speed}
-                        onChange={(e) => handleConfigChange("min_speed", e)}
+                        onChange={(e) => handleConfigChange("min_speed", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -231,7 +231,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         type="number"
                         placeholder="temp_change_threshold"
                         value={faninfo.temp_change_threshold}
-                        onChange={(e) => handleConfigChange("temp_change_threshold", e)}
+                        onChange={(e) => handleConfigChange("temp_change_threshold", parseFloat(e))}
                     />
                 </div>
                 <div className="form-control">

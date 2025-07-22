@@ -44,70 +44,70 @@ const AddDHT = ({ HOST_IP, closeWizard }) => {
             <GenericText
                 label="Sensor Pin"
                 readOnly={false}
-                type="text"
+                type="number"
                 placeholder="sensor_pin"
                 value={dhtData.sensor_pin}
-                onChange={(e) => handleConfigChange("sensor_pin", e)}
+                onChange={(e) => handleConfigChange("sensor_pin", parseInt(e))}
             />
         </div>
         <div className="form-control">
             <GenericText
                 label="Max Temperature"
                 readOnly={false}
-                type="text"
+                type="number"
                 placeholder="max_temperature"
                 value={dhtData.MAX_DHT_TEMP}
-                onChange={(e) => handleConfigChange("MAX_DHT_TEMP", e)}
+                onChange={(e) => handleConfigChange("MAX_DHT_TEMP", parseFloat(e))}
             />
         </div>
         <div className="form-control">
             <GenericText
                 label="Min Temperature"
                 readOnly={false}
-                type="text"
+                type="number"
                 placeholder="min_temperature"
                 value={dhtData.MIN_DHT_TEMP}
-                onChange={(e) => handleConfigChange("MIN_DHT_TEMP", e)}
+                onChange={(e) => handleConfigChange("MIN_DHT_TEMP", parseFloat(e))}
             />
         </div>
         <div className="form-control">
             <GenericText
                 label="Max Humidity"
                 readOnly={false}
-                type="text"
+                type="number"
                 placeholder="MAX_HUMIDITY"
                 value={dhtData.MAX_HUMIDITY}
-                onChange={(e) => handleConfigChange("MAX_HUMIDITY", e)}
+                onChange={(e) => handleConfigChange("MAX_HUMIDITY", parseFloat(e))}
             />
         </div>
         <div className="form-control">
             <GenericText
                 label="Min Humidity"
                 readOnly={false}
-                type="text"
+                type="number"
                 placeholder="MIN_HUMIDITY"
                 value={dhtData.MIN_HUMIDITY}
-                onChange={(e) => handleConfigChange("MIN_HUMIDITY", e)}
+                onChange={(e) => handleConfigChange("MIN_HUMIDITY", parseFloat(e))}
             />
         </div>
         <div className="form-control">
             <GenericText
                 label="Temperature Change Threshold"
                 readOnly={false}
-                type="text"
+                type="number"
                 placeholder="TEMP_CHANGE_THRESHOLD"
                 value={dhtData.DHT_TEMP_CHANGE_THRESHOLD}
-                onChange={(e) => handleConfigChange("DHT_TEMP_CHANGE_THRESHOLD", e)}
+                onChange={(e) => handleConfigChange("DHT_TEMP_CHANGE_THRESHOLD", parseFloat(e))}
             />
         </div>
         <div className="form-control">
             <GenericText
                 label="Humidity Change Threshold"
                 readOnly={false}
-                type="text"
+                type="number"
                 placeholder="HUMIDITY_CHANGE_THRESHOLD"
                 value={dhtData.DHT_HUMIDITY_CHANGE_THRESHOLD}
-                onChange={(e) => handleConfigChange("DHT_HUMIDITY_CHANGE_THRESHOLD", e)}
+                onChange={(e) => handleConfigChange("DHT_HUMIDITY_CHANGE_THRESHOLD", parseFloat(e))}
             />
         </div>
 

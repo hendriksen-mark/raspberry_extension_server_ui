@@ -197,17 +197,17 @@ const DHTObject = ({ HOST_IP, dht }) => {
                     <GenericText
                         label="Sensor Pin"
                         readOnly={false}
-                        type="text"
+                        type="number"
                         placeholder="sensor_pin"
                         value={dhtinfo.sensor_pin}
-                        onChange={(e) => handleConfigChange("sensor_pin", parseFloat(e))}
+                        onChange={(e) => handleConfigChange("sensor_pin", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
                     <GenericText
                         label="Max Temperature"
                         readOnly={false}
-                        type="text"
+                        type="number"
                         placeholder="max_temperature"
                         value={dhtinfo.MAX_DHT_TEMP}
                         onChange={(e) => handleConfigChange("MAX_DHT_TEMP", parseFloat(e))}
@@ -217,7 +217,7 @@ const DHTObject = ({ HOST_IP, dht }) => {
                     <GenericText
                         label="Min Temperature"
                         readOnly={false}
-                        type="text"
+                        type="number"
                         placeholder="min_temperature"
                         value={dhtinfo.MIN_DHT_TEMP}
                         onChange={(e) => handleConfigChange("MIN_DHT_TEMP", parseFloat(e))}
@@ -227,7 +227,7 @@ const DHTObject = ({ HOST_IP, dht }) => {
                     <GenericText
                         label="Max Humidity"
                         readOnly={false}
-                        type="text"
+                        type="number"
                         placeholder="MAX_HUMIDITY"
                         value={dhtinfo.MAX_HUMIDITY}
                         onChange={(e) => handleConfigChange("MAX_HUMIDITY", parseFloat(e))}
@@ -237,7 +237,7 @@ const DHTObject = ({ HOST_IP, dht }) => {
                     <GenericText
                         label="Min Humidity"
                         readOnly={false}
-                        type="text"
+                        type="number"
                         placeholder="MIN_HUMIDITY"
                         value={dhtinfo.MIN_HUMIDITY}
                         onChange={(e) => handleConfigChange("MIN_HUMIDITY", parseFloat(e))}
@@ -247,7 +247,7 @@ const DHTObject = ({ HOST_IP, dht }) => {
                     <GenericText
                         label="Temperature Change Threshold"
                         readOnly={false}
-                        type="text"
+                        type="number"
                         placeholder="TEMP_CHANGE_THRESHOLD"
                         value={dhtinfo.DHT_TEMP_CHANGE_THRESHOLD}
                         onChange={(e) => handleConfigChange("DHT_TEMP_CHANGE_THRESHOLD", parseFloat(e))}
@@ -257,7 +257,7 @@ const DHTObject = ({ HOST_IP, dht }) => {
                     <GenericText
                         label="Humidity Change Threshold"
                         readOnly={false}
-                        type="text"
+                        type="number"
                         placeholder="HUMIDITY_CHANGE_THRESHOLD"
                         value={dhtinfo.DHT_HUMIDITY_CHANGE_THRESHOLD}
                         onChange={(e) => handleConfigChange("DHT_HUMIDITY_CHANGE_THRESHOLD", parseFloat(e))}

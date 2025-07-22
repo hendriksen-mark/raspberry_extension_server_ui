@@ -135,7 +135,7 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                         type="number"
                         placeholder="button_pin"
                         value={powerbuttoninfo.button_pin}
-                        onChange={(e) => handleConfigChange("button_pin", e)}
+                        onChange={(e) => handleConfigChange("button_pin", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -145,7 +145,7 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                         type="number"
                         placeholder="long_press_duration"
                         value={powerbuttoninfo.long_press_duration}
-                        onChange={(e) => handleConfigChange("long_press_duration", e)}
+                        onChange={(e) => handleConfigChange("long_press_duration", parseFloat(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -155,7 +155,7 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                         type="number"
                         placeholder="debounce_time"
                         value={powerbuttoninfo.debounce_time}
-                        onChange={(e) => handleConfigChange("debounce_time", e)}
+                        onChange={(e) => handleConfigChange("debounce_time", parseFloat(e))}
                     />
                 </div>
                 <div className="form-control">

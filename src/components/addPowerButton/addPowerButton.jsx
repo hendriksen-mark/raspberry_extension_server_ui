@@ -37,7 +37,7 @@ const AddPowerButton = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="button_pin"
                 value={powerbuttonData.button_pin}
-                onChange={(e) => handleConfigChange("button_pin", e)}
+                onChange={(e) => handleConfigChange("button_pin", parseInt(e))}
             />
         </div>
         <div className="form-control">
@@ -47,7 +47,7 @@ const AddPowerButton = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="long_press_duration"
                 value={powerbuttonData.long_press_duration}
-                onChange={(e) => handleConfigChange("long_press_duration", e)}
+                onChange={(e) => handleConfigChange("long_press_duration", parseFloat(e))}
             />
         </div>
         <div className="form-control">
@@ -57,7 +57,7 @@ const AddPowerButton = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="debounce_time"
                 value={powerbuttonData.debounce_time}
-                onChange={(e) => handleConfigChange("debounce_time", e)}
+                onChange={(e) => handleConfigChange("debounce_time", parseFloat(e))}
             />
         </div>
 

@@ -37,7 +37,7 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="gpio_pin"
                 value={fanData.GPIO_pin}
-                onChange={(e) => handleConfigChange("GPIO_pin", e)}
+                onChange={(e) => handleConfigChange("GPIO_pin", parseInt(e))}
             />
         </div>
         <div className="form-control">
@@ -47,7 +47,7 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="pwm_frequency"
                 value={fanData.pwm_frequency}
-                onChange={(e) => handleConfigChange("pwm_frequency", e)}
+                onChange={(e) => handleConfigChange("pwm_frequency", parseInt(e))}
             />
         </div>
         <div className="form-control">
@@ -57,7 +57,7 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="max_temperature"
                 value={fanData.max_temperature}
-                onChange={(e) => handleConfigChange("max_temperature", e)}
+                onChange={(e) => handleConfigChange("max_temperature", parseInt(e))}
             />
         </div>
         <div className="form-control">
@@ -67,7 +67,7 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="min_temperature"
                 value={fanData.min_temperature}
-                onChange={(e) => handleConfigChange("min_temperature", e)}
+                onChange={(e) => handleConfigChange("min_temperature", parseInt(e))}
             />
         </div>
         <div className="form-control">
@@ -77,7 +77,7 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="max_speed"
                 value={fanData.max_speed}
-                onChange={(e) => handleConfigChange("max_speed", e)}
+                onChange={(e) => handleConfigChange("max_speed", parseInt(e))}
             />
         </div>
         <div className="form-control">
@@ -87,7 +87,7 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="min_speed"
                 value={fanData.min_speed}
-                onChange={(e) => handleConfigChange("min_speed", e)}
+                onChange={(e) => handleConfigChange("min_speed", parseInt(e))}
             />
         </div>
         <div className="form-control">
@@ -97,7 +97,7 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="temp_change_threshold"
                 value={fanData.temp_change_threshold}
-                onChange={(e) => handleConfigChange("temp_change_threshold", e)}
+                onChange={(e) => handleConfigChange("temp_change_threshold", parseFloat(e))}
             />
         </div>
 

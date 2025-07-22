@@ -37,7 +37,7 @@ const AddKlok = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="clk_pin"
                 value={KlokData.CLK_pin}
-                onChange={(e) => handleConfigChange("CLK_pin", e)}
+                onChange={(e) => handleConfigChange("CLK_pin", parseInt(e))}
             />
         </div>
         <div className="form-control">
@@ -47,7 +47,7 @@ const AddKlok = ({ HOST_IP, closeWizard }) => {
                 type="number"
                 placeholder="DIO_pin"
                 value={KlokData.DIO_pin}
-                onChange={(e) => handleConfigChange("DIO_pin", e)}
+                onChange={(e) => handleConfigChange("DIO_pin", parseInt(e))}
             />
         </div>
 

@@ -160,7 +160,7 @@ const KlokObject = ({ HOST_IP, klok }) => {
                         type="number"
                         placeholder="clk_pin"
                         value={Klokinfo.CLK_pin}
-                        onChange={(e) => handleCLKChange(e)}
+                        onChange={(e) => handleCLKChange(parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
@@ -170,7 +170,7 @@ const KlokObject = ({ HOST_IP, klok }) => {
                         type="number"
                         placeholder="DIO_pin"
                         value={Klokinfo.DIO_pin}
-                        onChange={(e) => handleDIOChange(e)}
+                        onChange={(e) => handleDIOChange(parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
