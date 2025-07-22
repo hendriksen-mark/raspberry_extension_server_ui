@@ -45,9 +45,9 @@ const AddDHT = ({ HOST_IP, closeWizard }) => {
                 label="Sensor Pin"
                 readOnly={false}
                 type="number"
-                placeholder="sensor_pin"
-                value={dhtData.sensor_pin}
-                onChange={(e) => handleConfigChange("sensor_pin", parseInt(e))}
+                placeholder="dht_pin"
+                value={dhtData.dht_pin}
+                onChange={(e) => handleConfigChange("dht_pin", parseInt(e))}
             />
         </div>
         <div className="form-control">

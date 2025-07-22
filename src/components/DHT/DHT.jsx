@@ -198,9 +198,9 @@ const DHTObject = ({ HOST_IP, dht }) => {
                         label="Sensor Pin"
                         readOnly={false}
                         type="number"
-                        placeholder="sensor_pin"
-                        value={dhtinfo.sensor_pin}
-                        onChange={(e) => handleConfigChange("sensor_pin", parseInt(e))}
+                        placeholder="dht_pin"
+                        value={dhtinfo.dht_pin}
+                        onChange={(e) => handleConfigChange("dht_pin", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">
