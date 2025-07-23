@@ -51,7 +51,10 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     if (value) {
       setServerConfig((prevConfig) => ({
         ...prevConfig,
-        branch: value
+        system: {
+          ...prevConfig.system,
+          branch: value
+        }
       }));
       setIsModified(true); // Mark as modified
     }
@@ -61,7 +64,10 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     if (value) {
       setServerConfig((prevConfig) => ({
         ...prevConfig,
-        loglevel: value
+        system: {
+          ...prevConfig.system,
+          loglevel: value
+        }
       }));
       setIsModified(true); // Mark as modified
     }
