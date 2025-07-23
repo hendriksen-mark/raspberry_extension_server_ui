@@ -385,16 +385,16 @@ const Settings = ({ HOST_IP, CONFIG }) => {
                   readOnly={false}
                   type="text"
                   placeholder="branch"
-                  value={String(ServerConfig.branch)}
+                  value={String(ServerConfig.system.branch)}
                   onChange={(e) => handleBranchChange(e)}
                 />
               </div>
               <div className="form-control">
                 <FlipSwitch
                   id="Debug"
-                  value={ServerConfig.loglevel === "DEBUG" ? true : false}
+                  value={ServerConfig.system.loglevel === "DEBUG" ? true : false}
                   onChange={(e) => handleLogLevelChange(e === true ? "DEBUG" : "INFO")}
-                  checked={ServerConfig.loglevel === "DEBUG" ? true : false}
+                  checked={ServerConfig.system.loglevel === "DEBUG" ? true : false}
                   label="Temporarily Enable Debug Log"
                   position="right"
                 />
