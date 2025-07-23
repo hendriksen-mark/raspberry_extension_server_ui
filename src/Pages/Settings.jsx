@@ -69,8 +69,11 @@ const Settings = ({ HOST_IP, CONFIG }) => {
 
   // Modularized submit functions
   const updateConfig = () => {
+    // Create a copy of ServerConfig without the "users" field
+    const { users, ...configWithoutUsers } = ServerConfig;
+    
     axios
-      .put(`${HOST_IP}/config`, ServerConfig)
+      .put(`${HOST_IP}/config`, configWithoutUsers)
       .then((response) => {
         if (response.status === 200) {
           console.log(`Configuration updated`);

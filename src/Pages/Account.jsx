@@ -9,7 +9,7 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
-const Account = ({ HOST_IP, API_KEY, CONFIG }) => {
+const Account = ({ HOST_IP, CONFIG }) => {
   const userName = Object.keys(CONFIG.config.users)[0];
   const [pass, setPass] = useState("");
   const [pass1, setPass1] = useState("");
@@ -25,7 +25,7 @@ const Account = ({ HOST_IP, API_KEY, CONFIG }) => {
       toast.error("Password can not be empty");
     } else if (pass === pass1) {
       axios
-        .put(`${HOST_IP}/api/${API_KEY}/config`, {
+        .put(`${HOST_IP}/config`, {
           users: { [userName]: { password: pass } },
         })
         .then((fetchedData) => {
