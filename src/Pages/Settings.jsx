@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { saveAs } from "file-saver";
 
 import Wizard from "../components/Wizard/Wizard";
 import GenericButton from "../components/GenericButton/GenericButton";
@@ -9,6 +10,7 @@ import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 import FlipSwitch from "../components/FlipSwitch/FlipSwitch";
+import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
 
 const Settings = ({ HOST_IP, CONFIG }) => {
   const [ServerConfig, setServerConfig] = useState(CONFIG.config);
