@@ -94,7 +94,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         readOnly={true}
                         type="number"
                         placeholder="gpio_pin"
-                        value={faninfo.GPIO_pin}
+                        value={faninfo.gpio_pin}
                     />
                 </div>
                 <div className="form-control">
@@ -170,8 +170,8 @@ const fanObject = ({ HOST_IP, fan }) => {
                         readOnly={false}
                         type="number"
                         placeholder="gpio_pin"
-                        value={faninfo.GPIO_pin}
-                        onChange={(e) => handleConfigChange("GPIO_pin", parseInt(e))}
+                        value={faninfo.gpio_pin}
+                        onChange={(e) => handleConfigChange("gpio_pin", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">

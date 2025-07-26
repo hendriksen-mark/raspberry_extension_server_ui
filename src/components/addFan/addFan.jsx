@@ -36,8 +36,8 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 readOnly={false}
                 type="number"
                 placeholder="gpio_pin"
-                value={fanData.GPIO_pin}
-                onChange={(e) => handleConfigChange("GPIO_pin", parseInt(e))}
+                value={fanData.gpio_pin}
+                onChange={(e) => handleConfigChange("gpio_pin", parseInt(e))}
             />
         </div>
         <div className="form-control">
