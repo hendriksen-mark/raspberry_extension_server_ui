@@ -262,7 +262,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                         type="text"
                         placeholder="full_speed_time_duration"
                         value={faninfo.full_speed_time_duration}
-                        onChange={(e) => handleConfigChange("full_speed_time_duration", e)}
+                        onChange={(e) => handleConfigChange("full_speed_time_duration", parseFloat(e))}
                     />
                 </div>
                 <div className="form-control">
