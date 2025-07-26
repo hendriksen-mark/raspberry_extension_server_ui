@@ -100,6 +100,16 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
                 onChange={(e) => handleConfigChange("temp_change_threshold", parseFloat(e))}
             />
         </div>
+        <div className="form-control">
+            <GenericText
+                label="Full Speed Duration"
+                readOnly={false}
+                type="text"
+                placeholder="full_speed_time_duration"
+                value={fanData.full_speed_time_duration}
+                onChange={(e) => handleConfigChange("full_speed_time_duration", e)}
+            />
+        </div>
 
         <div className="form-control">
             <GenericButton

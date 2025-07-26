@@ -24,6 +24,18 @@ const fanObject = ({ HOST_IP, fan }) => {
         }
     }, [fan]);
 
+    const SetFullSpeed = () => {
+        axios
+            .get(`${HOST_IP}/fan/full_speed`)
+            .then(() => {
+                toast.success("Fan set to full speed");
+            })
+            .catch((error) => {
+                console.error(error);
+                toast.error(`Error occurred: ${error.message}`);
+            });
+    };
+
     const onSubmit = () => {
         if (!isModified) {
             toast.error("No changes made to save.");
@@ -151,6 +163,15 @@ const fanObject = ({ HOST_IP, fan }) => {
                         value={faninfo.temp_change_threshold}
                     />
                 </div>
+                <div className="form-control">
+                    <GenericText
+                        label="Full Speed Duration"
+                        readOnly={true}
+                        type="text"
+                        placeholder="full_speed_time_duration"
+                        value={faninfo.full_speed_time_duration}
+                    />
+                </div>
             </>
         );
         openWizard();
@@ -235,6 +256,16 @@ const fanObject = ({ HOST_IP, fan }) => {
                     />
                 </div>
                 <div className="form-control">
+                    <GenericText
+                        label="Full Speed Duration"
+                        readOnly={false}
+                        type="text"
+                        placeholder="full_speed_time_duration"
+                        value={faninfo.full_speed_time_duration}
+                        onChange={(e) => handleConfigChange("full_speed_time_duration", e)}
+                    />
+                </div>
+                <div className="form-control">
                     <GenericButton
                         value="Save"
                         color="blue"
@@ -257,6 +288,15 @@ const fanObject = ({ HOST_IP, fan }) => {
     // #region HTML
     return (<>
         <GlassContainer>
+            <div className="form-control">
+              <GenericButton
+                value="Force Full Speed"
+                color="blue"
+                size=""
+                type="submit"
+                onClick={() => SetFullSpeed()}
+              />
+            </div>
             <div className="action-buttons">
                 <IconButton
                     iconName={IoIosInformationCircle}
