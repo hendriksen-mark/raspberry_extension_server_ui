@@ -167,7 +167,7 @@ const fanObject = ({ HOST_IP, fan }) => {
                     <GenericText
                         label="Full Speed Duration"
                         readOnly={true}
-                        type="text"
+                        type="number"
                         placeholder="full_speed_time_duration"
                         value={faninfo.full_speed_time_duration}
                     />
