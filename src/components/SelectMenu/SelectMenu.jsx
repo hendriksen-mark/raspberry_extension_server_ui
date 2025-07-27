@@ -7,12 +7,11 @@ const SelectMenu = ({ label, value, placeholder, options, onChange, close = true
             <label>{label}</label>
             <Select
                 closeMenuOnSelect={close}
-                defaultValue={value}
+                value={value}
                 isMulti={multie}
                 options={options}
                 placeholder={placeholder}
                 onChange={(e) => {
-                    //console.log("SelectMenu onChange event:", e);
                     onChange(e);
                 }}
                 menuPortalTarget={document.body}
