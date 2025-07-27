@@ -6,6 +6,7 @@ import { saveAs } from "file-saver";
 import Wizard from "../components/Wizard/Wizard";
 import GenericButton from "../components/GenericButton/GenericButton";
 import GenericText from "../components/GenericText/GenericText";
+import SelectMenu from "../components/SelectMenu/SelectMenu";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
 import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
@@ -19,6 +20,23 @@ const Settings = ({ HOST_IP, CONFIG }) => {
   const [WizardName, setWizardName] = useState("");
   const [WizardContent, setWizardContent] = useState({});
   const [AdvanceConfig, setAdvanceConfig] = useState(false);
+  const [branchOptions, setBranchOptions] = useState([]);
+
+  useEffect(() => {
+    // Fetch branch names from GitHub API
+    axios
+      .get("https://api.github.com/repos/hendriksen-mark/raspberry_extension_server/branches")
+      .then((response) => {
+        const options = response.data.map((branch) => ({
+          value: branch.name,
+          label: branch.name,
+        }));
+        setBranchOptions(options);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch branches:", error);
+      });
+  }, []);
 
   const openWizard = () => {
     setWizardIsOpen(true);
@@ -48,14 +66,14 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     }
   };
 
-  const handleBranchChange = (e) => {
-    const value = e.trim();
-    if (value) {
+  const handleBranchChange = (selected) => {
+    console.log("Selected branch:", selected);
+    if (selected) {
       setServerConfig((prevConfig) => ({
         ...prevConfig,
         system: {
           ...prevConfig.system,
-          branch: value
+          branch: String(selected)
         }
       }));
       setIsModified(true); // Mark as modified
@@ -382,13 +400,14 @@ const Settings = ({ HOST_IP, CONFIG }) => {
                 />
               </div>
               <div className="form-control">
-                <GenericText
+                <SelectMenu
                   label="Branch"
-                  readOnly={false}
-                  type="text"
-                  placeholder="branch"
-                  value={String(ServerConfig.system.branch)}
-                  onChange={(e) => handleBranchChange(e)}
+                  options={branchOptions}
+                  value={branchOptions.find(opt => opt.value === ServerConfig.system.branch)}
+                  placeholder="Select branch"
+                  onChange={(e) => handleBranchChange(e.value)}
+                  close={true}
+                  multie={false}
                 />
               </div>
               <div className="form-control">
