@@ -406,8 +406,6 @@ const Settings = ({ HOST_IP, CONFIG }) => {
                   value={branchOptions.find(opt => opt.value === ServerConfig.system.branch)}
                   placeholder="Select branch"
                   onChange={(e) => handleBranchChange(e.value)}
-                  close={true}
-                  multie={false}
                 />
               </div>
               <div className="form-control">

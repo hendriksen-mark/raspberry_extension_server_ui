@@ -33,7 +33,7 @@ const HeaderSection = ({ HOST_IP, showSidebar, setShowSidebar, CONFIG, isLoading
         <FaBars />
       </motion.div>
 
-      <div className="onbtn">
+      <div className="cpuTemp">
         <p>CPU Temperature: {CONFIG?.pi_temp}°C</p>
       </div>
 
