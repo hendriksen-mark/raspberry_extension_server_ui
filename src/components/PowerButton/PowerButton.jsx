@@ -115,6 +115,33 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                         value={powerbuttoninfo.debounce_time}
                     />
                 </div>
+                <div className="form-control">
+                    <GenericText
+                        label="LED Pin"
+                        readOnly={true}
+                        type="number"
+                        placeholder="led_pin"
+                        value={powerbuttoninfo.led_pin}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="LED Brightness"
+                        readOnly={true}
+                        type="number"
+                        placeholder="led_brightness"
+                        value={powerbuttoninfo.led_brightness}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="LED DMA"
+                        readOnly={true}
+                        type="number"
+                        placeholder="led_dma"
+                        value={powerbuttoninfo.led_dma}
+                    />
+                </div>
             </>
         );
         openWizard();
@@ -156,6 +183,36 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                         placeholder="debounce_time"
                         value={powerbuttoninfo.debounce_time}
                         onChange={(e) => handleConfigChange("debounce_time", parseFloat(e))}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="LED Pin"
+                        readOnly={false}
+                        type="number"
+                        placeholder="led_pin"
+                        value={powerbuttoninfo.led_pin}
+                        onChange={(e) => handleConfigChange("led_pin", parseInt(e))}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="LED Brightness"
+                        readOnly={false}
+                        type="number"
+                        placeholder="led_brightness"
+                        value={powerbuttoninfo.led_brightness}
+                        onChange={(e) => handleConfigChange("led_brightness", parseInt(e))}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="LED DMA"
+                        readOnly={false}
+                        type="number"
+                        placeholder="led_dma"
+                        value={powerbuttoninfo.led_dma}
+                        onChange={(e) => handleConfigChange("led_dma", parseInt(e))}
                     />
                 </div>
                 <div className="form-control">

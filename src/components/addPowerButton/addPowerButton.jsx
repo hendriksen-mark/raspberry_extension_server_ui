@@ -60,6 +60,36 @@ const AddPowerButton = ({ HOST_IP, closeWizard }) => {
                 onChange={(e) => handleConfigChange("debounce_time", parseFloat(e))}
             />
         </div>
+        <div className="form-control">
+            <GenericText
+                label="LED Pin"
+                readOnly={false}
+                type="number"
+                placeholder="led_pin"
+                value={powerbuttonData.led_pin}
+                onChange={(e) => handleConfigChange("led_pin", parseInt(e))}
+            />
+        </div>
+        <div className="form-control">
+            <GenericText
+                label="LED Brightness"
+                readOnly={false}
+                type="number"
+                placeholder="led_brightness"
+                value={powerbuttonData.led_brightness}
+                onChange={(e) => handleConfigChange("led_brightness", parseInt(e))}
+            />
+        </div>
+        <div className="form-control">
+            <GenericText
+                label="LED DMA"
+                readOnly={false}
+                type="number"
+                placeholder="led_dma"
+                value={powerbuttonData.led_dma}
+                onChange={(e) => handleConfigChange("led_dma", parseInt(e))}
+            />
+        </div>
 
         <div className="form-control">
             <GenericButton
