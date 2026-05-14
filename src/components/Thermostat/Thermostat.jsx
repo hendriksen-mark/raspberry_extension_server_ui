@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { MdDeleteForever, MdSettings } from "react-icons/md";
+import { MdDeleteForever, MdSettings, MdRefresh } from "react-icons/md";
 import { FaPowerOff, FaFire, FaAdjust } from "react-icons/fa";
 import { BsThermometerHalf, BsDropletHalf } from "react-icons/bs";
 import { IoIosInformationCircle } from "react-icons/io";
@@ -156,6 +156,18 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
                 },
             ],
         });
+    };
+
+    const pollThermostat = () => {
+        axios
+            .get(`${HOST_IP}/${thermostatinfo["mac"]}/poll`)
+            .then((response) => {
+                toast.success("Thermostat status updated");
+            })
+            .catch((error) => {
+                console.error("Error polling thermostat:", error);
+                toast.error(error.response?.data?.error || "Failed to poll thermostat");
+            });
     };
 
     const deleteThermostat = () => {
@@ -357,6 +369,13 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
             </div>
 
             <div className="action-buttons">
+                <IconButton
+                    iconName={MdRefresh}
+                    title="Poll"
+                    size="small"
+                    color="green"
+                    onClick={() => pollThermostat()}
+                />
                 <IconButton
                     iconName={IoIosInformationCircle}
                     title="Info"
