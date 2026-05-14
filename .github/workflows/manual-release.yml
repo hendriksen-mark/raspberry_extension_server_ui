@@ -3,6 +3,9 @@ on:
 
 name: Manual Release
 
+permissions:
+  contents: write
+
 jobs:
 
   determine-next-tag:
