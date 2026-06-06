@@ -46,13 +46,11 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
     };
 
     const handleConfigChange = (key, value) => {
-        if (!isNaN(value)) {
-            setpowerbuttonInfo((prevConfig) => ({
-                ...prevConfig,
-                [key]: value
-            }));
-            setIsModified(true); // Mark as modified
-        }
+        setpowerbuttonInfo((prevConfig) => ({
+            ...prevConfig,
+            [key]: value
+        }));
+        setIsModified(true); // Mark as modified
     };
 
     const deleteAlert = () => {
@@ -142,6 +140,24 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                         value={powerbuttoninfo.led_dma}
                     />
                 </div>
+                <div className="form-control">
+                    <GenericText
+                        label="Host Shutdown URL"
+                        readOnly={true}
+                        type="text"
+                        placeholder="host_shutdown_url"
+                        value={powerbuttoninfo.host_shutdown_url}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="Host API Key"
+                        readOnly={true}
+                        type="text"
+                        placeholder="host_api_key"
+                        value={powerbuttoninfo.host_api_key}
+                    />
+                </div>
             </>
         );
         openWizard();
@@ -213,6 +229,26 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                         placeholder="led_dma"
                         value={powerbuttoninfo.led_dma}
                         onChange={(e) => handleConfigChange("led_dma", parseInt(e))}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="Host Shutdown URL"
+                        readOnly={false}
+                        type="text"
+                        placeholder="host_shutdown_url"
+                        value={powerbuttoninfo.host_shutdown_url}
+                        onChange={(e) => handleConfigChange("host_shutdown_url", e)}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
+                        label="Host API Key"
+                        readOnly={false}
+                        type="text"
+                        placeholder="host_api_key"
+                        value={powerbuttoninfo.host_api_key}
+                        onChange={(e) => handleConfigChange("host_api_key", e)}
                     />
                 </div>
                 <div className="form-control">
