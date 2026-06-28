@@ -17,7 +17,7 @@ import GenericText from "../components/GenericText/GenericText";
 
 export default function fan({ HOST_IP, CONFIG }) {
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
-    const [faninfo, setfanInfo] = useState(CONFIG.fan);
+    const [fans, setFans] = useState(CONFIG.fan);
     const [fanConfig, setfanConfig] = useState(CONFIG.config.fan);
     const [isModified, setIsModified] = useState(false); // Track user modifications
 
@@ -47,7 +47,7 @@ export default function fan({ HOST_IP, CONFIG }) {
     };
 
     useEffect(() => {
-        setfanInfo(CONFIG.fan);
+        setFans(CONFIG.fan);
         if (!isModified) {
             setfanConfig(CONFIG.config.fan);
         }
@@ -109,15 +109,13 @@ export default function fan({ HOST_IP, CONFIG }) {
                                         <FaClock />
                                     </div>
                                     <div className="text">Fan Settings</div>
-                                    {(!faninfo || Object.keys(faninfo).length === 0) && (
-                                        <IconButton
-                                            iconName={BsPlusCircle}
-                                            title="Add Fan"
-                                            size="small"
-                                            color="green"
-                                            onClick={() => openWizard()}
-                                        />
-                                    )}
+                                    <IconButton
+                                        iconName={BsPlusCircle}
+                                        title="Add Fan"
+                                        size="small"
+                                        color="green"
+                                        onClick={() => openWizard()}
+                                    />
                                 </div>
                                 <FlipSwitch
                                     id="enabled"
@@ -141,12 +139,14 @@ export default function fan({ HOST_IP, CONFIG }) {
                 </CardGrid>
 
                 <CardGrid>
-                    {(faninfo && Object.keys(faninfo).length > 0) && (
+                    {Object.entries(fans).map(([id, fandata]) => (
                         <FanObject
+                            key={id}
                             HOST_IP={HOST_IP}
-                            fan={faninfo}
+                            id={id}
+                            fan={fandata}
                         />
-                    )}
+                    ))}
                 </CardGrid>
             </div>
 

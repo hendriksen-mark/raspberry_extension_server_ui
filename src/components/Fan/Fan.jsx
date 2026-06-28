@@ -11,7 +11,7 @@ import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 import GenericText from "../GenericText/GenericText";
 import GenericButton from "../GenericButton/GenericButton";
 
-const fanObject = ({ HOST_IP, fan }) => {
+const fanObject = ({ HOST_IP, id, fan }) => {
     const [faninfo, setfanInfo] = useState(fan);
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [WizardName, setWizardName] = useState("");
@@ -26,7 +26,7 @@ const fanObject = ({ HOST_IP, fan }) => {
 
     const SetFullSpeed = () => {
         axios
-            .get(`${HOST_IP}/fan/full_speed`)
+            .get(`${HOST_IP}/fan/${id}/full_speed`)
             .then(() => {
                 toast.success("Fan set to full speed");
             })
@@ -43,7 +43,7 @@ const fanObject = ({ HOST_IP, fan }) => {
         }
         console.log("Saving fan configuration:", faninfo);
         axios
-            .post(`${HOST_IP}/fan`, faninfo)
+            .post(`${HOST_IP}/fan/${id}`, faninfo)
             .then((response) => {
                 toast.success("fan configuration saved successfully");
                 setIsModified(false); // Reset modified state after saving
@@ -85,10 +85,9 @@ const fanObject = ({ HOST_IP, fan }) => {
 
     const deletefan = () => {
         axios
-            .delete(`${HOST_IP}/fan`)
-            .then((fetchedData) => {
-                //console.log(fetchedData.data);
-                toast.success("fan Sensor successfully deleted");
+            .delete(`${HOST_IP}/fan/${id}`)
+            .then(() => {
+                toast.success("fan successfully deleted");
             })
             .catch((error) => {
                 console.error(error);
