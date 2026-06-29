@@ -5,37 +5,23 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
-    "@jaames/iro": "latest",
     "@mui/material": "latest",
-    "@mui/x-date-pickers": "latest",
-    "dayjs": "latest",
-    "@testing-library/jest-dom": "latest",
-    "@testing-library/react": "latest",
-    "@testing-library/user-event": "latest",
     "axios": "latest",
     "file-saver": "latest",
-    "firebase": "latest",
     "framer-motion": "latest",
-    "install": "latest",
     "react": "latest",
     "react-confirm-alert": "latest",
     "react-dom": "latest",
     "react-hot-toast": "latest",
     "react-icons": "latest",
     "react-modal": "latest",
-    "react-redux": "latest",
     "react-responsive": "latest",
     "react-router-dom": "latest",
     "react-select": "latest",
     "vite": "latest",
-    "@vitejs/plugin-react": "latest",
     "@vitejs/plugin-react-swc": "latest",
-    "vite-plugin-svgr": "latest",
-    "vite-jsconfig-paths": "latest",
-    "lodash.debounce": "latest",
     "sass-embedded": "latest",
-    "web-vitals": "latest",
-    "react-qr-code": "latest"
+    "eslint-config-react-app": "latest"
   },
   "scripts": {
     "start": "vite",
@@ -59,8 +45,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@babel/plugin-transform-private-property-in-object": "^7.25.9"
   }
 }
