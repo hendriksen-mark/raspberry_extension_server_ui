@@ -9,8 +9,10 @@ import Wizard from "../Wizard/Wizard";
 import GlassContainer from "../GlassContainer/GlassContainer";
 import IconButton from "../IconButton/IconButton";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
-import GenericText from "../GenericText/GenericText";
 import GenericButton from "../GenericButton/GenericButton";
+import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
+
+import { DHT_CONFIG } from "../../Objects/dht_object";
 
 import "./DHT.scss";
 
@@ -33,17 +35,12 @@ const DHTObject = ({ HOST_IP, dht }) => {
             return;
         }
         console.log("Saving DHT configuration:", dhtinfo);
+        const payload = Object.keys(DHT_CONFIG).reduce((accumulator, key) => {
+            accumulator[key] = dhtinfo[key];
+            return accumulator;
+        }, {});
         axios
-            .post(`${HOST_IP}/dht`, {
-                sensor_type: dhtinfo.sensor_type,
-                dht_pin: dhtinfo.dht_pin,
-                MAX_DHT_TEMP: dhtinfo.MAX_DHT_TEMP,
-                MIN_DHT_TEMP: dhtinfo.MIN_DHT_TEMP,
-                MAX_HUMIDITY: dhtinfo.MAX_HUMIDITY,
-                MIN_HUMIDITY: dhtinfo.MIN_HUMIDITY,
-                DHT_TEMP_CHANGE_THRESHOLD: dhtinfo.DHT_TEMP_CHANGE_THRESHOLD,
-                DHT_HUMIDITY_CHANGE_THRESHOLD: dhtinfo.DHT_HUMIDITY_CHANGE_THRESHOLD
-            })
+            .post(`${HOST_IP}/dht`, payload)
             .then((response) => {
                 toast.success("DHT configuration saved successfully");
                 setIsModified(false); // Reset modified state after saving
@@ -55,8 +52,23 @@ const DHTObject = ({ HOST_IP, dht }) => {
             });
     };
 
-    const handleConfigChange = (key, value) => {
-        if (!isNaN(value)) {
+    const handleConfigChange = (key, value, datatype) => {
+        if (datatype === "string") {
+            setDHTInfo((prevConfig) => ({
+                ...prevConfig,
+                [key]: value
+            }));
+            setIsModified(true);
+            return;
+        }
+
+        if (datatype === "int") {
+            value = parseInt(value, 10);
+        } else if (datatype === "float") {
+            value = parseFloat(value);
+        }
+
+        if (!Number.isNaN(value)) {
             setDHTInfo((prevConfig) => ({
                 ...prevConfig,
                 [key]: value
@@ -98,78 +110,7 @@ const DHTObject = ({ HOST_IP, dht }) => {
         setWizardContent(
             <>
                 <p>Device Information for DHT Sensor</p>
-                <div className="form-control">
-                    <GenericText
-                        label="Sensor Type"
-                        readOnly={true}
-                        type="text"
-                        placeholder="sensor_type"
-                        value={dhtinfo.sensor_type}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Sensor Pin"
-                        readOnly={true}
-                        type="text"
-                        placeholder="dht_pin"
-                        value={dhtinfo.dht_pin}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Temperature"
-                        readOnly={true}
-                        type="text"
-                        placeholder="max_temperature"
-                        value={dhtinfo.MAX_DHT_TEMP}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Temperature"
-                        readOnly={true}
-                        type="text"
-                        placeholder="min_temperature"
-                        value={dhtinfo.MIN_DHT_TEMP}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Humidity"
-                        readOnly={true}
-                        type="text"
-                        placeholder="MAX_HUMIDITY"
-                        value={dhtinfo.MAX_HUMIDITY}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Humidity"
-                        readOnly={true}
-                        type="text"
-                        placeholder="MIN_HUMIDITY"
-                        value={dhtinfo.MIN_HUMIDITY}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Temperature Change Threshold"
-                        readOnly={true}
-                        type="text"
-                        placeholder="TEMP_CHANGE_THRESHOLD"
-                        value={dhtinfo.DHT_TEMP_CHANGE_THRESHOLD}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Humidity Change Threshold"
-                        readOnly={true}
-                        type="text"
-                        placeholder="HUMIDITY_CHANGE_THRESHOLD"
-                        value={dhtinfo.DHT_HUMIDITY_CHANGE_THRESHOLD}
-                    />
-                </div>
+                <ConfigFieldGroup config={DHT_CONFIG} values={dhtinfo} readOnly={true} />
             </>
         );
         openWizard();
@@ -183,86 +124,7 @@ const DHTObject = ({ HOST_IP, dht }) => {
         return (
             <>
                 <p>Change Configuration for DHT</p>
-                <div className="form-control">
-                    <GenericText
-                        label="Sensor Type"
-                        readOnly={false}
-                        type="text"
-                        placeholder="sensor_type"
-                        value={dhtinfo.sensor_type}
-                        onChange={(e) => handleConfigChange("sensor_type", e)}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Sensor Pin"
-                        readOnly={false}
-                        type="number"
-                        placeholder="dht_pin"
-                        value={dhtinfo.dht_pin}
-                        onChange={(e) => handleConfigChange("dht_pin", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Temperature"
-                        readOnly={false}
-                        type="number"
-                        placeholder="max_temperature"
-                        value={dhtinfo.MAX_DHT_TEMP}
-                        onChange={(e) => handleConfigChange("MAX_DHT_TEMP", parseFloat(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Temperature"
-                        readOnly={false}
-                        type="number"
-                        placeholder="min_temperature"
-                        value={dhtinfo.MIN_DHT_TEMP}
-                        onChange={(e) => handleConfigChange("MIN_DHT_TEMP", parseFloat(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Humidity"
-                        readOnly={false}
-                        type="number"
-                        placeholder="MAX_HUMIDITY"
-                        value={dhtinfo.MAX_HUMIDITY}
-                        onChange={(e) => handleConfigChange("MAX_HUMIDITY", parseFloat(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Humidity"
-                        readOnly={false}
-                        type="number"
-                        placeholder="MIN_HUMIDITY"
-                        value={dhtinfo.MIN_HUMIDITY}
-                        onChange={(e) => handleConfigChange("MIN_HUMIDITY", parseFloat(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Temperature Change Threshold"
-                        readOnly={false}
-                        type="number"
-                        placeholder="TEMP_CHANGE_THRESHOLD"
-                        value={dhtinfo.DHT_TEMP_CHANGE_THRESHOLD}
-                        onChange={(e) => handleConfigChange("DHT_TEMP_CHANGE_THRESHOLD", parseFloat(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Humidity Change Threshold"
-                        readOnly={false}
-                        type="number"
-                        placeholder="HUMIDITY_CHANGE_THRESHOLD"
-                        value={dhtinfo.DHT_HUMIDITY_CHANGE_THRESHOLD}
-                        onChange={(e) => handleConfigChange("DHT_HUMIDITY_CHANGE_THRESHOLD", parseFloat(e))}
-                    />
-                </div>
+                <ConfigFieldGroup config={DHT_CONFIG} values={dhtinfo} onChange={handleConfigChange} />
                 <div className="form-control">
                     <GenericButton
                         value="Save"

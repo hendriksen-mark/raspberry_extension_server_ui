@@ -4,16 +4,34 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 import GenericButton from "../GenericButton/GenericButton";
-import GenericText from "../GenericText/GenericText";
+import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
+
+import { POWERBUTTON_CONFIG } from "../../Objects/powerbutton_object";
 
 const AddPowerButton = ({ HOST_IP, closeWizard }) => {
     const [powerbuttonData, setpowerbuttonData] = useState({});
 
-    const handleConfigChange = (key, value) => {
-        setpowerbuttonData({
-            ...powerbuttonData,
-            [key]: value,
-        });
+    const handleConfigChange = (key, value, datatype) => {
+        if (datatype === "string") {
+            setpowerbuttonData((prevData) => ({
+                ...prevData,
+                [key]: value,
+            }));
+            return;
+        }
+
+        if (datatype === "int") {
+            value = parseInt(value, 10);
+        } else if (datatype === "float") {
+            value = parseFloat(value);
+        }
+
+        if (!Number.isNaN(value)) {
+            setpowerbuttonData((prevData) => ({
+                ...prevData,
+                [key]: value,
+            }));
+        }
     };
 
     const handleForm = () => {
@@ -30,66 +48,11 @@ const AddPowerButton = ({ HOST_IP, closeWizard }) => {
     };
     // #region HTML
     return (<>
-        <div className="form-control">
-            <GenericText
-                label="Button pin"
-                readOnly={false}
-                type="number"
-                placeholder="button_pin"
-                value={powerbuttonData.button_pin}
-                onChange={(e) => handleConfigChange("button_pin", parseInt(e))}
-            />
-        </div>
-        <div className="form-control">
-            <GenericText
-                label="Long Press Duration"
-                readOnly={false}
-                type="number"
-                placeholder="long_press_duration"
-                value={powerbuttonData.long_press_duration}
-                onChange={(e) => handleConfigChange("long_press_duration", parseFloat(e))}
-            />
-        </div>
-        <div className="form-control">
-            <GenericText
-                label="Debounce Time"
-                readOnly={false}
-                type="number"
-                placeholder="debounce_time"
-                value={powerbuttonData.debounce_time}
-                onChange={(e) => handleConfigChange("debounce_time", parseFloat(e))}
-            />
-        </div>
-        <div className="form-control">
-            <GenericText
-                label="LED Pin"
-                readOnly={false}
-                type="number"
-                placeholder="led_pin"
-                value={powerbuttonData.led_pin}
-                onChange={(e) => handleConfigChange("led_pin", parseInt(e))}
-            />
-        </div>
-        <div className="form-control">
-            <GenericText
-                label="LED Brightness"
-                readOnly={false}
-                type="number"
-                placeholder="led_brightness"
-                value={powerbuttonData.led_brightness}
-                onChange={(e) => handleConfigChange("led_brightness", parseInt(e))}
-            />
-        </div>
-        <div className="form-control">
-            <GenericText
-                label="LED DMA"
-                readOnly={false}
-                type="number"
-                placeholder="led_dma"
-                value={powerbuttonData.led_dma}
-                onChange={(e) => handleConfigChange("led_dma", parseInt(e))}
-            />
-        </div>
+        <ConfigFieldGroup
+            config={POWERBUTTON_CONFIG}
+            values={powerbuttonData}
+            onChange={handleConfigChange}
+        />
 
         <div className="form-control">
             <GenericButton

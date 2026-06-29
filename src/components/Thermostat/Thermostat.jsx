@@ -10,8 +10,10 @@ import Wizard from "../Wizard/Wizard";
 import GlassContainer from "../GlassContainer/GlassContainer";
 import IconButton from "../IconButton/IconButton";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
-import GenericText from "../GenericText/GenericText";
 import GenericButton from "../GenericButton/GenericButton";
+import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
+
+import { THERMOSTAT_CONFIG, THERMOSTAT_INFO_CONFIG } from "../../Objects/thermostat_object";
 
 import "./ThermostatControl.scss";
 
@@ -91,18 +93,14 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
         updateThermostat(`targetTemperature/?value=${targetTemperature}`);
     };
 
-    const handleMaxTemperatureChange = (value) => {
+    const handleTemperatureConfigChange = (key, value) => {
         const numValue = parseFloat(value);
-        if (!isNaN(numValue) && numValue >= 0) {
-            setMaxTemperature(numValue);
-            setIsModified(true); // Mark as modified
-        }
-    };
-
-    const handleMinTemperatureChange = (value) => {
-        const numValue = parseFloat(value);
-        if (!isNaN(numValue) && numValue >= 0) {
-            setMinTemperature(numValue);
+        if (!Number.isNaN(numValue) && numValue >= 0) {
+            if (key === "max_temperature") {
+                setMaxTemperature(numValue);
+            } else {
+                setMinTemperature(numValue);
+            }
             setIsModified(true); // Mark as modified
         }
     };
@@ -187,42 +185,7 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
         setWizardContent(
             <>
                 <p>Device Information for {thermostatinfo.mac}</p>
-                <div className="form-control">
-                    <GenericText
-                        label="MAC Address"
-                        readOnly={true}
-                        type="text"
-                        placeholder="mac"
-                        value={thermostatinfo.mac}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Last Updated"
-                        readOnly={true}
-                        type="text"
-                        placeholder="last_updated"
-                        value={thermostatinfo?.last_updated?.toLocaleString()}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="First Seen"
-                        readOnly={true}
-                        type="text"
-                        placeholder="first_seen"
-                        value={thermostatinfo?.first_seen?.toLocaleString()}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="DHT Sensor"
-                        readOnly={true}
-                        type="text"
-                        placeholder="DHT Sensor"
-                        value={thermostatinfo.DHT_connected ? 'Connected' : 'Disconnected'}
-                    />
-                </div>
+                <ConfigFieldGroup config={THERMOSTAT_INFO_CONFIG} values={thermostatinfo} readOnly={true} />
             </>
         );
         openWizard();
@@ -236,26 +199,14 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
         return (
             <>
                 <p>Change Configuration for {thermostatinfo.mac}</p>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Temperature"
-                        readOnly={false}
-                        type="number"
-                        placeholder="max_temperature"
-                        value={String(MaxTemperature)}
-                        onChange={(e) => handleMaxTemperatureChange(e)}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Temperature"
-                        readOnly={false}
-                        type="number"
-                        placeholder="min_temperature"
-                        value={String(MinTemperature)}
-                        onChange={(e) => handleMinTemperatureChange(e)}
-                    />
-                </div>
+                <ConfigFieldGroup
+                    config={THERMOSTAT_CONFIG}
+                    values={{
+                        max_temperature: MaxTemperature,
+                        min_temperature: MinTemperature,
+                    }}
+                    onChange={handleTemperatureConfigChange}
+                />
                 <div className="form-control">
                     <GenericButton
                         value="Save"

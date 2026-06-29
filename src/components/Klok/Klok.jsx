@@ -8,10 +8,12 @@ import Wizard from "../Wizard/Wizard";
 import GlassContainer from "../GlassContainer/GlassContainer";
 import IconButton from "../IconButton/IconButton";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
-import GenericText from "../GenericText/GenericText";
 import GenericButton from "../GenericButton/GenericButton";
 import BrightnessSlider from "../BrightnessSlider/BrightnessSlider";
 import FlipSwitch from "../FlipSwitch/FlipSwitch";
+import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
+
+import { KLOK_CONFIG } from "../../Objects/klok_object";
 
 const KlokObject = ({ HOST_IP, klok }) => {
     const [Klokinfo, setKlokInfo] = useState(klok);
@@ -36,11 +38,12 @@ const KlokObject = ({ HOST_IP, klok }) => {
             return;
         }
         console.log("Saving Klok configuration:", Klokinfo);
+        const payload = Object.keys(KLOK_CONFIG).reduce((accumulator, key) => {
+            accumulator[key] = Klokinfo[key];
+            return accumulator;
+        }, {});
         axios
-            .post(`${HOST_IP}/Klok`, {
-                CLK_pin: CLK_pin,
-                DIO_pin: DIO_pin,
-            })
+            .post(`${HOST_IP}/Klok`, payload)
             .then((response) => {
                 toast.success("Klok configuration saved successfully");
                 setIsModified(false); // Reset modified state after saving
@@ -122,24 +125,7 @@ const KlokObject = ({ HOST_IP, klok }) => {
         setWizardContent(
             <>
                 <p>Device Information for Klok</p>
-                <div className="form-control">
-                    <GenericText
-                        label="CLK pin"
-                        readOnly={true}
-                        type="number"
-                        placeholder="clk_pin"
-                        value={Klokinfo.CLK_pin}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="DIO Pin"
-                        readOnly={true}
-                        type="number"
-                        placeholder="DIO_pin"
-                        value={Klokinfo.DIO_pin}
-                    />
-                </div>
+                <ConfigFieldGroup config={KLOK_CONFIG} values={Klokinfo} readOnly={true} />
             </>
         );
         openWizard();
@@ -153,26 +139,18 @@ const KlokObject = ({ HOST_IP, klok }) => {
         return (
             <>
                 <p>Change Configuration for Klok</p>
-                <div className="form-control">
-                    <GenericText
-                        label="CLK pin"
-                        readOnly={false}
-                        type="number"
-                        placeholder="clk_pin"
-                        value={Klokinfo.CLK_pin}
-                        onChange={(e) => handleCLKChange(parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="DIO Pin"
-                        readOnly={false}
-                        type="number"
-                        placeholder="DIO_pin"
-                        value={Klokinfo.DIO_pin}
-                        onChange={(e) => handleDIOChange(parseInt(e))}
-                    />
-                </div>
+                <ConfigFieldGroup
+                    config={KLOK_CONFIG}
+                    values={Klokinfo}
+                    onChange={(key, value) => {
+                        const parsedValue = parseInt(value, 10);
+                        if (key === "CLK_pin") {
+                            handleCLKChange(parsedValue);
+                        } else {
+                            handleDIOChange(parsedValue);
+                        }
+                    }}
+                />
                 <div className="form-control">
                     <GenericButton
                         value="Save"

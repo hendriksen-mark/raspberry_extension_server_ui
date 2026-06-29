@@ -11,6 +11,8 @@ import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 import GenericText from "../GenericText/GenericText";
 import GenericButton from "../GenericButton/GenericButton";
 
+import { FAN_CONFIG } from "../../Objects/fan_object";
+
 const fanObject = ({ HOST_IP, id, fan }) => {
     const [faninfo, setfanInfo] = useState(fan);
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
@@ -57,8 +59,23 @@ const fanObject = ({ HOST_IP, id, fan }) => {
         setIsModified(false);
     };
 
-    const handleConfigChange = (key, value) => {
-        if (!isNaN(value)) {
+    const handleConfigChange = (key, value, datatype) => {
+        if (datatype === "string") {
+            setfanInfo((prevConfig) => ({
+                ...prevConfig,
+                [key]: value
+            }));
+            setIsModified(true);
+            return;
+        }
+
+        if (datatype === "int") {
+            value = parseInt(value, 10);
+        } else if (datatype === "float") {
+            value = parseFloat(value);
+        }
+
+        if (!Number.isNaN(value)) {
             setfanInfo((prevConfig) => ({
                 ...prevConfig,
                 [key]: value
@@ -99,87 +116,17 @@ const fanObject = ({ HOST_IP, id, fan }) => {
         setWizardContent(
             <>
                 <p>Device Information for fan</p>
-                <div className="form-control">
-                    <GenericText
-                        label="Name"
-                        readOnly={true}
-                        type="text"
-                        placeholder="name"
-                        value={faninfo.name}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="GPIO pin"
-                        readOnly={true}
-                        type="number"
-                        placeholder="gpio_pin"
-                        value={faninfo.gpio_pin}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="PWM Frequency"
-                        readOnly={true}
-                        type="number"
-                        placeholder="pwm_frequency"
-                        value={faninfo.pwm_frequency}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Temperature"
-                        readOnly={true}
-                        type="number"
-                        placeholder="max_temperature"
-                        value={faninfo.max_temperature}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Temperature"
-                        readOnly={true}
-                        type="number"
-                        placeholder="min_temperature"
-                        value={faninfo.min_temperature}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Speed"
-                        readOnly={true}
-                        type="number"
-                        placeholder="max_speed"
-                        value={faninfo.max_speed}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Speed"
-                        readOnly={true}
-                        type="number"
-                        placeholder="min_speed"
-                        value={faninfo.min_speed}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Temperature Change Threshold"
-                        readOnly={true}
-                        type="number"
-                        placeholder="temp_change_threshold"
-                        value={faninfo.temp_change_threshold}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Full Speed Duration"
-                        readOnly={true}
-                        type="number"
-                        placeholder="full_speed_time_duration"
-                        value={faninfo.full_speed_time_duration}
-                    />
-                </div>
+                {Object.entries(FAN_CONFIG).map(([key, config]) => (
+                    <div className="form-control" key={key}>
+                        <GenericText
+                            label={config.label}
+                            readOnly={true}
+                            type={config.type}
+                            placeholder={config.placeholder}
+                            value={faninfo[key]}
+                        />
+                    </div>
+                ))}
             </>
         );
         openWizard();
@@ -193,96 +140,18 @@ const fanObject = ({ HOST_IP, id, fan }) => {
         return (
             <>
                 <p>Change Configuration for fan</p>
-                <div className="form-control">
-                    <GenericText
-                        label="Name"
-                        readOnly={false}
-                        type="text"
-                        placeholder="name"
-                        value={faninfo.name}
-                        onChange={(e) => handleConfigChange("name", e)}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="GPIO pin"
-                        readOnly={false}
-                        type="number"
-                        placeholder="gpio_pin"
-                        value={faninfo.gpio_pin}
-                        onChange={(e) => handleConfigChange("gpio_pin", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="PWM Frequency"
-                        readOnly={false}
-                        type="number"
-                        placeholder="pwm_frequency"
-                        value={faninfo.pwm_frequency}
-                        onChange={(e) => handleConfigChange("pwm_frequency", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Temperature"
-                        readOnly={false}
-                        type="number"
-                        placeholder="max_temperature"
-                        value={faninfo.max_temperature}
-                        onChange={(e) => handleConfigChange("max_temperature", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Temperature"
-                        readOnly={false}
-                        type="number"
-                        placeholder="min_temperature"
-                        value={faninfo.min_temperature}
-                        onChange={(e) => handleConfigChange("min_temperature", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Max Speed"
-                        readOnly={false}
-                        type="number"
-                        placeholder="max_speed"
-                        value={faninfo.max_speed}
-                        onChange={(e) => handleConfigChange("max_speed", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Min Speed"
-                        readOnly={false}
-                        type="number"
-                        placeholder="min_speed"
-                        value={faninfo.min_speed}
-                        onChange={(e) => handleConfigChange("min_speed", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Temperature Change Threshold"
-                        readOnly={false}
-                        type="number"
-                        placeholder="temp_change_threshold"
-                        value={faninfo.temp_change_threshold}
-                        onChange={(e) => handleConfigChange("temp_change_threshold", parseFloat(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Full Speed Duration"
-                        readOnly={false}
-                        type="text"
-                        placeholder="full_speed_time_duration"
-                        value={faninfo.full_speed_time_duration}
-                        onChange={(e) => handleConfigChange("full_speed_time_duration", parseFloat(e))}
-                    />
-                </div>
+                {Object.entries(FAN_CONFIG).map(([key, config]) => (
+                    <div className="form-control" key={key}>
+                        <GenericText
+                            label={config.label}
+                            readOnly={false}
+                            type={config.type}
+                            placeholder={config.placeholder}
+                            value={faninfo[key]}
+                            onChange={(e) => handleConfigChange(key, e, config.datatype)}
+                        />
+                    </div>
+                ))}
                 <div className="form-control">
                     <GenericButton
                         value="Save"

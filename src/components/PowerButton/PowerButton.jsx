@@ -8,8 +8,10 @@ import Wizard from "../Wizard/Wizard";
 import GlassContainer from "../GlassContainer/GlassContainer";
 import IconButton from "../IconButton/IconButton";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
-import GenericText from "../GenericText/GenericText";
 import GenericButton from "../GenericButton/GenericButton";
+import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
+
+import { POWERBUTTON_CONFIG } from "../../Objects/powerbutton_object";
 
 const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
     const [powerbuttoninfo, setpowerbuttonInfo] = useState(powerbutton);
@@ -30,8 +32,12 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
             return;
         }
         console.log("Saving powerbutton configuration:", powerbuttoninfo);
+        const payload = Object.keys(POWERBUTTON_CONFIG).reduce((accumulator, key) => {
+            accumulator[key] = powerbuttoninfo[key];
+            return accumulator;
+        }, {});
         axios
-            .post(`${HOST_IP}/powerbutton`, powerbuttoninfo)
+            .post(`${HOST_IP}/powerbutton`, payload)
             .then((response) => {
                 toast.success("powerbutton configuration saved successfully");
                 setIsModified(false); // Reset modified state after saving
@@ -45,7 +51,26 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
         setIsModified(false);
     };
 
-    const handleConfigChange = (key, value) => {
+    const handleConfigChange = (key, value, datatype) => {
+        if (datatype === "string") {
+            setpowerbuttonInfo((prevConfig) => ({
+                ...prevConfig,
+                [key]: value
+            }));
+            setIsModified(true); // Mark as modified
+            return;
+        }
+
+        if (datatype === "int") {
+            value = parseInt(value, 10);
+        } else if (datatype === "float") {
+            value = parseFloat(value);
+        }
+
+        if (Number.isNaN(value)) {
+            return;
+        }
+
         setpowerbuttonInfo((prevConfig) => ({
             ...prevConfig,
             [key]: value
@@ -86,78 +111,7 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
         setWizardContent(
             <>
                 <p>Device Information for powerbutton</p>
-                <div className="form-control">
-                    <GenericText
-                        label="Button pin"
-                        readOnly={true}
-                        type="number"
-                        placeholder="button_pin"
-                        value={powerbuttoninfo.button_pin}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Long Press Duration"
-                        readOnly={true}
-                        type="number"
-                        placeholder="long_press_duration"
-                        value={powerbuttoninfo.long_press_duration}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Debounce Time"
-                        readOnly={true}
-                        type="number"
-                        placeholder="debounce_time"
-                        value={powerbuttoninfo.debounce_time}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="LED Pin"
-                        readOnly={true}
-                        type="number"
-                        placeholder="led_pin"
-                        value={powerbuttoninfo.led_pin}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="LED Brightness"
-                        readOnly={true}
-                        type="number"
-                        placeholder="led_brightness"
-                        value={powerbuttoninfo.led_brightness}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="LED DMA"
-                        readOnly={true}
-                        type="number"
-                        placeholder="led_dma"
-                        value={powerbuttoninfo.led_dma}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Host Shutdown URL"
-                        readOnly={true}
-                        type="text"
-                        placeholder="host_shutdown_url"
-                        value={powerbuttoninfo.host_shutdown_url}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Host API Key"
-                        readOnly={true}
-                        type="text"
-                        placeholder="host_api_key"
-                        value={powerbuttoninfo.host_api_key}
-                    />
-                </div>
+                <ConfigFieldGroup config={POWERBUTTON_CONFIG} values={powerbuttoninfo} readOnly={true} />
             </>
         );
         openWizard();
@@ -171,86 +125,11 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
         return (
             <>
                 <p>Change Configuration for powerbutton</p>
-                <div className="form-control">
-                    <GenericText
-                        label="Button pin"
-                        readOnly={false}
-                        type="number"
-                        placeholder="button_pin"
-                        value={powerbuttoninfo.button_pin}
-                        onChange={(e) => handleConfigChange("button_pin", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Long Press Duration"
-                        readOnly={false}
-                        type="number"
-                        placeholder="long_press_duration"
-                        value={powerbuttoninfo.long_press_duration}
-                        onChange={(e) => handleConfigChange("long_press_duration", parseFloat(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Debounce Time"
-                        readOnly={false}
-                        type="number"
-                        placeholder="debounce_time"
-                        value={powerbuttoninfo.debounce_time}
-                        onChange={(e) => handleConfigChange("debounce_time", parseFloat(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="LED Pin"
-                        readOnly={false}
-                        type="number"
-                        placeholder="led_pin"
-                        value={powerbuttoninfo.led_pin}
-                        onChange={(e) => handleConfigChange("led_pin", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="LED Brightness"
-                        readOnly={false}
-                        type="number"
-                        placeholder="led_brightness"
-                        value={powerbuttoninfo.led_brightness}
-                        onChange={(e) => handleConfigChange("led_brightness", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="LED DMA"
-                        readOnly={false}
-                        type="number"
-                        placeholder="led_dma"
-                        value={powerbuttoninfo.led_dma}
-                        onChange={(e) => handleConfigChange("led_dma", parseInt(e))}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Host Shutdown URL"
-                        readOnly={false}
-                        type="text"
-                        placeholder="host_shutdown_url"
-                        value={powerbuttoninfo.host_shutdown_url}
-                        onChange={(e) => handleConfigChange("host_shutdown_url", e)}
-                    />
-                </div>
-                <div className="form-control">
-                    <GenericText
-                        label="Host API Key"
-                        readOnly={false}
-                        type="text"
-                        placeholder="host_api_key"
-                        value={powerbuttoninfo.host_api_key}
-                        onChange={(e) => handleConfigChange("host_api_key", e)}
-                    />
-                </div>
+                <ConfigFieldGroup
+                    config={POWERBUTTON_CONFIG}
+                    values={powerbuttoninfo}
+                    onChange={handleConfigChange}
+                />
                 <div className="form-control">
                     <GenericButton
                         value="Save"

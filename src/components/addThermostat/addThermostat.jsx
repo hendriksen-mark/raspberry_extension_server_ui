@@ -4,18 +4,29 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 import GenericButton from "../GenericButton/GenericButton";
-import GenericText from "../GenericText/GenericText";
+import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
+
+import { THERMOSTAT_CONFIG } from "../../Objects/thermostat_object";
 
 const AddThermostat = ({ HOST_IP, closeWizard }) => {
-    const [thermostatData, setThermostatData] = useState({
-        mac: "",
-    });
+    const [thermostatData, setThermostatData] = useState({});
 
-    const handleChange = (key, value) => {
-        setThermostatData({
-            ...thermostatData,
-            [key]: value,
-        });
+    const handleChange = (key, value, field) => {
+        if (field.datatype === "string") {
+            setThermostatData((prevData) => ({
+                ...prevData,
+                [key]: value,
+            }));
+            return;
+        }
+
+        const parsedValue = parseFloat(value);
+        if (!Number.isNaN(parsedValue)) {
+            setThermostatData((prevData) => ({
+                ...prevData,
+                [key]: parsedValue,
+            }));
+        }
     };
 
     const handleForm = () => {
@@ -32,35 +43,11 @@ const AddThermostat = ({ HOST_IP, closeWizard }) => {
     };
     // #region HTML
     return (<>
-        <div className="form-control">
-            <GenericText
-                label="MAC Address"
-                type="text"
-                placeholder="00:00:00:00:00:00"
-                value={thermostatData.mac}
-                onChange={(e) => handleChange("mac", e)}
-            />
-        </div>
-        <div className="form-control">
-            <GenericText
-                label="Max Temperature"
-                readOnly={false}
-                type="number"
-                placeholder="max_temperature"
-                value={String(thermostatData.max_temperature)}
-                onChange={(e) => handleChange("max_temperature", parseFloat(e))}
-            />
-        </div>
-        <div className="form-control">
-            <GenericText
-                label="Min Temperature"
-                readOnly={false}
-                type="number"
-                placeholder="min_temperature"
-                value={String(thermostatData.min_temperature)}
-                onChange={(e) => handleChange("min_temperature", parseFloat(e))}
-            />
-        </div>
+        <ConfigFieldGroup
+            config={THERMOSTAT_CONFIG}
+            values={thermostatData}
+            onChange={handleChange}
+        />
 
         <div className="form-control">
             <GenericButton

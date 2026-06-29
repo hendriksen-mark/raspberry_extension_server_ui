@@ -4,16 +4,21 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 import GenericButton from "../GenericButton/GenericButton";
-import GenericText from "../GenericText/GenericText";
+import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
+
+import { KLOK_CONFIG } from "../../Objects/klok_object";
 
 const AddKlok = ({ HOST_IP, closeWizard }) => {
     const [KlokData, setKlokData] = useState({});
 
     const handleConfigChange = (key, value) => {
-        setKlokData({
-            ...KlokData,
-            [key]: value,
-        });
+        const parsedValue = parseInt(value, 10);
+        if (!Number.isNaN(parsedValue)) {
+            setKlokData((prevData) => ({
+                ...prevData,
+                [key]: parsedValue,
+            }));
+        }
     };
 
     const handleForm = () => {
@@ -30,26 +35,11 @@ const AddKlok = ({ HOST_IP, closeWizard }) => {
     };
     // #region HTML
     return (<>
-        <div className="form-control">
-            <GenericText
-                label="CLK pin"
-                readOnly={false}
-                type="number"
-                placeholder="clk_pin"
-                value={KlokData.CLK_pin}
-                onChange={(e) => handleConfigChange("CLK_pin", parseInt(e))}
-            />
-        </div>
-        <div className="form-control">
-            <GenericText
-                label="DIO Pin"
-                readOnly={false}
-                type="number"
-                placeholder="DIO_pin"
-                value={KlokData.DIO_pin}
-                onChange={(e) => handleConfigChange("DIO_pin", parseInt(e))}
-            />
-        </div>
+        <ConfigFieldGroup
+            config={KLOK_CONFIG}
+            values={KlokData}
+            onChange={(key, value) => handleConfigChange(key, value)}
+        />
 
         <div className="form-control">
             <GenericButton
