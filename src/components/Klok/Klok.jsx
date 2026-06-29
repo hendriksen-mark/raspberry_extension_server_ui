@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { MdDeleteForever, MdSettings } from "react-icons/md";
 import { IoIosInformationCircle } from "react-icons/io";
-import Wizard from "../Wizard/Wizard";
 
+import Wizard from "../Wizard/Wizard";
 import GlassContainer from "../GlassContainer/GlassContainer";
 import IconButton from "../IconButton/IconButton";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
@@ -13,9 +13,9 @@ import BrightnessSlider from "../BrightnessSlider/BrightnessSlider";
 import FlipSwitch from "../FlipSwitch/FlipSwitch";
 import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
-import { KLOK_CONFIG } from "../../Objects/klok_object";
+import { KLOK_CONFIG } from "../../Objects_Config/klok_config";
 
-const KlokObject = ({ HOST_IP, klok }) => {
+const Klok = ({ HOST_IP, klok }) => {
     const [Klokinfo, setKlokInfo] = useState(klok);
     const [power, setPower] = useState(klok.power_state);
     const [brightness, setBrightness] = useState(klok.brightness);
@@ -229,4 +229,4 @@ const KlokObject = ({ HOST_IP, klok }) => {
     );
 };
 
-export default KlokObject;
+export default Klok;

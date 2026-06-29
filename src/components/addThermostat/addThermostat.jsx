@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import GenericButton from "../GenericButton/GenericButton";
 import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
-import { THERMOSTAT_CONFIG } from "../../Objects/thermostat_object";
+import { THERMOSTAT_CONFIG } from "../../Objects_Config/thermostat_config";
 
 const AddThermostat = ({ HOST_IP, closeWizard }) => {
     const [thermostatData, setThermostatData] = useState({});

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { MdDeleteForever, MdSettings } from "react-icons/md";
@@ -11,9 +11,9 @@ import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 import GenericButton from "../GenericButton/GenericButton";
 import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
-import { POWERBUTTON_CONFIG } from "../../Objects/powerbutton_object";
+import { POWERBUTTON_CONFIG } from "../../Objects_Config/powerbutton_config";
 
-const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
+const PowerButton = ({ HOST_IP, powerbutton }) => {
     const [powerbuttoninfo, setpowerbuttonInfo] = useState(powerbutton);
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [WizardName, setWizardName] = useState("");
@@ -106,7 +106,7 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                 toast.error("Error occured, check browser console");
             });
     };
-    const Infopowerbutton = () => {
+    const InfoPowerButton = () => {
         setWizardName("Device Information");
         setWizardContent(
             <>
@@ -116,7 +116,7 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
         );
         openWizard();
     };
-    const configurepowerbutton = () => {
+    const ConfigurePowerButton = () => {
         setWizardName("Device Configuration");
         openWizard();
     };
@@ -159,14 +159,14 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
                     title="Info"
                     size="small"
                     color="green"
-                    onClick={() => Infopowerbutton()}
+                    onClick={() => InfoPowerButton()}
                 />
                 <IconButton
                     iconName={MdSettings}
                     title="Settings"
                     size="small"
                     color="blue"
-                    onClick={() => configurepowerbutton()}
+                    onClick={() => ConfigurePowerButton()}
                 />
                 <IconButton
                     iconName={MdDeleteForever}
@@ -189,4 +189,4 @@ const powerbuttonObject = ({ HOST_IP, powerbutton }) => {
     );
 };
 
-export default powerbuttonObject;
+export default PowerButton;

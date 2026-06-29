@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import GenericButton from "../GenericButton/GenericButton";
 import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
-import { DHT_CONFIG } from "../../Objects/dht_object";
+import { DHT_CONFIG } from "../../Objects_Config/dht_config";
 
 const AddDHT = ({ HOST_IP, closeWizard }) => {
     const [dhtData, setDhtData] = useState({});

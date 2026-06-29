@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { FaClock} from "react-icons/fa";
 import axios from "axios";
@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
-import PowerButtonObject from "../components/PowerButton/PowerButton";
+import PowerButton from "../components/PowerButton/PowerButton";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
@@ -14,7 +14,7 @@ import FlipSwitch from "../components/FlipSwitch/FlipSwitch";
 import AddPowerButton from "../components/addPowerButton/addPowerButton";
 import PageContent from "../components/PageContent/PageContent";
 
-export default function powerbutton({ HOST_IP, CONFIG }) {
+export default function PowerButton({ HOST_IP, CONFIG }) {
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [powerbuttoninfo, setpowerbuttonInfo] = useState(CONFIG.powerbutton);
     const [powerbuttonConfig, setpowerbuttonConfig] = useState(CONFIG.config.powerbutton);
@@ -121,7 +121,7 @@ export default function powerbutton({ HOST_IP, CONFIG }) {
 
                 <CardGrid>
                     {(powerbuttoninfo && Object.keys(powerbuttoninfo).length > 0) && (
-                        <PowerButtonObject
+                        <PowerButton
                             HOST_IP={HOST_IP}
                             powerbutton={powerbuttoninfo}
                         />

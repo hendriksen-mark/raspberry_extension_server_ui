@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { FaClock} from "react-icons/fa";
 import axios from "axios";
@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
-import FanObject from "../components/Fan/Fan";
+import Fan from "../components/Fan/Fan";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
@@ -15,7 +15,7 @@ import AddFan from "../components/addFan/addFan";
 import PageContent from "../components/PageContent/PageContent";
 import GenericText from "../components/GenericText/GenericText";
 
-export default function fan({ HOST_IP, CONFIG }) {
+export default function Fan({ HOST_IP, CONFIG }) {
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [fans, setFans] = useState(CONFIG.fan);
     const [fanConfig, setfanConfig] = useState(CONFIG.config.fan);
@@ -140,7 +140,7 @@ export default function fan({ HOST_IP, CONFIG }) {
 
                 <CardGrid>
                     {Object.entries(fans).map(([id, fandata]) => (
-                        <FanObject
+                        <Fan
                             key={id}
                             HOST_IP={HOST_IP}
                             id={id}

@@ -1,4 +1,5 @@
 import Select from "react-select";
+
 import "./selectMenu.scss";
 
 const SelectMenu = ({ label, value, placeholder, options, onChange, close = true , multie = false, classOptions = ""}) => {

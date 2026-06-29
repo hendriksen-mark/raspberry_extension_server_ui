@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { MdDeleteForever, MdSettings } from "react-icons/md";
@@ -11,9 +11,9 @@ import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 import GenericText from "../GenericText/GenericText";
 import GenericButton from "../GenericButton/GenericButton";
 
-import { FAN_CONFIG } from "../../Objects/fan_object";
+import { FAN_CONFIG } from "../../Objects_Config/fan_config";
 
-const fanObject = ({ HOST_IP, id, fan }) => {
+const Fan = ({ HOST_IP, id, fan }) => {
     const [faninfo, setfanInfo] = useState(fan);
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [WizardName, setWizardName] = useState("");
@@ -220,4 +220,4 @@ const fanObject = ({ HOST_IP, id, fan }) => {
     );
 };
 
-export default fanObject;
+export default Fan;

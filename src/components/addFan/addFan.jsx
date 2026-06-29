@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import GenericButton from "../GenericButton/GenericButton";
 import GenericText from "../GenericText/GenericText";
 
-import { FAN_CONFIG } from "../../Objects/fan_object";
+import { FAN_CONFIG } from "../../Objects_Config/fan_config";
 
 const Addfan = ({ HOST_IP, closeWizard }) => {
     const [fanData, setfanData] = useState({});

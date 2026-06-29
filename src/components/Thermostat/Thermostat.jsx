@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { MdDeleteForever, MdSettings, MdRefresh } from "react-icons/md";
 import { FaPowerOff, FaFire, FaAdjust } from "react-icons/fa";
 import { BsThermometerHalf, BsDropletHalf } from "react-icons/bs";
 import { IoIosInformationCircle } from "react-icons/io";
-import Wizard from "../Wizard/Wizard";
 
+import Wizard from "../Wizard/Wizard";
 import GlassContainer from "../GlassContainer/GlassContainer";
 import IconButton from "../IconButton/IconButton";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 import GenericButton from "../GenericButton/GenericButton";
 import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
-import { THERMOSTAT_CONFIG, THERMOSTAT_INFO_CONFIG } from "../../Objects/thermostat_object";
+import { THERMOSTAT_CONFIG, THERMOSTAT_INFO_CONFIG } from "../../Objects_Config/thermostat_config";
 
 import "./ThermostatControl.scss";
 

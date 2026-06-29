@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { WiHumidity } from "react-icons/wi";
 import axios from "axios";
@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
-import DHTObject from "../components/DHT/DHT";
+import DHT from "../components/DHT/DHT";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
@@ -142,7 +142,7 @@ export default function DHT({ HOST_IP, CONFIG }) {
 
                 <CardGrid>
                     {(dhtinfo && Object.keys(dhtinfo).length > 0) && (
-                        <DHTObject
+                        <DHT
                             HOST_IP={HOST_IP}
                             dht={dhtinfo}
                         />

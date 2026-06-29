@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import GenericButton from "../GenericButton/GenericButton";
 import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
-import { POWERBUTTON_CONFIG } from "../../Objects/powerbutton_object";
+import { POWERBUTTON_CONFIG } from "../../Objects_Config/powerbutton_config";
 
 const AddPowerButton = ({ HOST_IP, closeWizard }) => {
     const [powerbuttonData, setpowerbuttonData] = useState({});

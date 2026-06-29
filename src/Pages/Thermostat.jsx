@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 import { MdDeviceThermostat } from "react-icons/md";
 import axios from "axios";

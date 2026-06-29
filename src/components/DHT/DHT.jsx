@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { MdDeleteForever, MdSettings } from "react-icons/md";
 import { BsThermometerHalf, BsDropletHalf } from "react-icons/bs";
 import { IoIosInformationCircle } from "react-icons/io";
-import Wizard from "../Wizard/Wizard";
 
+import Wizard from "../Wizard/Wizard";
 import GlassContainer from "../GlassContainer/GlassContainer";
 import IconButton from "../IconButton/IconButton";
 import confirmAlert from "../reactConfirmAlert/reactConfirmAlert";
 import GenericButton from "../GenericButton/GenericButton";
 import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
-import { DHT_CONFIG } from "../../Objects/dht_object";
+import { DHT_CONFIG } from "../../Objects_Config/dht_config";
 
 import "./DHT.scss";
 
-const DHTObject = ({ HOST_IP, dht }) => {
+const DHT = ({ HOST_IP, dht }) => {
     const [dhtinfo, setDHTInfo] = useState(dht);
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [WizardName, setWizardName] = useState("");
@@ -212,4 +212,4 @@ const DHTObject = ({ HOST_IP, dht }) => {
     );
 };
 
-export default DHTObject;
+export default DHT;

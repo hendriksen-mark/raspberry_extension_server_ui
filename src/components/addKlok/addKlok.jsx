@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import GenericButton from "../GenericButton/GenericButton";
 import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
-import { KLOK_CONFIG } from "../../Objects/klok_object";
+import { KLOK_CONFIG } from "../../Objects_Config/klok_config";
 
 const AddKlok = ({ HOST_IP, closeWizard }) => {
     const [KlokData, setKlokData] = useState({});

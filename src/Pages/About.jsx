@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { FaGithub} from "react-icons/fa";
 import { Tooltip } from "@mui/material";
 
@@ -8,7 +6,6 @@ import PageContent from "../components/PageContent/PageContent";
 import CardGrid from "../components/CardGrid/CardGrid";
 
 function About() {
-  const [contributors, setContributors] = useState([]);
 
 // #region HTML
   return (
