@@ -125,7 +125,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
         <p>Never share the config.tar!</p>
         <div className="form-control">
           <GenericButton
-            value="DiyHue local"
+            value="Server local"
             color="blue"
             size=""
             type="submit"
@@ -134,7 +134,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
         </div>
         <div className="form-control">
           <GenericButton
-            value="DiyHue backup"
+            value="Server backup"
             color="blue"
             size=""
             type="submit"
@@ -314,7 +314,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     axios
       .get(`${HOST_IP}/restore_config`)
       .then(() => {
-        toast.success("restore config");
+        toast.success("Restore config");
         Restart();
       })
       .catch((error) => {
@@ -370,7 +370,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     axios
       .get(`${HOST_IP}/download_log`, { responseType: "blob" })
       .then((response) => {
-        saveAs(response.data, "diyhue_log.tar");
+        saveAs(response.data, "server_log.tar");
         toast.success("Download log tar");
       })
       .catch((error) => {
