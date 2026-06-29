@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
-import PowerButton from "../components/PowerButton/PowerButton";
+import PowerButtonObject from "../components/PowerButton/PowerButton";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
@@ -121,7 +121,7 @@ export default function PowerButton({ HOST_IP, CONFIG }) {
 
                 <CardGrid>
                     {(powerbuttoninfo && Object.keys(powerbuttoninfo).length > 0) && (
-                        <PowerButton
+                        <PowerButtonObject
                             HOST_IP={HOST_IP}
                             powerbutton={powerbuttoninfo}
                         />

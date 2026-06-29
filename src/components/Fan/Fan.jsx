@@ -13,7 +13,7 @@ import GenericButton from "../GenericButton/GenericButton";
 
 import { FAN_CONFIG } from "../../Objects_Config/fan_config";
 
-const Fan = ({ HOST_IP, id, fan }) => {
+const FanObject = ({ HOST_IP, id, fan }) => {
     const [faninfo, setfanInfo] = useState(fan);
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [WizardName, setWizardName] = useState("");
@@ -220,4 +220,4 @@ const Fan = ({ HOST_IP, id, fan }) => {
     );
 };
 
-export default Fan;
+export default FanObject;

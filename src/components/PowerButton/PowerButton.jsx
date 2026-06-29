@@ -13,7 +13,7 @@ import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
 import { POWERBUTTON_CONFIG } from "../../Objects_Config/powerbutton_config";
 
-const PowerButton = ({ HOST_IP, powerbutton }) => {
+const PowerButtonObject = ({ HOST_IP, powerbutton }) => {
     const [powerbuttoninfo, setpowerbuttonInfo] = useState(powerbutton);
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [WizardName, setWizardName] = useState("");
@@ -189,4 +189,4 @@ const PowerButton = ({ HOST_IP, powerbutton }) => {
     );
 };
 
-export default PowerButton;
+export default PowerButtonObject;

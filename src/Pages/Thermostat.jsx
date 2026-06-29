@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
-import Thermostat from "../components/Thermostat/Thermostat";
+import ThermostatObject from "../components/Thermostat/Thermostat";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
@@ -140,7 +140,7 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
 
                 <CardGrid>
                     {Object.entries(thermostats).map(([id, thermostatconfig]) => (
-                        <Thermostat
+                        <ThermostatObject
                             key={id}
                             HOST_IP={HOST_IP}
                             id={id}

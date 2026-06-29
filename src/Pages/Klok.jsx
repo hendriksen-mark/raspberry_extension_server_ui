@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
-import Klok from "../components/Klok/Klok";
+import KlokObject from "../components/Klok/Klok";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
@@ -121,7 +121,7 @@ export default function Klok({ HOST_IP, CONFIG }) {
 
                 <CardGrid>
                     {(klokinfo && Object.keys(klokinfo).length > 0) && (
-                        <Klok
+                        <KlokObject
                             HOST_IP={HOST_IP}
                             klok={klokinfo}
                         />

@@ -17,7 +17,7 @@ import { THERMOSTAT_CONFIG, THERMOSTAT_INFO_CONFIG } from "../../Objects_Config/
 
 import "./ThermostatControl.scss";
 
-const Thermostat = ({ HOST_IP, id, thermostat }) => {
+const ThermostatObject = ({ HOST_IP, id, thermostat }) => {
     const [thermostatinfo, setThermostat] = useState(thermostat);
     const [targetTemperature, setTargetTemperature] = useState(thermostat.targetTemperature);
     const [targetMode, setTargetMode] = useState(thermostat.targetMode);
@@ -362,4 +362,4 @@ const Thermostat = ({ HOST_IP, id, thermostat }) => {
     );
 };
 
-export default Thermostat;
+export default ThermostatObject;

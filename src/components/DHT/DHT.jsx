@@ -16,7 +16,7 @@ import { DHT_CONFIG } from "../../Objects_Config/dht_config";
 
 import "./DHT.scss";
 
-const DHT = ({ HOST_IP, dht }) => {
+const DHTObject = ({ HOST_IP, dht }) => {
     const [dhtinfo, setDHTInfo] = useState(dht);
     const [WizardIsOpen, setWizardIsOpen] = useState(false);
     const [WizardName, setWizardName] = useState("");
@@ -212,4 +212,4 @@ const DHT = ({ HOST_IP, dht }) => {
     );
 };
 
-export default DHT;
+export default DHTObject;

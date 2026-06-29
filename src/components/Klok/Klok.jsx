@@ -15,7 +15,7 @@ import ConfigFieldGroup from "../ConfigFieldGroup/ConfigFieldGroup";
 
 import { KLOK_CONFIG } from "../../Objects_Config/klok_config";
 
-const Klok = ({ HOST_IP, klok }) => {
+const KlokObject = ({ HOST_IP, klok }) => {
     const [Klokinfo, setKlokInfo] = useState(klok);
     const [power, setPower] = useState(klok.power_state);
     const [brightness, setBrightness] = useState(klok.brightness);
@@ -229,4 +229,4 @@ const Klok = ({ HOST_IP, klok }) => {
     );
 };
 
-export default Klok;
+export default KlokObject;

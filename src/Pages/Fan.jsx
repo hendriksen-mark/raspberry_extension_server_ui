@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 
 import CardGrid from "../components/CardGrid/CardGrid";
 import GlassContainer from "../components/GlassContainer/GlassContainer";
-import Fan from "../components/Fan/Fan";
+import FanObject from "../components/Fan/Fan";
 import Wizard from "../components/Wizard/Wizard";
 import IconButton from "../components/IconButton/IconButton";
 import confirmAlert from "../components/reactConfirmAlert/reactConfirmAlert";
@@ -140,7 +140,7 @@ export default function Fan({ HOST_IP, CONFIG }) {
 
                 <CardGrid>
                     {Object.entries(fans).map(([id, fandata]) => (
-                        <Fan
+                        <FanObject
                             key={id}
                             HOST_IP={HOST_IP}
                             id={id}
