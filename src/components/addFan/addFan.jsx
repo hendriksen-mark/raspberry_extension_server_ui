@@ -32,6 +32,16 @@ const Addfan = ({ HOST_IP, closeWizard }) => {
     return (<>
         <div className="form-control">
             <GenericText
+                label="Name"
+                readOnly={false}
+                type="text"
+                placeholder="name"
+                value={fanData.name}
+                onChange={(e) => handleConfigChange("name", e)}
+            />
+        </div>
+        <div className="form-control">
+            <GenericText
                 label="GPIO pin"
                 readOnly={false}
                 type="number"

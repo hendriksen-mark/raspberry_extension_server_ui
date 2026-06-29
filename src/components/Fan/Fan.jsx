@@ -101,6 +101,15 @@ const fanObject = ({ HOST_IP, id, fan }) => {
                 <p>Device Information for fan</p>
                 <div className="form-control">
                     <GenericText
+                        label="Name"
+                        readOnly={true}
+                        type="text"
+                        placeholder="name"
+                        value={faninfo.name}
+                    />
+                </div>
+                <div className="form-control">
+                    <GenericText
                         label="GPIO pin"
                         readOnly={true}
                         type="number"
@@ -184,6 +193,16 @@ const fanObject = ({ HOST_IP, id, fan }) => {
         return (
             <>
                 <p>Change Configuration for fan</p>
+                <div className="form-control">
+                    <GenericText
+                        label="Name"
+                        readOnly={false}
+                        type="text"
+                        placeholder="name"
+                        value={faninfo.name}
+                        onChange={(e) => handleConfigChange("name", e)}
+                    />
+                </div>
                 <div className="form-control">
                     <GenericText
                         label="GPIO pin"
