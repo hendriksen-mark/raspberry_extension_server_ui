@@ -122,7 +122,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     setWizardContent(
       <>
         <p>Where do you want to save config?</p>
-        <p>Never share the config.tar!</p>
+        <p>Never share the config.zip!</p>
         <div className="form-control">
           <GenericButton
             value="Server local"
@@ -143,7 +143,7 @@ const Settings = ({ HOST_IP, CONFIG }) => {
         </div>
         <div className="form-control">
           <GenericButton
-            value="Download tar"
+            value="Download zip"
             color="blue"
             size=""
             type="submit"
@@ -188,8 +188,8 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     axios
       .get(`${HOST_IP}/download_config`, { responseType: "blob" })
       .then((response) => {
-        saveAs(response.data, "config.tar");
-        toast.success("Download config tar");
+        saveAs(response.data, "config.zip");
+        toast.success("Download config zip");
       })
       .catch((error) => {
         console.error(error);
@@ -356,8 +356,8 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     axios
       .get(`${HOST_IP}/download_debug`, { responseType: "blob" })
       .then((response) => {
-        saveAs(response.data, "config_debug.tar");
-        toast.success("Download debug tar");
+        saveAs(response.data, "config_debug.zip");
+        toast.success("Download debug zip");
       })
       .catch((error) => {
         console.error(error);
@@ -370,8 +370,8 @@ const Settings = ({ HOST_IP, CONFIG }) => {
     axios
       .get(`${HOST_IP}/download_log`, { responseType: "blob" })
       .then((response) => {
-        saveAs(response.data, "server_log.tar");
-        toast.success("Download log tar");
+        saveAs(response.data, "server_log.zip");
+        toast.success("Download log zip");
       })
       .catch((error) => {
         console.error(error);
