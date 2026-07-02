@@ -96,7 +96,7 @@ export default function Klok({ HOST_IP, CONFIG }) {
                                         <FaClock />
                                     </div>
                                     <div className="text">Klok Settings</div>
-                                    {(!klokinfo || Object.keys(klokinfo).length === 0) && (
+                                    {(typeof klokinfo !== 'object' || klokinfo === null || Object.keys(klokinfo).length === 0) && (
                                         <IconButton
                                             iconName={BsPlusCircle}
                                             title="Add Klok"
@@ -122,7 +122,7 @@ export default function Klok({ HOST_IP, CONFIG }) {
                 <CardGrid>
                     {typeof klokinfo === 'object' && klokinfo !== null
                         ? <KlokObject HOST_IP={HOST_IP} klok={klokinfo} />
-                        : <p>{klokinfo}</p>
+                        : <GlassContainer options="spacer"><p>{klokinfo}</p></GlassContainer>
                     }
                 </CardGrid>
             </div>

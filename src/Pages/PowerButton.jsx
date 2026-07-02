@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsPlusCircle } from "react-icons/bs";
-import { FaClock} from "react-icons/fa";
+import { FaPowerOff} from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -93,10 +93,10 @@ export default function PowerButton({ HOST_IP, CONFIG }) {
                             <div className="top">
                                 <div className="row1">
                                     <div className="icon">
-                                        <FaClock />
+                                        <FaPowerOff />
                                     </div>
                                     <div className="text">PowerButton Settings</div>
-                                    {(!powerbuttoninfo || Object.keys(powerbuttoninfo).length === 0) && (
+                                    {(typeof powerbuttoninfo !== 'object' || powerbuttoninfo === null || Object.keys(powerbuttoninfo).length === 0) && (
                                         <IconButton
                                             iconName={BsPlusCircle}
                                             title="Add PowerButton"
@@ -122,7 +122,7 @@ export default function PowerButton({ HOST_IP, CONFIG }) {
                 <CardGrid>
                     {typeof powerbuttoninfo === 'object' && powerbuttoninfo !== null
                         ? <PowerButtonObject HOST_IP={HOST_IP} powerbutton={powerbuttoninfo} />
-                        : <p>{powerbuttoninfo}</p>
+                        : <GlassContainer options="spacer"><p>{powerbuttoninfo}</p></GlassContainer>
                     }
                 </CardGrid>
             </div>

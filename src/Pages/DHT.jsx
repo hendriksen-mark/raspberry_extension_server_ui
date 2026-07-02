@@ -109,7 +109,7 @@ export default function DHT({ HOST_IP, CONFIG }) {
                                         <WiHumidity />
                                     </div>
                                     <div className="text">DHT Settings</div>
-                                    {(!dhtinfo || Object.keys(dhtinfo).length === 0) && (
+                                    {(typeof dhtinfo !== 'object' || dhtinfo === null || Object.keys(dhtinfo).length === 0) && (
                                         <IconButton
                                             iconName={BsPlusCircle}
                                             title="Add DHT Sensor"
@@ -143,7 +143,7 @@ export default function DHT({ HOST_IP, CONFIG }) {
                 <CardGrid>
                     {typeof dhtinfo === 'object' && dhtinfo !== null
                         ? <DHTObject HOST_IP={HOST_IP} dht={dhtinfo} />
-                        : <p>{dhtinfo}</p>
+                        : <GlassContainer options="spacer"><p>{dhtinfo}</p></GlassContainer>
                     }
                 </CardGrid>
             </div>

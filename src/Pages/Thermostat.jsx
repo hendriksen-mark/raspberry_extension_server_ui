@@ -148,7 +148,7 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
                                 thermostat={thermostatconfig}
                             />
                         ))
-                        : <p>{thermostats}</p>
+                        : <GlassContainer options="spacer"><p>{thermostats}</p></GlassContainer>
                     }
                 </CardGrid>
             </div>

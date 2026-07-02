@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsPlusCircle } from "react-icons/bs";
-import { FaClock} from "react-icons/fa";
+import { GrFanOption} from "react-icons/gr";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -106,7 +106,7 @@ export default function Fan({ HOST_IP, CONFIG }) {
                             <div className="top">
                                 <div className="row1">
                                     <div className="icon">
-                                        <FaClock />
+                                        <GrFanOption />
                                     </div>
                                     <div className="text">Fan Settings</div>
                                     <IconButton
@@ -148,7 +148,7 @@ export default function Fan({ HOST_IP, CONFIG }) {
                                 fan={fandata}
                             />
                         ))
-                        : <p>{fans}</p>
+                        : <GlassContainer options="spacer"><p>{fans}</p></GlassContainer>
                     }
                 </CardGrid>
             </div>
