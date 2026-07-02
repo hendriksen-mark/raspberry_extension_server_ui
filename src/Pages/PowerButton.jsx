@@ -120,12 +120,10 @@ export default function PowerButton({ HOST_IP, CONFIG }) {
                 </CardGrid>
 
                 <CardGrid>
-                    {(powerbuttoninfo && Object.keys(powerbuttoninfo).length > 0) && (
-                        <PowerButtonObject
-                            HOST_IP={HOST_IP}
-                            powerbutton={powerbuttoninfo}
-                        />
-                    )}
+                    {typeof powerbuttoninfo === 'object' && powerbuttoninfo !== null
+                        ? <PowerButtonObject HOST_IP={HOST_IP} powerbutton={powerbuttoninfo} />
+                        : <p>{powerbuttoninfo}</p>
+                    }
                 </CardGrid>
             </div>
 

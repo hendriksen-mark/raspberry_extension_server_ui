@@ -139,14 +139,17 @@ export default function Fan({ HOST_IP, CONFIG }) {
                 </CardGrid>
 
                 <CardGrid>
-                    {Object.entries(fans).map(([id, fandata]) => (
-                        <FanObject
-                            key={id}
-                            HOST_IP={HOST_IP}
-                            id={id}
-                            fan={fandata}
-                        />
-                    ))}
+                    {typeof fans === 'object' && fans !== null
+                        ? Object.entries(fans).map(([id, fandata]) => (
+                            <FanObject
+                                key={id}
+                                HOST_IP={HOST_IP}
+                                id={id}
+                                fan={fandata}
+                            />
+                        ))
+                        : <p>{fans}</p>
+                    }
                 </CardGrid>
             </div>
 

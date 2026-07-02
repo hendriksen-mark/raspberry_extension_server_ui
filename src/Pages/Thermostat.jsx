@@ -139,14 +139,17 @@ export default function Thermostats({ HOST_IP, CONFIG }) {
                 </CardGrid>
 
                 <CardGrid>
-                    {Object.entries(thermostats).map(([id, thermostatconfig]) => (
-                        <ThermostatObject
-                            key={id}
-                            HOST_IP={HOST_IP}
-                            id={id}
-                            thermostat={thermostatconfig}
-                        />
-                    ))}
+                    {typeof thermostats === 'object' && thermostats !== null
+                        ? Object.entries(thermostats).map(([id, thermostatconfig]) => (
+                            <ThermostatObject
+                                key={id}
+                                HOST_IP={HOST_IP}
+                                id={id}
+                                thermostat={thermostatconfig}
+                            />
+                        ))
+                        : <p>{thermostats}</p>
+                    }
                 </CardGrid>
             </div>
 

@@ -141,12 +141,10 @@ export default function DHT({ HOST_IP, CONFIG }) {
                 </CardGrid>
 
                 <CardGrid>
-                    {(dhtinfo && Object.keys(dhtinfo).length > 0) && (
-                        <DHTObject
-                            HOST_IP={HOST_IP}
-                            dht={dhtinfo}
-                        />
-                    )}
+                    {typeof dhtinfo === 'object' && dhtinfo !== null
+                        ? <DHTObject HOST_IP={HOST_IP} dht={dhtinfo} />
+                        : <p>{dhtinfo}</p>
+                    }
                 </CardGrid>
             </div>
 

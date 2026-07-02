@@ -120,12 +120,10 @@ export default function Klok({ HOST_IP, CONFIG }) {
                 </CardGrid>
 
                 <CardGrid>
-                    {(klokinfo && Object.keys(klokinfo).length > 0) && (
-                        <KlokObject
-                            HOST_IP={HOST_IP}
-                            klok={klokinfo}
-                        />
-                    )}
+                    {typeof klokinfo === 'object' && klokinfo !== null
+                        ? <KlokObject HOST_IP={HOST_IP} klok={klokinfo} />
+                        : <p>{klokinfo}</p>
+                    }
                 </CardGrid>
             </div>
 
